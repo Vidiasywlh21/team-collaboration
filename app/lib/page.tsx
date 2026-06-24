@@ -1,0 +1,1 @@
+import { bookingSchema } from "./schema";
