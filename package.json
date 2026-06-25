@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
@@ -27,9 +26,5 @@
     "eslint-config-next": "16.2.9",
     "tailwindcss": "^4",
     "typescript": "^5"
-=======
-  "dependencies": {
-    "zod": "^4.4.3"
->>>>>>> 028040ed72a19038df663d9e1b36ff2e8516dbd5
   }
 }
