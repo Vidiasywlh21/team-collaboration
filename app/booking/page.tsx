@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { bookingSchema } from "@/lib/schema";
+import { bookingSchema } from "../lib/schema";
 import Link from "next/link";
 import { IconCalendarPlus, IconCircleCheck, IconArrowLeft } from "@tabler/icons-react";
 
