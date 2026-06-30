@@ -28,7 +28,7 @@ export default function BantuanPage() {
   const [submitted, setSubmitted] = useState(false);
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 font-sans text-zinc-900 dark:text-zinc-100">
+    <div className="min-h-screen font-sans text-zinc-900 dark:text-zinc-100" style={{background: "linear-gradient(to bottom, #e4d7c3 0%, #dccfb9 12%, #511821 22%, #60232c 35%, #68242e 45%, #c6b9a3 55%, #e6d9c3 65%, #e7dac4 75%, #e6d9c3 82%, #581b23 90%, #561d23 100%)"}}>
       <header className="bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 sticky top-0 z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center gap-3">
           <Link href="/" className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full transition-colors text-zinc-600 dark:text-zinc-300">
@@ -45,10 +45,10 @@ export default function BantuanPage() {
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-14">
-          <h2 className="text-3xl font-extrabold mb-3 bg-gradient-to-r from-rose-600 to-orange-600 dark:from-rose-400 dark:to-orange-400 bg-clip-text text-transparent">
+          <h2 className="text-3xl font-extrabold mb-3 bg-gradient-to-br from-zinc-800 via-zinc-800 to-zinc-950 bg-clip-text text-transparent drop-shadow-sm">
             Ada yang bisa kami bantu?
           </h2>
-          <p className="text-zinc-600 dark:text-zinc-400 max-w-lg mx-auto">
+          <p className="text-zinc-700 dark:text-zinc-500 max-w-lg mx-auto leading-relaxed">
             Temukan jawaban atas pertanyaan umum seputar pemesanan, fasilitas, atau laporkan kendala teknis langsung ke tim SinergiSpace.
           </p>
         </div>
@@ -61,12 +61,12 @@ export default function BantuanPage() {
             <div>
               <h3 className="font-bold text-sm mb-1">Hotline Operasional</h3>
               <p className="text-zinc-500 dark:text-zinc-400 text-xs mb-2">Tersedia setiap hari kerja pukul 08.00 - 17.00 WIB</p>
-              <span className="text-sm font-semibold text-indigo-600 dark:text-indigo-400">0812-3456-7890</span>
+              <span className="text-sm font-semibold text-indigo-600 dark:text-indigo-400">0895-7043-96770</span>
             </div>
           </div>
           <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 flex items-start gap-4 hover:shadow-md transition-shadow">
             <div className="p-3 bg-emerald-50 dark:bg-emerald-950/40 rounded-xl text-emerald-600 dark:text-emerald-400 flex-shrink-0">
-              <IconMail size={22} />
+              <IconMail size={22} /> 
             </div>
             <div>
               <h3 className="font-bold text-sm mb-1">Surel Resmi</h3>
@@ -80,8 +80,8 @@ export default function BantuanPage() {
             </div>
             <div>
               <h3 className="font-bold text-sm mb-1">Lokasi Kantor Pusat</h3>
-              <p className="text-zinc-500 dark:text-zinc-400 text-xs mb-2">Kunjungi helpdesk di lantai dasar gedung utama</p>
-              <span className="text-sm font-semibold text-amber-600 dark:text-amber-400">Gedung Sinergi Lt. 1</span>
+              <p className="text-zinc-500 dark:text-zinc-400 text-xs mb-2">Kunjungi helpdesk di Gedung Putih FIKOM</p>
+              <span className="text-sm font-semibold text-amber-600 dark:text-amber-400">Gedung Putih Lt. 1</span>
             </div>
           </div>
         </div>
@@ -130,11 +130,12 @@ export default function BantuanPage() {
                 </div>
                 <div>
                   <label htmlFor="issue" className="block text-sm font-medium text-zinc-300 mb-1.5">Topik Kendala</label>
-                  <select id="issue" className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all appearance-none">
+                  <select id="issue" className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all appearance-none [&>option]:bg-zinc-900 [&>option]:text-white">
                     <option value="ruangan">Kondisi Ruangan / Fasilitas</option>
-                    <option value="sistem">Kendala Teknis Aplikasi</option>
-                    <option value="booking">Masalah Booking / Reservasi</option>
-                    <option value="lainnya">Pertanyaan Umum Lainnya</option>
+                    <option value="pemesanan">Kendala Pemesanan</option>
+                    <option value="akun">Masalah Akun / Login</option>
+                    <option value="jadwal">Informasi Jadwal</option>
+                    <option value="lainnya">Lainnya</option>
                   </select>
                 </div>
                 <div>
