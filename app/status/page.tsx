@@ -1,11 +1,24 @@
 "use client";
 
 import Link from "next/link";
+<<<<<<< HEAD
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { IconClock, IconArrowLeft, IconCircleCheck, IconClockHour4, IconCancel, IconRefresh, IconLogin } from "@tabler/icons-react";
 import { useAuth } from "../lib/auth-context";
 import { getBookingsByEmail, Booking } from "../lib/booking-store";
+=======
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import { IconClock, IconCircleCheck, IconClockHour4, IconCancel, IconRefresh } from "@tabler/icons-react";
+
+const bookingHistory = [
+  { id: "INV-2023-0012", room: "Ruang Rapat Kreatif A", date: "15 Des 2023", time: "09:00 - 11:00 WIB", status: "confirmed", booker: "Andika Wijaya" },
+  { id: "INV-2023-0011", room: "Booth Telepon 3", date: "14 Des 2023", time: "13:00 - 14:00 WIB", status: "completed", booker: "Andika Wijaya" },
+  { id: "INV-2023-0010", room: "Meja Tim Tengah - 4", date: "14 Des 2023", time: "Full Day", status: "completed", booker: "Andika Wijaya" },
+  { id: "INV-2023-0009", room: "Ruang Rapat Eksekutif B", date: "13 Des 2023", time: "15:00 - 16:30 WIB", status: "rejected", booker: "Andika Wijaya" },
+];
+>>>>>>> main
 
 const statusStyles: Record<string, { bg: string; text: string; icon: React.ElementType }> = {
   dikonfirmasi: { bg: "bg-emerald-50 dark:bg-emerald-950/30 border-emerald-200 dark:border-emerald-900", text: "text-emerald-700 dark:text-emerald-400", icon: IconCircleCheck },
@@ -45,6 +58,7 @@ export default function StatusPage() {
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 font-sans text-zinc-900 dark:text-zinc-100">
+<<<<<<< HEAD
       <header className="bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 sticky top-0 z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -66,6 +80,9 @@ export default function StatusPage() {
           </div>
         </div>
       </header>
+=======
+      <Navbar activePage="/status" />
+>>>>>>> main
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {bookingHistory.length === 0 ? (
@@ -128,6 +145,7 @@ export default function StatusPage() {
           </>
         )}
       </main>
+      <Footer />
     </div>
   );
 }

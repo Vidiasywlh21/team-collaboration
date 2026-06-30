@@ -1,8 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
-import { IconLifebuoy, IconArrowLeft, IconChevronDown, IconSend, IconPhone, IconMail, IconMapPin } from "@tabler/icons-react";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import Link from "next/link";
+import { IconChevronDown, IconSend, IconPhone, IconMail, IconMapPin, IconArrowLeft, IconLifebuoy} from "@tabler/icons-react";
 
 const faqs = [
   {
@@ -152,6 +154,7 @@ export default function BantuanPage() {
         </div>
 
       </main>
+      <Footer />
     </div>
   );
 }
