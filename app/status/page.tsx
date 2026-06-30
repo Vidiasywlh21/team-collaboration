@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { IconClock, IconArrowLeft, IconCircleCheck, IconClockHour4, IconCancel, IconRefresh } from "@tabler/icons-react";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import { IconClock, IconCircleCheck, IconClockHour4, IconCancel, IconRefresh } from "@tabler/icons-react";
 
 const bookingHistory = [
   { id: "INV-2023-0012", room: "Ruang Rapat Kreatif A", date: "15 Des 2023", time: "09:00 - 11:00 WIB", status: "confirmed", booker: "Andika Wijaya" },
@@ -20,19 +22,7 @@ const statusStyles: Record<string, { bg: string; text: string; icon: React.Eleme
 export default function StatusPage() {
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 font-sans text-zinc-900 dark:text-zinc-100">
-      <header className="bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 sticky top-0 z-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center gap-3">
-          <Link href="/" className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full transition-colors text-zinc-600 dark:text-zinc-300">
-            <IconArrowLeft size={20} />
-          </Link>
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
-              <IconClock size={18} />
-            </div>
-            <h1 className="text-lg font-bold">Status & Riwayat Booking</h1>
-          </div>
-        </div>
-      </header>
+      <Navbar activePage="/status" />
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center justify-between mb-6">
@@ -111,6 +101,7 @@ export default function StatusPage() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

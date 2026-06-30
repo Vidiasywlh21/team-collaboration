@@ -1,8 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
-import { IconLifebuoy, IconArrowLeft, IconChevronDown, IconSend, IconPhone, IconMail, IconMapPin } from "@tabler/icons-react";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import { IconChevronDown, IconSend, IconPhone, IconMail, IconMapPin } from "@tabler/icons-react";
 
 const faqs = [
   {
@@ -29,19 +30,7 @@ export default function BantuanPage() {
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 font-sans text-zinc-900 dark:text-zinc-100">
-      <header className="bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 sticky top-0 z-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center gap-3">
-          <Link href="/" className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full transition-colors text-zinc-600 dark:text-zinc-300">
-            <IconArrowLeft size={20} />
-          </Link>
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-400 flex items-center justify-center">
-              <IconLifebuoy size={18} />
-            </div>
-            <h1 className="text-lg font-bold">Pusat Bantuan & Dukungan Teknis</h1>
-          </div>
-        </div>
-      </header>
+      <Navbar activePage="/bantuan" />
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-14">
@@ -151,6 +140,7 @@ export default function BantuanPage() {
         </div>
 
       </main>
+      <Footer />
     </div>
   );
 }

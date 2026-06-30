@@ -3,7 +3,9 @@
 import { useState } from "react";
 import { bookingSchema } from "../lib/schema";
 import Link from "next/link";
-import { IconCalendarPlus, IconCircleCheck, IconArrowLeft } from "@tabler/icons-react";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import { IconCalendarPlus, IconCircleCheck } from "@tabler/icons-react";
 
 export default function BookingPage() {
   const [formData, setFormData] = useState({
@@ -40,37 +42,37 @@ export default function BookingPage() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 flex flex-col items-center justify-center p-4 text-center">
-        <div className="w-20 h-20 rounded-full bg-emerald-100 dark:bg-emerald-950/50 flex items-center justify-center mb-6">
-          <IconCircleCheck size={40} className="text-emerald-600 dark:text-emerald-400" />
+      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 font-sans text-zinc-900 dark:text-zinc-100">
+        <Navbar activePage="/booking" />
+        <div className="flex flex-col items-center justify-center p-4 text-center flex-1 py-20">
+          <div className="w-20 h-20 rounded-full bg-emerald-100 dark:bg-emerald-950/50 flex items-center justify-center mb-6">
+            <IconCircleCheck size={40} className="text-emerald-600 dark:text-emerald-400" />
+          </div>
+          <h2 className="text-2xl font-bold mb-2 text-zinc-900 dark:text-zinc-100">Booking Berhasil Dikirim!</h2>
+          <p className="text-zinc-600 dark:text-zinc-400 mb-8 max-w-sm">
+            Permintaan reservasi ruangan <strong>{formData.ruangan}</strong> untuk <strong>{formData.nama}</strong> sedang diproses.
+          </p>
+          <div className="flex gap-3">
+            <button 
+              onClick={() => { setSubmitted(false); setFormData({ nama: "", tanggal: "", waktu_mulai: "", waktu_selesai: "", ruangan: "", keperluan: "" }); }}
+              className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-lg shadow-indigo-600/30 transition-all"
+            >
+              Buat Booking Lagi
+            </button>
+            <Link href="/" className="inline-flex items-center gap-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-200 px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-all">
+              Kembali ke Beranda
+            </Link>
+          </div>
         </div>
-        <h2 className="text-2xl font-bold mb-2 text-zinc-900 dark:text-zinc-100">Booking Berhasil Dikirim!</h2>
-        <p className="text-zinc-600 dark:text-zinc-400 mb-8 max-w-sm">
-          Permintaan reservasi ruangan <strong>{formData.ruangan}</strong> untuk <strong>{formData.nama}</strong> sedang diproses.
-        </p>
-        <div className="flex gap-3">
-          <button 
-            onClick={() => { setSubmitted(false); setFormData({ nama: "", tanggal: "", waktu_mulai: "", waktu_selesai: "", ruangan: "", keperluan: "" }); }}
-            className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-lg shadow-indigo-600/30 transition-all"
-          >
-            Buat Booking Lagi
-          </button>
-          <Link href="/" className="inline-flex items-center gap-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-200 px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-all">
-            Kembali ke Beranda
-          </Link>
-        </div>
+        <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 font-sans py-12 px-4 sm:px-6 lg:px-8 text-zinc-900 dark:text-zinc-100">
-      <div className="max-w-3xl mx-auto">
-        <Link href="/" className="inline-flex items-center gap-1 text-sm font-medium text-zinc-500 hover:text-indigo-600 dark:hover:text-indigo-400 mb-8 transition-colors">
-          <IconArrowLeft size={16} />
-          Kembali ke Beranda
-        </Link>
-
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 font-sans text-zinc-900 dark:text-zinc-100">
+      <Navbar activePage="/booking" />
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex items-center gap-4 mb-8">
           <div className="p-3 bg-indigo-50 dark:bg-indigo-950/50 rounded-xl text-indigo-600 dark:text-indigo-400">
             <IconCalendarPlus size={28} />
@@ -184,7 +186,8 @@ export default function BookingPage() {
             </div>
           </form>
         </div>
-      </div>
+      </main>
+      <Footer />
     </div>
   );
 }
