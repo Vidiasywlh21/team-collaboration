@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import { 
   IconLayout, 
   IconCalendarPlus, 
@@ -10,66 +12,12 @@ import {
   IconMapPin,
   IconUsers,
   IconCircleCheck,
-  IconBell,
-  IconUser
 } from "@tabler/icons-react";
 
 export default function Home() {
   return (
     <div className="min-h-screen text-zinc-900 dark:text-zinc-100 font-sans" style={{background: "linear-gradient(to bottom, #e4d7c3 0%, #dccfb9 12%, #511821 22%, #60232c 35%, #68242e 45%, #c6b9a3 55%, #e6d9c3 65%, #e7dac4 75%, #e6d9c3 82%, #581b23 90%, #561d23 100%)"}}>
-      {/* Navigation Top Bar */}
-      <header className="sticky top-0 z-40 w-full border-b border-zinc-200 dark:border-zinc-800 backdrop-blur-md" style={{background: "rgba(228,215,195,0.85)"}}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl bg-indigo-600 dark:bg-indigo-500 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-indigo-500/30">
-              S
-            </div>
-            <div>
-              <span className="font-bold text-lg tracking-tight bg-gradient-to-r from-indigo-600 to-violet-600 dark:from-indigo-400 dark:to-violet-400 bg-clip-text text-transparent">
-                SinergiSpace
-              </span>
-              <span className="block text-[10px] text-zinc-500 dark:text-zinc-400 font-medium tracking-wider uppercase -mt-1">
-                Collaboration Hub
-              </span>
-            </div>
-          </div>
-
-          <div className="hidden md:flex items-center gap-6 text-sm font-medium">
-            <Link href="/" className="text-indigo-600 dark:text-indigo-400 transition-colors">
-              Beranda
-            </Link>
-            <Link href="/tata-letak" className="text-zinc-600 dark:text-zinc-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
-              Tata Letak
-            </Link>
-            <Link href="/booking" className="text-zinc-600 dark:text-zinc-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
-              Booking
-            </Link>
-            <Link href="/status" className="text-zinc-600 dark:text-zinc-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
-              Status
-            </Link>
-            <Link href="/bantuan" className="text-zinc-600 dark:text-zinc-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
-              Bantuan
-            </Link>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <button className="relative p-2 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full transition-colors" aria-label="Notifikasi">
-              <IconBell size={20} />
-              <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-rose-500 rounded-full border-2 border-white dark:border-zinc-900"></span>
-            </button>
-            <div className="h-8 w-[1px] bg-zinc-200 dark:bg-zinc-800"></div>
-            <div className="flex items-center gap-2 pl-1">
-              <div className="w-8 h-8 rounded-full bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-300">
-                <IconUser size={18} />
-              </div>
-              <div className="hidden sm:block text-left">
-                <p className="text-xs font-semibold leading-tight text-zinc-900 dark:text-zinc-100">Andika Wijaya</p>
-                <p className="text-[10px] text-zinc-500 dark:text-zinc-400">Tim Kreatif</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Navbar activePage="/" />
 
       {/* Main Content Area */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -288,24 +236,7 @@ export default function Home() {
 
       </main>
 
-      {/* Beautiful Minimal Footer */}
-      <footer className="border-t border-zinc-200/50 dark:border-zinc-800/50 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-sm py-8 mt-16 text-zinc-500 dark:text-zinc-400 text-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-md bg-indigo-600 flex items-center justify-center text-white font-bold text-xs">
-              S
-            </div>
-            <span className="font-bold text-zinc-800 dark:text-zinc-200">SinergiSpace</span>
-          </div>
-          <p className="text-xs">
-            &copy; {new Date().getFullYear()} SinergiSpace Team Collaboration Hub. Hak Cipta Dilindungi Undang-Undang.
-          </p>
-          <div className="flex gap-4 text-xs font-medium">
-            <Link href="/bantuan" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Kebijakan Privasi</Link>
-            <Link href="/bantuan" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Syarat & Ketentuan</Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
