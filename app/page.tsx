@@ -1,12 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import { 
-  IconLayout, 
-  IconCalendarPlus, 
-  IconClock, 
+import {
+  IconLayout,
+  IconCalendarPlus,
+  IconClock,
   IconHelpCircle,
   IconArrowRight,
   IconMapPin,
@@ -16,34 +14,34 @@ import {
 
 export default function Home() {
   return (
-    <div className="min-h-screen text-zinc-900 dark:text-zinc-100 font-sans" style={{background: "linear-gradient(to bottom, #e4d7c3 0%, #dccfb9 12%, #511821 22%, #60232c 35%, #68242e 45%, #c6b9a3 55%, #e6d9c3 65%, #e7dac4 75%, #e6d9c3 82%, #581b23 90%, #561d23 100%)"}}>
+    <div className="min-h-screen text-zinc-900 dark:text-zinc-100 font-sans relative" style={{background: "linear-gradient(to bottom, #e4d7c3 0%, #dccfb9 12%, #511821 22%, #60232c 35%, #68242e 45%, #c6b9a3 55%, #e6d9c3 65%, #e7dac4 75%, #e6d9c3 82%, #581b23 90%, #561d23 100%)"}}>
       {/* Main Content Area */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"> 
         {/* Welcome Section */}
-        <section className="mb-10 p-8 md:p-12 relative overflow-hidden rounded-3xl shadow-[0_0_40px_rgba(99,102,241,0.15),0_0_80px_rgba(99,102,241,0.08)]">
+        <section className="mb-10 p-8 md:p-12 relative overflow-hidden rounded-3xl shadow-lg">
           <div
             className="absolute inset-0 bg-cover bg-center opacity-20"
             style={{ backgroundImage: "url('/um_beranda2.png')" }}
           ></div>
-          <div className="absolute inset-0 bg-black/20"></div>
+          <div className="absolute inset-0 bg-[#561C24]/30"></div>
           <div className="relative max-w-2xl">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-700 border border-indigo-200 mb-6">
-              <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping"></span>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#E8D8C4] text-[#561C24] mb-6">
+              <span className="w-1.5 h-1.5 bg-[#6D2932] rounded-full animate-ping"></span>
               Sistem Aktif & Terpadu
             </span>
-            <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4 leading-tight text-zinc-900">
+            <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4 leading-tight text-white">
               Booking Ruangan Mudah untuk <br />
               Seluruh Civitas Universitas Mulia Balikpapan
             </h1>
-            <p className="text-zinc-100 text-sm md:text-base mb-8 leading-relaxed drop-shadow-md">
-              SinergiSpace adalah platform booking ruangan yang diperuntukkan bagi mahasiswa dan seluruh warga Universitas Mulia Balikpapan. Anda dapat dengan mudah membuat atau melakukan booking ruangan untuk belajar mandiri, belajar kelompok, maupun diskusi UKM — tersedia untuk semua ruangan di setiap fakultas.
+            <p className="text-[#E8D8C4] text-sm md:text-base mb-8 leading-relaxed drop-shadow-md">
+              UMSpace adalah platform booking ruangan yang diperuntukkan bagi mahasiswa dan seluruh warga Universitas Mulia Balikpapan. Anda dapat dengan mudah membuat atau melakukan booking ruangan untuk belajar mandiri, belajar kelompok, maupun diskusi UKM — tersedia untuk semua ruangan di setiap fakultas.
             </p>
             <div className="flex flex-wrap gap-3">
-              <Link href="/booking" className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm px-5 py-3 rounded-xl transition-all shadow-lg shadow-indigo-600/30 hover:shadow-indigo-600/40">
-                Pilih Ruangan Sekarang  
+              <Link href="/booking" className="inline-flex items-center gap-2 bg-[#E8D8C4] hover:bg-[#C7B7A3] text-[#561C24] font-semibold text-sm px-5 py-3 rounded-xl transition-all shadow-lg">
+                Pilih Ruangan Sekarang
                 <IconArrowRight size={16} />
               </Link>
-              <Link href="/tata-letak" className="inline-flex items-center gap-2 bg-zinc-100 hover:bg-zinc-200 text-zinc-800 font-semibold text-sm px-5 py-3 rounded-xl transition-all border border-zinc-200">
+              <Link href="/tata-letak" className="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white font-semibold text-sm px-5 py-3 rounded-xl transition-all border border-white/30">
                 Lihat Denah Tata Letak
               </Link>
             </div>
@@ -51,75 +49,80 @@ export default function Home() {
         </section>
 
         {/* Live Statistics Cards */}
-        <section className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-10">
-          <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm p-5 rounded-2xl border border-zinc-200/50 dark:border-zinc-800/50 shadow-sm flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+        <section className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mb-10">
+          <div className="bg-[#E8D8C4] p-5 rounded-2xl border border-[#C7B7A3] shadow-sm flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-[#561C24] flex items-center justify-center text-[#E8D8C4]">
               <IconMapPin size={24} />
             </div>
             <div>
-              <span className="text-xs text-zinc-500 dark:text-zinc-400 block mb-0.5">Meja Terbooking</span>
-              <span className="text-xl font-bold tracking-tight">18 <span className="text-xs text-zinc-400 dark:text-zinc-500 font-normal">/ 24 meja</span></span>
+              <span className="text-xs text-[#6D2932] block mb-0.5">Meja Terbooking</span>
+              <span className="text-xl font-bold tracking-tight text-[#561C24]">18 <span className="text-xs text-[#6D2932]/60 font-normal">/ 24 meja</span></span>
             </div>
           </div>
 
-          <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm p-5 rounded-2xl border border-zinc-200/50 dark:border-zinc-800/50 shadow-sm flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+          <div className="bg-white p-5 rounded-2xl border border-[#C7B7A3] shadow-sm flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-[#6D2932] flex items-center justify-center text-[#E8D8C4]">
               <IconUsers size={24} />
             </div>
             <div>
-              <span className="text-xs text-zinc-500 dark:text-zinc-400 block mb-0.5">Kapasitas Hari Ini</span>
-              <span className="text-xl font-bold tracking-tight">75% <span className="text-xs text-emerald-500 font-semibold">(Terisi)</span></span>
+              <span className="text-xs text-[#6D2932] block mb-0.5">Kapasitas Hari Ini</span>
+              <span className="text-xl font-bold tracking-tight text-[#561C24]">75% <span className="text-xs text-[#6D2932] font-semibold">(Terisi)</span></span>
             </div>
           </div>
 
-          <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm p-5 rounded-2xl border border-zinc-200/50 dark:border-zinc-800/50 shadow-sm flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-950/50 flex items-center justify-center text-amber-600 dark:text-amber-400">
+          <div className="bg-[#E8D8C4]/80 p-5 rounded-2xl border border-[#C7B7A3] shadow-sm flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-[#561C24] flex items-center justify-center text-[#E8D8C4]">
               <IconClock size={24} />
             </div>
             <div>
-              <span className="text-xs text-zinc-500 dark:text-zinc-400 block mb-0.5">Booking Aktif</span>
-              <span className="text-xl font-bold tracking-tight">5 <span className="text-xs text-zinc-400 dark:text-zinc-500 font-normal">reservasi</span></span>
+              <span className="text-xs text-[#6D2932] block mb-0.5">Booking Aktif</span>
+              <span className="text-xl font-bold tracking-tight text-[#561C24]">5 <span className="text-xs text-[#6D2932]/60 font-normal">reservasi</span></span>
             </div>
           </div>
 
-          <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm p-5 rounded-2xl border border-zinc-200/50 dark:border-zinc-800/50 shadow-sm flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-teal-50 dark:bg-teal-950/50 flex items-center justify-center text-teal-600 dark:text-teal-400">
+          <div className="bg-white p-5 rounded-2xl border border-[#C7B7A3] shadow-sm flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-[#6D2932] flex items-center justify-center text-[#E8D8C4]">
               <IconCircleCheck size={24} />
             </div>
             <div>
-              <span className="text-xs text-zinc-500 dark:text-zinc-400 block mb-0.5">Status Server</span>
-              <span className="text-xl font-bold tracking-tight text-teal-600 dark:text-teal-400">Normal</span>
+              <span className="text-xs text-[#6D2932] block mb-0.5">Status Server</span>
+              <span className="text-xl font-bold tracking-tight text-[#561C24]">Normal</span>
             </div>
           </div>
         </section>
 
-        {/* Core Menu Grid */}
+        {/* Core Menu Grid - Modern Clean Layout */}
         <section className="mb-12">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h2 className="text-xl md:text-2xl font-bold tracking-tight">Menu Utama Sistem</h2>
-              <p className="text-zinc-500 dark:text-zinc-100 text-xs md:text-sm">Akses cepat ke seluruh modul operasional SinergiSpace</p>
-            </div>
+          {/* Title Section - Just Text */}
+          <div className="mb-8">
+            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-white drop-shadow-lg">
+              Menu Utama Sistem
+            </h2>
+            <p className="text-[#E8D8C4] text-sm md:text-base mt-2 drop-shadow-md">
+              Akses cepat ke seluruh modul operasional UMSpace
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            
+          {/* Modern Grid - No Overlap */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+
             {/* Tata Letak Card */}
-            <div className="group bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm rounded-3xl p-6 border border-zinc-200/50 dark:border-zinc-800/50 shadow-sm hover:shadow-lg hover:border-indigo-500/20 dark:hover:border-indigo-500/30 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
-              <div>
-                <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
-                  <IconLayout size={26} />
+            <div className="group bg-[#E8D8C4] rounded-2xl p-6 border border-[#C7B7A3] shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="w-12 h-12 rounded-xl bg-[#561C24] text-[#E8D8C4] flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
+                  <IconLayout size={24} />
                 </div>
-                <h3 className="text-lg font-bold mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                  Tata Letak Ruangan
-                </h3>
-                <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed mb-6">
-                  Lihat denah interaktif ruang kerja, ketersediaan meja, dan koordinat area tim secara real-time. Membantu Anda menemukan rekan kerja atau meja yang siap pakai.
-                </p>
+                <div className="flex-1">
+                  <h3 className="text-lg font-bold text-[#561C24] mb-1">
+                    Tata Letak Ruangan
+                  </h3>
+                  <p className="text-[#6D2932] text-sm leading-relaxed">
+                    Lihat denah interaktif ruang kerja, ketersediaan meja, dan koordinat area tim secara real-time.
+                  </p>
+                </div>
               </div>
-              <div>
-                <div className="h-[1px] w-full bg-zinc-100 dark:bg-zinc-800 mb-5"></div>
-                <Link href="/tata-letak" className="inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-semibold text-sm hover:gap-3 transition-all">
+              <div className="pt-4 border-t border-[#C7B7A3]">
+                <Link href="/tata-letak" className="inline-flex items-center gap-2 text-[#561C24] font-semibold text-sm hover:gap-3 transition-all">
                   Buka Denah Tata Letak
                   <IconArrowRight size={16} />
                 </Link>
@@ -127,43 +130,45 @@ export default function Home() {
             </div>
 
             {/* Booking Card */}
-            <div className="group bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm rounded-3xl p-6 border border-zinc-200/50 dark:border-zinc-800/50 shadow-sm hover:shadow-lg hover:border-indigo-500/20 dark:hover:border-indigo-500/30 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
-              <div>
-                <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
-                  <IconCalendarPlus size={26} />
+            <div className="group bg-[#561c24] rounded-2xl p-6 border border-[#561c24] shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="w-12 h-12 rounded-xl bg-[#E8D8C4] text-[#561C24] flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
+                  <IconCalendarPlus size={24} />
                 </div>
-                <h3 className="text-lg font-bold mb-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-                  Reservasi / Booking
-                </h3>
-                <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed mb-6">
-                  Buat reservasi meja harian, ruang meeting eksekutif, atau bilik telepon kedap suara. Proses pengisian formulir mudah, cepat, dan terintegrasi aturan validasi.
-                </p>
+                <div className="flex-1">
+                  <h3 className="text-lg font-bold text-white mb-1">
+                    Reservasi / Booking
+                  </h3>
+                  <p className="text-[#E8D8C4] text-sm leading-relaxed">
+                    Buat reservasi meja harian, ruang meeting eksekutif, atau bilik telepon kedap suara dengan mudah.
+                  </p>
+                </div>
               </div>
-              <div>
-                <div className="h-[1px] w-full bg-zinc-100 dark:bg-zinc-800 mb-5"></div>
-                <Link href="/booking" className="inline-flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold text-sm hover:gap-3 transition-all">
+              <div className="pt-4 border-t border-[#C7B7A3]">
+                <Link href="/booking" className="inline-flex items-center gap-2 text-[#E8D8C4] font-semibold text-sm hover:gap-3 transition-all">
                   Mulai Pesan Ruangan
                   <IconArrowRight size={16} />
                 </Link>
               </div>
             </div>
 
-            {/* Status Booking Card */}
-            <div className="group bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm rounded-3xl p-6 border border-zinc-200/50 dark:border-zinc-800/50 shadow-sm hover:shadow-lg hover:border-indigo-500/20 dark:hover:border-indigo-500/30 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
-              <div>
-                <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
-                  <IconClock size={26} />
+            {/* Status Card */}
+            <div className="group bg-[#561C24] rounded-2xl p-6 border border-[#4a1520] shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="w-12 h-12 rounded-xl bg-[#E8D8C4] text-[#561C24] flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
+                  <IconClock size={24} />
                 </div>
-                <h3 className="text-lg font-bold mb-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-                  Status & Riwayat Booking
-                </h3>
-                <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed mb-6">
-                  Pantau persetujuan admin untuk reservasi yang Anda ajukan. Periksa detail tiket reservasi aktif, jadwal mendatang, serta riwayat booking yang telah selesai.
-                </p>
+                <div className="flex-1">
+                  <h3 className="text-lg font-bold text-white mb-1">
+                    Status & Riwayat
+                  </h3>
+                  <p className="text-[#E8D8C4]/80 text-sm leading-relaxed">
+                    Pantau persetujuan admin untuk reservasi yang Anda ajukan dan cek riwayat booking.
+                  </p>
+                </div>
               </div>
-              <div>
-                <div className="h-[1px] w-full bg-zinc-100 dark:bg-zinc-800 mb-5"></div>
-                <Link href="/status" className="inline-flex items-center gap-2 text-amber-600 dark:text-amber-400 font-semibold text-sm hover:gap-3 transition-all">
+              <div className="pt-4 border-t border-[#4a1520]">
+                <Link href="/status" className="inline-flex items-center gap-2 text-[#E8D8C4] font-semibold text-sm hover:gap-3 transition-all">
                   Cek Status Booking
                   <IconArrowRight size={16} />
                 </Link>
@@ -171,21 +176,22 @@ export default function Home() {
             </div>
 
             {/* Bantuan Card */}
-            <div className="group bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm rounded-3xl p-6 border border-zinc-200/50 dark:border-zinc-800/50 shadow-sm hover:shadow-lg hover:border-indigo-500/20 dark:hover:border-indigo-500/30 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
-              <div>
-                <div className="w-12 h-12 rounded-2xl bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
-                  <IconHelpCircle size={26} />
+            <div className="group bg-[#E8D8C4]/80 rounded-2xl p-6 border border-[#C7B7A3] shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="w-12 h-12 rounded-xl bg-[#561C24] text-[#E8D8C4] flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
+                  <IconHelpCircle size={24} />
                 </div>
-                <h3 className="text-lg font-bold mb-2 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors">
-                  Pusat Bantuan & FAQ
-                </h3>
-                <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed mb-6">
-                  Temukan panduan praktis penggunaan ruang kerja, tanyakan kendala teknis (wi-fi, AC, proyektor), atau kirimkan tiket aduan langsung ke tim operasional kami.
-                </p>
+                <div className="flex-1">
+                  <h3 className="text-lg font-bold text-[#561C24] mb-1">
+                    Pusat Bantuan & FAQ
+                  </h3>
+                  <p className="text-[#6D2932] text-sm leading-relaxed">
+                    Temukan panduan penggunaan ruang kerja atau kirimkan tiket aduan ke tim operasional kami.
+                  </p>
+                </div>
               </div>
-              <div>
-                <div className="h-[1px] w-full bg-zinc-100 dark:bg-zinc-800 mb-5"></div>
-                <Link href="/bantuan" className="inline-flex items-center gap-2 text-rose-600 dark:text-rose-400 font-semibold text-sm hover:gap-3 transition-all">
+              <div className="pt-4 border-t border-[#C7B7A3]">
+                <Link href="/bantuan" className="inline-flex items-center gap-2 text-[#561C24] font-semibold text-sm hover:gap-3 transition-all">
                   Butuh Bantuan Teknis
                   <IconArrowRight size={16} />
                 </Link>
@@ -196,41 +202,41 @@ export default function Home() {
         </section>
 
         {/* Recent Activity / Information Logs Section */}
-        <section className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm rounded-3xl p-6 md:p-8 border border-zinc-200/50 dark:border-zinc-800/50 shadow-sm">
+        <section className="bg-[#E8D8C4] rounded-3xl p-6 md:p-8 border border-[#C7B7A3] shadow-md">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
             <div>
-              <h2 className="text-lg font-bold">Informasi & Aktivitas Terkini</h2>
-              <p className="text-zinc-500 dark:text-zinc-400 text-xs">Pembaruan harian seputar operasional SinergiSpace</p>
+              <h2 className="text-lg font-bold text-[#561C24]">Informasi & Aktivitas Terkini</h2>
+              <p className="text-[#6D2932] text-xs">Pembaruan harian seputar operasional UMSpace</p>
             </div>
-            <span className="text-xs bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 font-semibold px-3 py-1 rounded-full self-start sm:self-center">
+            <span className="text-xs bg-[#561C24] text-[#E8D8C4] font-semibold px-3 py-1 rounded-full self-start sm:self-center">
               Pembaruan Terakhir: Hari Ini, 09:15
             </span>
           </div>
 
           <div className="space-y-4">
-            <div className="flex gap-4 p-3 rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors">
-              <span className="flex-shrink-0 w-2 h-2 mt-2 rounded-full bg-emerald-500"></span>
+            <div className="flex gap-4 p-3 rounded-xl hover:bg-white/50 transition-colors">
+              <span className="flex-shrink-0 w-2 h-2 mt-2 rounded-full bg-[#561C24]"></span>
               <div>
-                <p className="text-xs text-zinc-400 mb-0.5">09:00 WIB · Booking Baru</p>
-                <p className="text-sm font-medium">Budi Santoso telah memesan <strong className="text-indigo-600 dark:text-indigo-400">Ruang Rapat Kreatif A</strong> untuk jam 13:00 - 15:00 WIB.</p>
+                <p className="text-xs text-[#6D2932]/70 mb-0.5">09:00 WIB · Booking Baru</p>
+                <p className="text-sm font-medium text-[#561C24]">Budi Santoso telah memesan <strong className="text-[#6D2932]">Ruang Rapat Kreatif A</strong> untuk jam 13:00 - 15:00 WIB.</p>
               </div>
             </div>
-            <div className="h-[1px] w-full bg-zinc-100 dark:bg-zinc-800"></div>
-            
-            <div className="flex gap-4 p-3 rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors">
-              <span className="flex-shrink-0 w-2 h-2 mt-2 rounded-full bg-indigo-500"></span>
-              <div>
-                <p className="text-xs text-zinc-400 mb-0.5 font-sans">08:30 WIB · Pengumuman</p>
-                <p className="text-sm font-medium">Perawatan berkala jaringan Wi-Fi Area Timur selesai lebih cepat. Seluruh jaringan kembali beroperasi normal.</p>
-              </div>
-            </div>
-            <div className="h-[1px] w-full bg-zinc-100 dark:bg-zinc-800"></div>
+            <div className="h-[1px] w-full bg-[#C7B7A3]"></div>
 
-            <div className="flex gap-4 p-3 rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors">
-              <span className="flex-shrink-0 w-2 h-2 mt-2 rounded-full bg-amber-500"></span>
+            <div className="flex gap-4 p-3 rounded-xl hover:bg-white/50 transition-colors">
+              <span className="flex-shrink-0 w-2 h-2 mt-2 rounded-full bg-[#6D2932]"></span>
               <div>
-                <p className="text-xs text-zinc-400 mb-0.5">Kemarin, 16:45 WIB · Status Booking</p>
-                <p className="text-sm font-medium">Reservasi Meja 12 oleh Clara Sitorus telah dikonfirmasi oleh Admin.</p>
+                <p className="text-xs text-[#6D2932]/70 mb-0.5">08:30 WIB · Pengumuman</p>
+                <p className="text-sm font-medium text-[#561C24]">Perawatan berkala jaringan Wi-Fi Area Timur selesai lebih cepat. Seluruh jaringan kembali beroperasi normal.</p>
+              </div>
+            </div>
+            <div className="h-[1px] w-full bg-[#C7B7A3]"></div>
+
+            <div className="flex gap-4 p-3 rounded-xl hover:bg-white/50 transition-colors">
+              <span className="flex-shrink-0 w-2 h-2 mt-2 rounded-full bg-[#E8D8C4]"></span>
+              <div>
+                <p className="text-xs text-[#6D2932]/70 mb-0.5">Kemarin, 16:45 WIB · Status Booking</p>
+                <p className="text-sm font-medium text-[#561C24]">Reservasi Meja 12 oleh Clara Sitorus telah dikonfirmasi oleh Admin.</p>
               </div>
             </div>
           </div>

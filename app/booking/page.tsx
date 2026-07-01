@@ -5,9 +5,8 @@ import { bookingSchema } from "../lib/schema";
 import { checkTimeOverlap, saveBooking, generateBookingId, Booking } from "../lib/booking-store";
 import { useAuth } from "../lib/auth-context";
 import Link from "next/link";
-<<<<<<< HEAD
 import { useRouter } from "next/navigation";
-import { IconCalendarPlus, IconCircleCheck, IconArrowLeft, IconPhone, IconAlertCircle, IconLogin, IconId } from "@tabler/icons-react";
+import { IconCalendarPlus, IconCircleCheck, IconArrowLeft, IconPhone, IconAlertCircle, IconId } from "@tabler/icons-react";
 import SearchableSelect from "../components/SearchableSelect";
 import AnggotaForm from "../components/AnggotaForm";
 
@@ -72,11 +71,6 @@ const dataRuangan: Record<string, { value: string; label: string }[]> = {
     { value: "domain_space", label: "Domain Space" },
   ],
 };
-=======
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import { IconCalendarPlus, IconCircleCheck } from "@tabler/icons-react";
->>>>>>> main
 
 export default function BookingPage() {
   const { user, isLoading } = useAuth();
@@ -94,7 +88,7 @@ export default function BookingPage() {
     anggota: [] as { nama: string; nim: string }[],
   });
   const [submitted, setSubmitted] = useState(false);
-  const [bookingResult, setBookingResult] = useState<{ status: "dikonfirmasi" | "ditolak"; message: string } | null>(null);
+  const [bookingResult, setBookingResult] = useState<{ status: "dikonfirmasi" | "ditolak" | "pending"; message: string } | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
@@ -122,6 +116,7 @@ export default function BookingPage() {
 
   // Dapatkan daftar ruangan berdasarkan fakultas yang dipilih
   const availableRuangan = formData.fakultas ? dataRuangan[formData.fakultas] || [] : [];
+  const allRuangan = Object.values(dataRuangan).flat();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -196,8 +191,12 @@ export default function BookingPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+      <div className="min-h-screen flex items-center justify-center"
+        style={{
+          background: "linear-gradient(to bottom, #f8f3ec 0%, #f5efe6 10%, #ede4d4 20%, #e4d7c3 30%, #dccfb9 40%, #d4c4ac 48%, #c8b89a 50%, #b09078 53%, #9a7060 57%, #8a5a50 62%, #7a4040 68%, #6D2931 75%, #622530 82%, #5a1f25 88%, #511a20 94%, #4a1520 100%)",
+        }}
+      >
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
       </div>
     );
   }
@@ -209,114 +208,91 @@ export default function BookingPage() {
   if (submitted && bookingResult) {
     const isConfirmed = bookingResult.status === "dikonfirmasi";
     return (
-<<<<<<< HEAD
-      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 flex flex-col items-center justify-center p-4 text-center">
-        <div className={`w-20 h-20 rounded-full flex items-center justify-center mb-6 ${isConfirmed ? "bg-emerald-100 dark:bg-emerald-950/50" : "bg-rose-100 dark:bg-rose-950/50"}`}>
+      <div
+        className="min-h-screen flex flex-col items-center justify-center p-4 text-center"
+        style={{
+          background: "linear-gradient(to bottom, #f8f3ec 0%, #f5efe6 10%, #ede4d4 20%, #e4d7c3 30%, #dccfb9 40%, #d4c4ac 48%, #c8b89a 50%, #b09078 53%, #9a7060 57%, #8a5a50 62%, #7a4040 68%, #6D2931 75%, #622530 82%, #5a1f25 88%, #511a20 94%, #4a1520 100%)",
+        }}
+      >
+        <div className={`w-20 h-20 rounded-full flex items-center justify-center mb-6 ${isConfirmed ? "bg-emerald-100" : "bg-[#C7B7A3]"}`}>
           {isConfirmed ? (
-            <IconCircleCheck size={40} className="text-emerald-600 dark:text-emerald-400" />
+            <IconCircleCheck size={40} className="text-emerald-600" />
           ) : (
-            <IconAlertCircle size={40} className="text-rose-600 dark:text-rose-400" />
+            <IconAlertCircle size={40} className="text-[#561C24]" />
           )}
         </div>
-        <h2 className={`text-2xl font-bold mb-2 ${isConfirmed ? "text-emerald-700 dark:text-emerald-300" : "text-rose-700 dark:text-rose-300"}`}>
-          {isConfirmed ? "Booking Dikonfirmasi!" : "Booking Ditolak"}
+        <h2 className={`text-2xl font-bold mb-2 ${isConfirmed ? "text-emerald-700" : "text-rose-500"}`}>
+          {isConfirmed ? "Booking Dikonfirmasi!" : "Menunggu Konfirmasi" }
         </h2>
-        <p className="text-zinc-600 dark:text-zinc-400 mb-8 max-w-sm">
+        <p className="text-white mb-8 max-w-sm">
           {bookingResult.message}
         </p>
         {isConfirmed && (
-          <div className="bg-zinc-100 dark:bg-zinc-800 rounded-xl p-4 mb-6 text-sm text-left max-w-sm w-full">
-            <p className="text-zinc-500 dark:text-zinc-400">Detail Booking:</p>
-            <p className="font-semibold">{ruanganOptions.find(r => r.value === formData.ruangan)?.label}</p>
-            <p className="text-zinc-600 dark:text-zinc-300">{formData.tanggal} • {formData.waktu_mulai} - {formData.waktu_selesai}</p>
+          <div className="bg-[#E8D8C4] rounded-xl p-4 mb-6 text-sm text-left max-w-sm w-full">
+            <p className="text-[#6D2932]/70">Detail Booking:</p>
+            <p className="font-semibold text-[#561C24]">{allRuangan.find(r => r.value === formData.ruangan)?.label}</p>
+            <p className="text-[#6D2932]">{formData.tanggal} • {formData.waktu_mulai} - {formData.waktu_selesai}</p>
           </div>
         )}
         <div className="flex gap-3">
-          <button 
+          <button
             onClick={resetForm}
-            className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-lg shadow-indigo-600/30 transition-all"
+            className="inline-flex items-center gap-2 bg-[#6D2932] hover:bg-[#561C24] text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-all"
           >
             Buat Booking Lagi
           </button>
-          <Link href="/status" className="inline-flex items-center gap-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-200 px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-all">
+          <Link href="/status" className="inline-flex items-center gap-2 bg-[#E8D8C4] border border-[#C7B7A3] text-[#561C24] px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#C7B7A3] transition-all">
             Lihat Riwayat
           </Link>
-          <Link href="/" className="inline-flex items-center gap-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-200 px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-all">
+          <Link href="/" className="inline-flex items-center gap-2 bg-[#E8D8C4] border border-[#C7B7A3] text-[#561C24] px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#C7B7A3] transition-all">
             Kembali ke Beranda
           </Link>
-=======
-      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 font-sans text-zinc-900 dark:text-zinc-100">
-        <Navbar activePage="/booking" />
-        <div className="flex flex-col items-center justify-center p-4 text-center flex-1 py-20">
-          <div className="w-20 h-20 rounded-full bg-emerald-100 dark:bg-emerald-950/50 flex items-center justify-center mb-6">
-            <IconCircleCheck size={40} className="text-emerald-600 dark:text-emerald-400" />
-          </div>
-          <h2 className="text-2xl font-bold mb-2 text-zinc-900 dark:text-zinc-100">Booking Berhasil Dikirim!</h2>
-          <p className="text-zinc-600 dark:text-zinc-400 mb-8 max-w-sm">
-            Permintaan reservasi ruangan <strong>{formData.ruangan}</strong> untuk <strong>{formData.nama}</strong> sedang diproses.
-          </p>
-          <div className="flex gap-3">
-            <button 
-              onClick={() => { setSubmitted(false); setFormData({ nama: "", tanggal: "", waktu_mulai: "", waktu_selesai: "", ruangan: "", keperluan: "" }); }}
-              className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-lg shadow-indigo-600/30 transition-all"
-            >
-              Buat Booking Lagi
-            </button>
-            <Link href="/" className="inline-flex items-center gap-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-200 px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-all">
-              Kembali ke Beranda
-            </Link>
-          </div>
->>>>>>> main
         </div>
-        <Footer />
       </div>
     );
   }
 
   return (
-<<<<<<< HEAD
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 font-sans py-12 px-4 sm:px-6 lg:px-8 text-zinc-900 dark:text-zinc-100">
-      <div className="max-w-3xl mx-auto">
-        <Link href="/" className="inline-flex items-center gap-1 text-sm font-medium text-zinc-500 hover:text-indigo-600 dark:hover:text-indigo-400 mb-8 transition-colors">
+    <div
+      className="min-h-screen font-sans py-12 px-4 sm:px-6 lg:px-8 text-zinc-900 dark:text-zinc-100 relative"
+      style={{
+        background: "linear-gradient(to bottom, #f8f3ec 0%, #f5efe6 10%, #ede4d4 20%, #e4d7c3 30%, #dccfb9 40%, #d4c4ac 48%, #c8b89a 50%, #b09078 53%, #9a7060 57%, #8a5a50 62%, #7a4040 68%, #6D2931 75%, #622530 82%, #5a1f25 88%, #511a20 94%, #4a1520 100%)",
+      }}
+    >
+      <main>
+        <div className="max-w-3xl mx-auto">
+          <Link href="/" className="inline-flex items-center gap-1 text-sm font-medium text-[#561C24] hover:text-[#E8D8C4] mb-8 transition-colors">
           <IconArrowLeft size={16} />
           Kembali ke Beranda
         </Link>
 
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-4">
-            <div className="p-3 bg-indigo-50 dark:bg-indigo-950/50 rounded-xl text-indigo-600 dark:text-indigo-400">
+            <div className="p-3 bg-[#E8D8C4] rounded-xl text-[#561C24]">
               <IconCalendarPlus size={28} />
             </div>
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold">Formulir Booking Ruangan</h1>
-              <p className="text-zinc-500 dark:text-zinc-400 text-sm">Isi detail berikut untuk mengajukan reservasi ruang rapat atau area kerja.</p>
+              <h1 className="text-2xl md:text-3xl font-bold text-[#561C24]">Formulir Booking Ruangan</h1>
+              <p className="text-[#561C24] text-sm">Isi detail berikut untuk mengajukan reservasi ruang rapat atau area kerja.</p>
             </div>
-=======
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 font-sans text-zinc-900 dark:text-zinc-100">
-      <Navbar activePage="/booking" />
-      <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex items-center gap-4 mb-8">
-          <div className="p-3 bg-indigo-50 dark:bg-indigo-950/50 rounded-xl text-indigo-600 dark:text-indigo-400">
-            <IconCalendarPlus size={28} />
->>>>>>> main
           </div>
-          <div className="hidden sm:flex items-center gap-2 px-4 py-2 bg-zinc-100 dark:bg-zinc-800 rounded-xl">
-            <div className="w-8 h-8 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold text-sm">
+          <div className="hidden sm:flex items-center gap-2 px-4 py-2 bg-[#E8D8C4] rounded-xl">
+            <div className="w-8 h-8 bg-[#561C24] rounded-full flex items-center justify-center text-white font-bold text-sm">
               {user.nama.charAt(0).toUpperCase()}
             </div>
             <div className="text-sm">
-              <p className="font-semibold">{user.nama}</p>
-              <p className="text-zinc-500 dark:text-zinc-400 text-xs">{user.email}</p>
+              <p className="font-semibold text-[#561C24]">{user.nama}</p>
+              <p className="text-[#6D2932] text-xs">{user.email}</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm overflow-hidden">
+        <div className="bg-[#E8D8C4] rounded-2xl shadow-lg overflow-hidden">
           <form onSubmit={handleSubmit} className="p-6 md:p-8 space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
               {/* Nama */}
               <div>
-                <label htmlFor="nama" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">Nama Pemesan</label>
+                <label htmlFor="nama" className="block text-sm font-semibold text-[#561C24] mb-2">Nama Pemesan</label>
                 <input
                   type="text"
                   id="nama"
@@ -324,14 +300,14 @@ export default function BookingPage() {
                   value={formData.nama}
                   onChange={handleChange}
                   placeholder="Masukkan nama lengkap"
-                  className={`w-full px-4 py-3 rounded-xl border ${errors.nama ? 'border-rose-500 focus:ring-rose-500' : 'border-zinc-300 dark:border-zinc-700 focus:ring-indigo-600'} bg-zinc-50 dark:bg-zinc-800/50 text-sm focus:outline-none focus:ring-2 transition-all`}
+                  className={`w-full px-4 py-3 rounded-xl border ${errors.nama ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] placeholder-[#6D2932]/50 text-sm focus:outline-none focus:ring-2 transition-all`}
                 />
-                {errors.nama && <p className="mt-1.5 text-xs text-rose-500">{errors.nama}</p>}
+                {errors.nama && <p className="mt-1.5 text-xs text-rose-600">{errors.nama}</p>}
               </div>
 
               {/* NIM */}
               <div>
-                <label htmlFor="nim" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">
+                <label htmlFor="nim" className="block text-sm font-semibold text-[#561C24] mb-2">
                   <span className="flex items-center gap-1.5">
                     <IconId size={14} />
                     NIM Pemesan
@@ -344,14 +320,14 @@ export default function BookingPage() {
                   value={formData.nim}
                   onChange={handleChange}
                   placeholder="Nomor Induk Mahasiswa"
-                  className={`w-full px-4 py-3 rounded-xl border ${errors.nim ? 'border-rose-500 focus:ring-rose-500' : 'border-zinc-300 dark:border-zinc-700 focus:ring-indigo-600'} bg-zinc-50 dark:bg-zinc-800/50 text-sm focus:outline-none focus:ring-2 transition-all`}
+                  className={`w-full px-4 py-3 rounded-xl border ${errors.nim ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] placeholder-[#6D2932]/50 text-sm focus:outline-none focus:ring-2 transition-all`}
                 />
-                {errors.nim && <p className="mt-1.5 text-xs text-rose-500">{errors.nim}</p>}
+                {errors.nim && <p className="mt-1.5 text-xs text-rose-600">{errors.nim}</p>}
               </div>
 
               {/* Telepon */}
               <div>
-                <label htmlFor="telepon" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">
+                <label htmlFor="telepon" className="block text-sm font-semibold text-[#561C24] mb-2">
                   <span className="flex items-center gap-1.5">
                     <IconPhone size={14} />
                     Nomor Telepon Aktif
@@ -364,34 +340,34 @@ export default function BookingPage() {
                   value={formData.telepon}
                   onChange={handleChange}
                   placeholder="08xxxxxxxxxx"
-                  className={`w-full px-4 py-3 rounded-xl border ${errors.telepon ? 'border-rose-500 focus:ring-rose-500' : 'border-zinc-300 dark:border-zinc-700 focus:ring-indigo-600'} bg-zinc-50 dark:bg-zinc-800/50 text-sm focus:outline-none focus:ring-2 transition-all`}
+                  className={`w-full px-4 py-3 rounded-xl border ${errors.telepon ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] placeholder-[#6D2932]/50 text-sm focus:outline-none focus:ring-2 transition-all`}
                 />
-                {errors.telepon && <p className="mt-1.5 text-xs text-rose-500">{errors.telepon}</p>}
+                {errors.telepon && <p className="mt-1.5 text-xs text-rose-600">{errors.telepon}</p>}
               </div>
 
               {/* Fakultas dan Lainnya */}
               <div>
-                <label htmlFor="fakultas" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">Fakultas dan Lainnya</label>
+                <label htmlFor="fakultas" className="block text-sm font-semibold text-[#561C24] mb-2">Fakultas dan Lainnya</label>
                 <select
                   id="fakultas"
                   name="fakultas"
                   value={formData.fakultas}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 rounded-xl border ${errors.fakultas ? 'border-rose-500 focus:ring-rose-500' : 'border-zinc-300 dark:border-zinc-700 focus:ring-indigo-600'} bg-zinc-50 dark:bg-zinc-800/50 text-sm focus:outline-none focus:ring-2 transition-all`}
+                  className={`w-full px-4 py-3 rounded-xl border ${errors.fakultas ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] text-sm focus:outline-none focus:ring-2 transition-all`}
                 >
                   <option value="">-- Pilih Fakultas --</option>
                   {fakultasOptions.map((opt) => (
                     <option key={opt.value} value={opt.value}>{opt.label}</option>
                   ))}
                 </select>
-                {errors.fakultas && <p className="mt-1.5 text-xs text-rose-500">{errors.fakultas}</p>}
+                {errors.fakultas && <p className="mt-1.5 text-xs text-rose-600">{errors.fakultas}</p>}
               </div>
 
               {/* Ruangan */}
               <div>
-                <label htmlFor="ruangan" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">Pilih Ruangan</label>
+                <label htmlFor="ruangan" className="block text-sm font-semibold text-[#561C24] mb-2">Pilih Ruangan</label>
                 {!formData.fakultas ? (
-                  <div className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-800/30 text-sm text-zinc-400 cursor-not-allowed">
+                  <div className="w-full px-4 py-3 rounded-xl border border-[#C7B7A3] bg-white/50 text-sm text-[#6D2932]/50 cursor-not-allowed">
                     Pilih fakultas terlebih dahulu
                   </div>
                 ) : (
@@ -405,55 +381,55 @@ export default function BookingPage() {
                     error={!!errors.ruangan}
                   />
                 )}
-                {errors.ruangan && <p className="mt-1.5 text-xs text-rose-500">{errors.ruangan}</p>}
+                {errors.ruangan && <p className="mt-1.5 text-xs text-rose-600">{errors.ruangan}</p>}
               </div>
 
               {/* Tanggal */}
               <div>
-                <label htmlFor="tanggal" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">Tanggal Booking</label>
+                <label htmlFor="tanggal" className="block text-sm font-semibold text-[#561C24] mb-2">Tanggal Booking</label>
                 <input
                   type="date"
                   id="tanggal"
                   name="tanggal"
                   value={formData.tanggal}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 rounded-xl border ${errors.tanggal ? 'border-rose-500 focus:ring-rose-500' : 'border-zinc-300 dark:border-zinc-700 focus:ring-indigo-600'} bg-zinc-50 dark:bg-zinc-800/50 text-sm focus:outline-none focus:ring-2 transition-all`}
+                  className={`w-full px-4 py-3 rounded-xl border ${errors.tanggal ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] text-sm focus:outline-none focus:ring-2 transition-all`}
                 />
-                {errors.tanggal && <p className="mt-1.5 text-xs text-rose-500">{errors.tanggal}</p>}
+                {errors.tanggal && <p className="mt-1.5 text-xs text-rose-600">{errors.tanggal}</p>}
               </div>
 
               {/* Waktu */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="waktu_mulai" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">Jam Mulai</label>
+                  <label htmlFor="waktu_mulai" className="block text-sm font-semibold text-[#561C24] mb-2">Jam Mulai</label>
                   <input
                     type="time"
                     id="waktu_mulai"
                     name="waktu_mulai"
                     value={formData.waktu_mulai}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 rounded-xl border ${errors.waktu_mulai ? 'border-rose-500 focus:ring-rose-500' : 'border-zinc-300 dark:border-zinc-700 focus:ring-indigo-600'} bg-zinc-50 dark:bg-zinc-800/50 text-sm focus:outline-none focus:ring-2 transition-all`}
+                    className={`w-full px-4 py-3 rounded-xl border ${errors.waktu_mulai ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] text-sm focus:outline-none focus:ring-2 transition-all`}
                   />
-                  {errors.waktu_mulai && <p className="mt-1.5 text-xs text-rose-500">{errors.waktu_mulai}</p>}
+                  {errors.waktu_mulai && <p className="mt-1.5 text-xs text-rose-600">{errors.waktu_mulai}</p>}
                 </div>
                 <div>
-                  <label htmlFor="waktu_selesai" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">Jam Selesai</label>
+                  <label htmlFor="waktu_selesai" className="block text-sm font-semibold text-[#561C24] mb-2">Jam Selesai</label>
                   <input
                     type="time"
                     id="waktu_selesai"
                     name="waktu_selesai"
                     value={formData.waktu_selesai}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 rounded-xl border ${errors.waktu_selesai ? 'border-rose-500 focus:ring-rose-500' : 'border-zinc-300 dark:border-zinc-700 focus:ring-indigo-600'} bg-zinc-50 dark:bg-zinc-800/50 text-sm focus:outline-none focus:ring-2 transition-all`}
+                    className={`w-full px-4 py-3 rounded-xl border ${errors.waktu_selesai ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] text-sm focus:outline-none focus:ring-2 transition-all`}
                   />
-                  {errors.waktu_selesai && <p className="mt-1.5 text-xs text-rose-500">{errors.waktu_selesai}</p>}
+                  {errors.waktu_selesai && <p className="mt-1.5 text-xs text-rose-600">{errors.waktu_selesai}</p>}
                 </div>
               </div>
             </div>
 
             {/* Keperluan */}
             <div>
-              <label htmlFor="keperluan" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">Keperluan / Catatan</label>
+              <label htmlFor="keperluan" className="block text-sm font-semibold text-[#561C24] mb-2">Keperluan / Catatan</label>
               <textarea
                 id="keperluan"
                 name="keperluan"
@@ -461,7 +437,7 @@ export default function BookingPage() {
                 onChange={handleChange}
                 rows={4}
                 placeholder="Jelaskan secara singkat agenda penggunaan ruangan..."
-                className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 transition-all resize-none"
+                className="w-full px-4 py-3 rounded-xl border border-[#C7B7A3] bg-white text-[#561C24] placeholder-[#6D2932]/50 text-sm focus:outline-none focus:ring-2 focus:ring-[#6D2932] transition-all resize-none"
               ></textarea>
             </div>
 
@@ -472,13 +448,13 @@ export default function BookingPage() {
               errors={errors}
             />
 
-            <div className="flex justify-end gap-3 pt-4 border-t border-zinc-100 dark:border-zinc-800">
-              <Link href="/" className="px-5 py-2.5 rounded-xl text-sm font-medium text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all">
+            <div className="flex justify-end gap-3 pt-4 border-t border-[#C7B7A3]">
+              <Link href="/" className="px-5 py-2.5 rounded-xl text-sm font-medium text-[#6D2932] hover:bg-[#C7B7A3] transition-all">
                 Batal
               </Link>
               <button
                 type="submit"
-                className="inline-flex items-center gap-2 px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold shadow-lg shadow-indigo-600/30 transition-all"
+                className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#6D2932] hover:bg-[#561C24] text-white rounded-xl text-sm font-semibold shadow-lg transition-all"
               >
                 <IconCalendarPlus size={16} />
                 Ajukan Booking
@@ -486,8 +462,8 @@ export default function BookingPage() {
             </div>
           </form>
         </div>
+        </div>
       </main>
-      <Footer />
     </div>
   );
 }

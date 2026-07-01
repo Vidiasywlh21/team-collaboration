@@ -3,8 +3,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import { IconArrowRight, IconX, IconArmchair, IconSchool, IconRadio } from "@tabler/icons-react";
 
 const faculties = [
@@ -167,7 +165,7 @@ export default function TataLetakPage() {
         }
       `}</style>
 
-      <Navbar activePage="/tata-letak" />
+      
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
         <div className="text-center mb-10">
@@ -431,7 +429,7 @@ export default function TataLetakPage() {
         </div>
       )}
 
-      <Footer variant="maroon" />
+      
     </div>
   );
 }

@@ -40,8 +40,8 @@ export default function AnggotaForm({ anggota, onChange, errors }: AnggotaFormPr
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <IconUsers size={20} className="text-zinc-500 dark:text-zinc-400" />
-          <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+          <IconUsers size={20} className="text-[#561C24]" />
+          <label className="block text-sm font-semibold text-[#561C24]">
             Anggota Kelompok (Opsional)
           </label>
         </div>
@@ -49,7 +49,7 @@ export default function AnggotaForm({ anggota, onChange, errors }: AnggotaFormPr
           <button
             type="button"
             onClick={() => setIsExpanded(true)}
-            className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline"
+            className="text-xs text-[#6D2932] hover:underline"
           >
             Tambah anggota?
           </button>
@@ -57,21 +57,21 @@ export default function AnggotaForm({ anggota, onChange, errors }: AnggotaFormPr
       </div>
 
       {isExpanded && (
-        <div className="bg-zinc-50 dark:bg-zinc-800/30 rounded-xl p-4 space-y-4 border border-zinc-200 dark:border-zinc-700">
-          <p className="text-xs text-zinc-500 dark:text-zinc-400">
+        <div className="bg-white rounded-xl p-4 space-y-4 border border-[#C7B7A3]">
+          <p className="text-xs text-[#6D2932]">
             Jika Anda memesan ruangan untuk kelompok, tambahkan nama dan NIM anggota kelompok agar mereka juga mendapat notifikasi status booking.
           </p>
 
           {anggota.map((member, index) => (
-            <div key={index} className="bg-white dark:bg-zinc-900 rounded-lg p-4 space-y-3 border border-zinc-200 dark:border-zinc-700">
+            <div key={index} className="bg-[#E8D8C4]/50 rounded-lg p-4 space-y-3 border border-[#C7B7A3]">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">
+                <span className="text-xs font-semibold text-[#6D2932]">
                   Anggota {index + 1}
                 </span>
                 <button
                   type="button"
                   onClick={() => handleRemoveAnggota(index)}
-                  className="text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300 transition-colors"
+                  className="text-rose-600 hover:text-rose-700 transition-colors"
                   title="Hapus anggota"
                 >
                   <IconTrash size={16} />
@@ -80,7 +80,7 @@ export default function AnggotaForm({ anggota, onChange, errors }: AnggotaFormPr
 
               <div className="grid md:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-medium text-zinc-600 dark:text-zinc-400 mb-1.5">
+                  <label className="block text-xs font-medium text-[#561C24] mb-1.5">
                     Nama Lengkap
                   </label>
                   <input
@@ -88,11 +88,11 @@ export default function AnggotaForm({ anggota, onChange, errors }: AnggotaFormPr
                     value={member.nama}
                     onChange={(e) => handleChangeAnggota(index, "nama", e.target.value)}
                     placeholder="Nama anggota"
-                    className="w-full px-3 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 transition-all"
+                    className="w-full px-3 py-2 rounded-lg border border-[#C7B7A3] bg-white text-[#561C24] placeholder-[#6D2932]/50 text-sm focus:outline-none focus:ring-2 focus:ring-[#6D2932] transition-all"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-zinc-600 dark:text-zinc-400 mb-1.5">
+                  <label className="block text-xs font-medium text-[#561C24] mb-1.5">
                     NIM
                   </label>
                   <input
@@ -100,7 +100,7 @@ export default function AnggotaForm({ anggota, onChange, errors }: AnggotaFormPr
                     value={member.nim}
                     onChange={(e) => handleChangeAnggota(index, "nim", e.target.value)}
                     placeholder="Nomor Induk Mahasiswa"
-                    className="w-full px-3 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 transition-all"
+                    className="w-full px-3 py-2 rounded-lg border border-[#C7B7A3] bg-white text-[#561C24] placeholder-[#6D2932]/50 text-sm focus:outline-none focus:ring-2 focus:ring-[#6D2932] transition-all"
                   />
                 </div>
               </div>
@@ -110,7 +110,7 @@ export default function AnggotaForm({ anggota, onChange, errors }: AnggotaFormPr
           <button
             type="button"
             onClick={handleAddAnggota}
-            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 rounded-lg text-sm font-medium hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-all"
+            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-white border border-[#C7B7A3] text-[#561C24] rounded-lg text-sm font-medium hover:bg-[#E8D8C4] transition-all"
           >
             <IconPlus size={16} />
             Tambah Anggota

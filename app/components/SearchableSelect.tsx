@@ -78,26 +78,26 @@ export default function SearchableSelect({
         className={`w-full px-4 py-3 rounded-xl border ${
           error
             ? "border-rose-500 focus-within:ring-rose-500"
-            : "border-zinc-300 dark:border-zinc-700 focus-within:ring-indigo-600"
-        } bg-zinc-50 dark:bg-zinc-800/50 text-sm focus-within:outline-none focus-within:ring-2 transition-all cursor-pointer ${className}`}
+            : "border-[#C7B7A3] focus-within:ring-[#6D2932]"
+        } bg-white text-[#561C24] text-sm focus-within:outline-none focus-within:ring-2 transition-all cursor-pointer ${className}`}
         onClick={handleInputClick}
       >
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 flex-1">
-            <IconSearch size={16} className="text-zinc-400" />
+            <IconSearch size={16} className="text-[#6D2932]/50" />
             <input
               ref={inputRef}
               type="text"
               value={isOpen ? searchTerm : selectedOption?.label || ""}
               onChange={handleInputChange}
               placeholder={placeholder}
-              className="flex-1 bg-transparent border-none outline-none text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400"
+              className="flex-1 bg-transparent border-none outline-none text-[#561C24] placeholder:text-[#6D2932]/50"
               onClick={(e) => e.stopPropagation()}
             />
           </div>
           <IconChevronDown
             size={16}
-            className={`text-zinc-400 transition-transform ${
+            className={`text-[#6D2932]/50 transition-transform ${
               isOpen ? "rotate-180" : ""
             }`}
           />
@@ -105,9 +105,9 @@ export default function SearchableSelect({
       </div>
 
       {isOpen && (
-        <div className="absolute z-50 w-full mt-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl shadow-lg max-h-60 overflow-y-auto">
+        <div className="absolute z-50 w-full mt-2 bg-white border border-[#C7B7A3] rounded-xl shadow-lg max-h-60 overflow-y-auto">
           {filteredOptions.length === 0 ? (
-            <div className="px-4 py-3 text-sm text-zinc-500 dark:text-zinc-400 text-center">
+            <div className="px-4 py-3 text-sm text-[#6D2932]/50 text-center">
               Tidak ada hasil
             </div>
           ) : (
@@ -117,8 +117,8 @@ export default function SearchableSelect({
                 onClick={() => handleSelect(option.value)}
                 className={`px-4 py-3 text-sm cursor-pointer transition-colors ${
                   option.value === value
-                    ? "bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 font-medium"
-                    : "text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-700"
+                    ? "bg-[#6D2932] text-white font-medium"
+                    : "text-[#561C24] hover:bg-[#E8D8C4]"
                 }`}
               >
                 {option.label}
