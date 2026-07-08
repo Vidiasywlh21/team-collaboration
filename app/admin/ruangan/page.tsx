@@ -7,6 +7,25 @@ import AdminSidebar from "../../components/AdminSidebar";
 import { getRooms, saveRoom, deleteRoom, generateRoomId, Room } from "../../lib/admin-store";
 import { IconPlus, IconEdit, IconTrash, IconDoor, IconX } from "@tabler/icons-react";
 
+function useScrollReveal() {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+          } else {
+            entry.target.classList.remove("revealed");
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    );
+    document.querySelectorAll(".scroll-reveal").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+}
+
 const fakultasOptions = [
   { value: "fakultas_ilmu_komputer", label: "Fakultas Ilmu Komputer" },
   { value: "fakultas_humaniora_kesehatan", label: "Fakultas Humaniora dan Kesehatan" },
@@ -28,6 +47,8 @@ export default function ManajemenRuangan() {
     kapasitas: "",
     fasilitas: "",
   });
+
+  useScrollReveal();
 
   useEffect(() => {
     if (!isLoading && (!user || user.role !== "admin")) {
@@ -125,14 +146,14 @@ export default function ManajemenRuangan() {
       <main className="flex-1 p-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-between mb-8 animate-fade-in-up">
             <div>
               <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100">Manajemen Ruangan</h1>
               <p className="text-zinc-500 dark:text-zinc-400 mt-1">Kelola data ruangan yang tersedia</p>
             </div>
             <button
               onClick={() => handleOpenModal()}
-              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl text-sm font-semibold shadow-lg shadow-indigo-600/30 transition-all"
+              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl text-sm font-semibold shadow-lg shadow-indigo-600/30 transition-all duration-300 hover:scale-105"
             >
               <IconPlus size={18} />
               Tambah Ruangan
@@ -140,7 +161,7 @@ export default function ManajemenRuangan() {
           </div>
 
           {/* Table */}
-          <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
+          <div className="scroll-reveal bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead className="bg-zinc-50 dark:bg-zinc-800">
@@ -161,7 +182,7 @@ export default function ManajemenRuangan() {
                     </tr>
                   ) : (
                     rooms.map((room) => (
-                      <tr key={room.id} className="border-t border-zinc-100 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50">
+                      <tr key={room.id} className="border-t border-zinc-100 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors duration-200">
                         <td className="py-4 px-6 text-sm font-medium text-zinc-900 dark:text-zinc-100">{room.label}</td>
                         <td className="py-4 px-6 text-sm text-zinc-600 dark:text-zinc-400">
                           {fakultasOptions.find((f) => f.value === room.fakultas)?.label || room.fakultas}
@@ -202,8 +223,8 @@ export default function ManajemenRuangan() {
 
       {/* Modal Form */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 animate-modal-fade">
+          <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-modal-scale">
             <div className="p-6 border-b border-zinc-200 dark:border-zinc-800">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">

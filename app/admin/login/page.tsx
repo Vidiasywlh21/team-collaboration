@@ -49,10 +49,10 @@ export default function AdminLoginPage() {
           Kembali ke Beranda
         </Link>
 
-        <div className="bg-[#E8D8C4] rounded-2xl shadow-xl border border-[#C7B7A3] p-8">
+        <div className="bg-[#E8D8C4] rounded-2xl shadow-xl border border-[#C7B7A3] p-8 animate-fade-in-scale">
           {/* Admin Badge */}
           <div className="flex justify-center mb-6">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#561C24] rounded-full">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#561C24] rounded-full animate-scale-bounce">
               <IconShieldLock size={20} className="text-[#E8D8C4]" />
               <span className="text-sm font-semibold text-[#E8D8C4]">Portal Admin</span>
             </div>
@@ -66,7 +66,7 @@ export default function AdminLoginPage() {
           </div>
 
           {error && (
-            <div className="mb-6 p-4 bg-rose-100 border border-rose-300 rounded-xl text-rose-700 text-sm">
+            <div className="mb-6 p-4 bg-rose-100 border border-rose-300 rounded-xl text-rose-700 text-sm animate-shake">
               {error}
             </div>
           )}

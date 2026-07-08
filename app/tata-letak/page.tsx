@@ -5,6 +5,25 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { IconArrowRight, IconX, IconArmchair, IconSchool, IconRadio } from "@tabler/icons-react";
 
+function useScrollReveal() {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+          } else {
+            entry.target.classList.remove("revealed");
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    );
+    document.querySelectorAll(".scroll-reveal").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+}
+
 const faculties = [
   { slug: "fikom", name: "FIKOM", full: "Fakultas Ilmu Komuputer", image: "/FIKOM.jpeg", desc: "Informatika, Sistem Informasi, dan Teknologi Informasi" },
   { slug: "feb", name: "FEB", full: "Fakultas Ekonomi & Bisnis", image: "/feb2.png", desc: "Manajemen dan Akuntasi" },
@@ -52,6 +71,8 @@ export default function TataLetakPage() {
   const [selectedFaculty, setSelectedFaculty] = useState<typeof faculties[0] | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
+  useScrollReveal();
+
   // Close modal on ESC key press
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -76,10 +97,7 @@ export default function TataLetakPage() {
 
   return (
     <div
-      className="min-h-screen font-sans text-zinc-900 dark:text-zinc-100 relative"
-      style={{
-        background: "linear-gradient(to bottom, #f8f3ec 0%, #f5efe6 10%, #ede4d4 20%, #e4d7c3 30%, #dccfb9 40%, #d4c4ac 48%, #c8b89a 50%, #b09078 53%, #9a7060 57%, #8a5a50 62%, #7a4040 68%, #6D2931 75%, #622530 82%, #5a1f25 88%, #511a20 94%, #4a1520 100%)",
-      }}
+      className="font-sans text-zinc-900 dark:text-zinc-100 relative bg-hero-gradient"
     >
       {/* Inline styles for custom table tennis animations */}
       <style jsx global>{`
@@ -169,15 +187,15 @@ export default function TataLetakPage() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
         <div className="text-center mb-10">
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
+          <h1 className="animate-fade-in-up animate-stagger-1 text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
             <span className="bg-gradient-to-r from-[#6D2932] via-[#a04050] to-[#c86070] bg-clip-text text-transparent">
               Denah Fakultas
             </span>
           </h1>
-          <p className="text-zinc-600 max-w-lg mx-auto text-base leading-relaxed">
+          <p className="animate-fade-in-up animate-stagger-2 text-zinc-600 max-w-lg mx-auto text-base leading-relaxed">
             Pilih fakultas untuk melihat denah tata letak ruangan, area kerja, dan fasilitas yang tersedia
           </p>
-          <div className="flex justify-center mt-6">
+          <div className="animate-fade-in-up animate-stagger-3 flex justify-center mt-6">
             <div className="w-20 h-1 rounded-full bg-gradient-to-r from-transparent via-[#6D2932]/40 to-transparent"></div>
           </div>
         </div>
@@ -187,11 +205,12 @@ export default function TataLetakPage() {
             <button
               key={f.slug}
               onClick={() => handleCardClick(f)}
-              className={`group text-left relative overflow-hidden rounded-3xl min-h-[250px] flex flex-col justify-end transition-all duration-500 hover:-translate-y-2 border-2 border-white/20 hover:border-white/60 cursor-pointer ${
+              className={`scroll-reveal group text-left relative overflow-hidden rounded-3xl min-h-[250px] flex flex-col justify-end transition-all duration-500 hover:-translate-y-2 border-2 border-white/20 hover:border-white/60 cursor-pointer ${
                 i < 3
                   ? "hover:shadow-[0_0_30px_rgba(90,31,37,0.6),0_0_60px_rgba(109,41,50,0.3)]"
                   : "hover:shadow-[0_0_25px_rgba(255,255,255,0.5),0_0_50px_rgba(255,255,255,0.2)]"
               }`}
+              style={{ transitionDelay: `${i * 0.1}s` }}
             >
               <Image
                 src={f.image}

@@ -8,6 +8,25 @@ import { getAllBookings, updateBookingStatus } from "../../lib/admin-store";
 import { Booking } from "../../lib/booking-store";
 import { IconCheck, IconX, IconEye, IconClock, IconUser, IconPhone, IconDoor, IconCalendar, IconUsers } from "@tabler/icons-react";
 
+function useScrollReveal() {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+          } else {
+            entry.target.classList.remove("revealed");
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    );
+    document.querySelectorAll(".scroll-reveal").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+}
+
 export default function VerifikasiBooking() {
   const { user, isLoading } = useAuth();
   const router = useRouter();
@@ -15,6 +34,8 @@ export default function VerifikasiBooking() {
   const [filter, setFilter] = useState<"all" | "pending" | "dikonfirmasi" | "ditolak">("all");
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
   const [showDetail, setShowDetail] = useState(false);
+
+  useScrollReveal();
 
   useEffect(() => {
     if (!isLoading && (!user || user.role !== "admin")) {
@@ -63,13 +84,13 @@ export default function VerifikasiBooking() {
       <main className="flex-1 p-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="mb-8">
+          <div className="mb-8 animate-fade-in-up">
             <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100">Verifikasi Booking</h1>
             <p className="text-zinc-500 dark:text-zinc-400 mt-1">Kelola dan verifikasi booking ruangan</p>
           </div>
 
           {/* Filter Tabs */}
-          <div className="flex gap-2 mb-6 overflow-x-auto">
+          <div className="flex gap-2 mb-6 overflow-x-auto animate-fade-in-up animate-stagger-1">
             {[
               { value: "all", label: "Semua" },
               { value: "pending", label: "Pending" },
@@ -91,7 +112,7 @@ export default function VerifikasiBooking() {
           </div>
 
           {/* Table */}
-          <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
+          <div className="scroll-reveal bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead className="bg-zinc-50 dark:bg-zinc-800">
@@ -114,7 +135,7 @@ export default function VerifikasiBooking() {
                     </tr>
                   ) : (
                     filteredBookings.map((booking) => (
-                      <tr key={booking.id} className="border-t border-zinc-100 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50">
+                      <tr key={booking.id} className="border-t border-zinc-100 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors duration-200">
                         <td className="py-4 px-6 text-sm text-zinc-900 dark:text-zinc-100 font-mono">{booking.id}</td>
                         <td className="py-4 px-6 text-sm text-zinc-900 dark:text-zinc-100">{booking.nama}</td>
                         <td className="py-4 px-6 text-sm text-zinc-600 dark:text-zinc-400">{booking.ruangan}</td>
@@ -185,8 +206,8 @@ export default function VerifikasiBooking() {
 
       {/* Detail Modal */}
       {showDetail && selectedBooking && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 animate-modal-fade">
+          <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-modal-scale">
             <div className="p-6 border-b border-zinc-200 dark:border-zinc-800">
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">Detail Booking</h2>

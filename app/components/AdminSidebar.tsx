@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { IconLayoutDashboard, IconClipboardCheck, IconDoor, IconFileText, IconLogout, IconMenu2, IconX } from "@tabler/icons-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../lib/auth-context";
 import { useRouter } from "next/navigation";
 
@@ -50,15 +50,15 @@ export default function AdminSidebar() {
         } lg:translate-x-0 fixed lg:sticky top-0 left-0 h-screen w-64 bg-white dark:bg-zinc-900 border-r border-zinc-200 dark:border-zinc-800 p-6 transition-transform duration-300 z-40 flex flex-col`}
       >
         {/* Logo */}
-        <div className="mb-8">
+        <div className="mb-8 animate-slide-in-left">
           <h1 className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">SinergiSpace</h1>
           <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Admin Dashboard</p>
         </div>
 
         {/* User Info */}
-        <div className="mb-6 p-3 bg-zinc-50 dark:bg-zinc-800 rounded-xl">
+        <div className="mb-6 p-3 bg-zinc-50 dark:bg-zinc-800 rounded-xl animate-slide-in-left" style={{ animationDelay: "0.1s" }}>
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold">
+            <div className="w-10 h-10 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold transition-transform duration-300 hover:scale-110">
               {user?.nama.charAt(0).toUpperCase()}
             </div>
             <div className="flex-1 min-w-0">
@@ -70,7 +70,7 @@ export default function AdminSidebar() {
 
         {/* Navigation */}
         <nav className="flex-1 space-y-1">
-          {menuItems.map((item) => {
+          {menuItems.map((item, index) => {
             const isActive = pathname === item.href;
             const Icon = item.icon;
             return (
@@ -78,11 +78,12 @@ export default function AdminSidebar() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 animate-slide-in-left ${
                   isActive
                     ? "bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400"
-                    : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800"
+                    : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:translate-x-1"
                 }`}
+                style={{ animationDelay: `${0.15 + index * 0.05}s` }}
               >
                 <Icon size={20} />
                 {item.label}
@@ -94,7 +95,8 @@ export default function AdminSidebar() {
         {/* Logout Button */}
         <button
           onClick={handleLogout}
-          className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-all w-full"
+          className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-all duration-300 w-full animate-slide-in-left"
+          style={{ animationDelay: "0.4s" }}
         >
           <IconLogout size={20} />
           Keluar

@@ -7,11 +7,32 @@ import AdminSidebar from "../../components/AdminSidebar";
 import { getBookingStats, getAllBookings } from "../../lib/admin-store";
 import { IconCalendarStats, IconClockHour4, IconCircleCheck, IconCircleX, IconTrendingUp } from "@tabler/icons-react";
 
+function useScrollReveal() {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+          } else {
+            entry.target.classList.remove("revealed");
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    );
+    document.querySelectorAll(".scroll-reveal").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+}
+
 export default function AdminDashboard() {
   const { user, isLoading } = useAuth();
   const router = useRouter();
   const [stats, setStats] = useState({ total: 0, pending: 0, dikonfirmasi: 0, ditolak: 0 });
   const [recentBookings, setRecentBookings] = useState<any[]>([]);
+
+  useScrollReveal();
 
   useEffect(() => {
     if (!isLoading && (!user || user.role !== "admin")) {
@@ -51,14 +72,14 @@ export default function AdminDashboard() {
       <main className="flex-1 p-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="mb-8">
+          <div className="mb-8 animate-fade-in-up">
             <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100">Dashboard</h1>
             <p className="text-zinc-500 dark:text-zinc-400 mt-1">Selamat datang di panel administrasi SinergiSpace</p>
           </div>
 
           {/* Stats Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6">
+            <div className="animate-fade-in-up animate-stagger-1 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
               <div className="flex items-center justify-between mb-4">
                 <div className="p-3 bg-blue-50 dark:bg-blue-950/50 rounded-lg">
                   <IconCalendarStats size={24} className="text-blue-600 dark:text-blue-400" />
@@ -69,7 +90,7 @@ export default function AdminDashboard() {
               <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Total Booking</p>
             </div>
 
-            <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6">
+            <div className="animate-fade-in-up animate-stagger-2 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
               <div className="flex items-center justify-between mb-4">
                 <div className="p-3 bg-amber-50 dark:bg-amber-950/50 rounded-lg">
                   <IconClockHour4 size={24} className="text-amber-600 dark:text-amber-400" />
@@ -79,7 +100,7 @@ export default function AdminDashboard() {
               <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Menunggu Verifikasi</p>
             </div>
 
-            <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6">
+            <div className="animate-fade-in-up animate-stagger-3 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
               <div className="flex items-center justify-between mb-4">
                 <div className="p-3 bg-emerald-50 dark:bg-emerald-950/50 rounded-lg">
                   <IconCircleCheck size={24} className="text-emerald-600 dark:text-emerald-400" />
@@ -89,7 +110,7 @@ export default function AdminDashboard() {
               <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Disetujui</p>
             </div>
 
-            <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6">
+            <div className="animate-fade-in-up animate-stagger-4 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
               <div className="flex items-center justify-between mb-4">
                 <div className="p-3 bg-rose-50 dark:bg-rose-950/50 rounded-lg">
                   <IconCircleX size={24} className="text-rose-600 dark:text-rose-400" />
@@ -101,7 +122,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Recent Bookings */}
-          <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6">
+          <div className="scroll-reveal bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6">
             <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">Booking Terbaru</h2>
             <div className="overflow-x-auto">
               <table className="w-full">
@@ -123,7 +144,7 @@ export default function AdminDashboard() {
                     </tr>
                   ) : (
                     recentBookings.map((booking) => (
-                      <tr key={booking.id} className="border-b border-zinc-100 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50">
+                      <tr key={booking.id} className="border-b border-zinc-100 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors duration-200">
                         <td className="py-3 px-4 text-sm text-zinc-900 dark:text-zinc-100 font-mono">{booking.id}</td>
                         <td className="py-3 px-4 text-sm text-zinc-900 dark:text-zinc-100">{booking.nama}</td>
                         <td className="py-3 px-4 text-sm text-zinc-600 dark:text-zinc-400">{booking.ruangan}</td>
