@@ -311,13 +311,9 @@ function FakultasPageContent() {
 
   return (
     <div
-      className="min-h-screen font-sans text-zinc-900 dark:text-zinc-100 flex flex-col justify-between relative"
-      style={{
-        background: "radial-gradient(circle at center, #561C24 0%, #6D2932 20%, #8a4a52 35%, #C7B7A3 55%, #E8D8C4 75%, transparent 100%)",
-        backgroundColor: "#E8D8C4",
-      }}
+      className="font-sans text-zinc-900 dark:text-zinc-100 flex flex-col justify-between relative bg-hero-gradient"
     >
-      <div className="relative z-10 min-h-screen flex flex-col justify-between">
+      <div className="relative z-10 flex flex-col justify-between">
       <style jsx global>{`
         @keyframes float {
           0%, 100% { transform: translateY(0); }
@@ -639,7 +635,7 @@ export default function FakultasPage() {
         </div>
       }
     >
-      <FakultasPageContent />
+      
     </Suspense>
   );
 }

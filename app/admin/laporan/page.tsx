@@ -8,12 +8,33 @@ import { getAllBookings } from "../../lib/admin-store";
 import { Booking } from "../../lib/booking-store";
 import { IconDownload, IconCalendar, IconFilter } from "@tabler/icons-react";
 
+function useScrollReveal() {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+          } else {
+            entry.target.classList.remove("revealed");
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    );
+    document.querySelectorAll(".scroll-reveal").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+}
+
 export default function Laporan() {
   const { user, isLoading } = useAuth();
   const router = useRouter();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [filterMonth, setFilterMonth] = useState("");
   const [filterStatus, setFilterStatus] = useState<"all" | "pending" | "dikonfirmasi" | "ditolak">("all");
+
+  useScrollReveal();
 
   useEffect(() => {
     if (!isLoading && (!user || user.role !== "admin")) {
@@ -96,14 +117,14 @@ export default function Laporan() {
       <main className="flex-1 p-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-between mb-8 animate-fade-in-up">
             <div>
               <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100">Laporan</h1>
               <p className="text-zinc-500 dark:text-zinc-400 mt-1">Statistik dan laporan booking ruangan</p>
             </div>
             <button
               onClick={handleExport}
-              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl text-sm font-semibold shadow-lg shadow-indigo-600/30 transition-all"
+              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl text-sm font-semibold shadow-lg shadow-indigo-600/30 transition-all duration-300 hover:scale-105"
             >
               <IconDownload size={18} />
               Export CSV
@@ -111,7 +132,7 @@ export default function Laporan() {
           </div>
 
           {/* Filters */}
-          <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6 mb-6">
+          <div className="scroll-reveal bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6 mb-6">
             <div className="flex items-center gap-2 mb-4">
               <IconFilter size={20} className="text-zinc-500 dark:text-zinc-400" />
               <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Filter Laporan</h2>
@@ -147,26 +168,26 @@ export default function Laporan() {
 
           {/* Stats Summary */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-            <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6">
+            <div className="animate-fade-in-up animate-stagger-1 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
               <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-1">Total Booking</p>
               <h3 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100">{stats.total}</h3>
             </div>
-            <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6">
+            <div className="animate-fade-in-up animate-stagger-2 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
               <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-1">Pending</p>
               <h3 className="text-3xl font-bold text-amber-600 dark:text-amber-400">{stats.pending}</h3>
             </div>
-            <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6">
+            <div className="animate-fade-in-up animate-stagger-3 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
               <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-1">Disetujui</p>
               <h3 className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">{stats.dikonfirmasi}</h3>
             </div>
-            <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6">
+            <div className="animate-fade-in-up animate-stagger-4 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
               <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-1">Ditolak</p>
               <h3 className="text-3xl font-bold text-rose-600 dark:text-rose-400">{stats.ditolak}</h3>
             </div>
           </div>
 
           {/* Table */}
-          <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
+          <div className="scroll-reveal bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead className="bg-zinc-50 dark:bg-zinc-800">
@@ -188,7 +209,7 @@ export default function Laporan() {
                     </tr>
                   ) : (
                     filteredBookings.map((booking) => (
-                      <tr key={booking.id} className="border-t border-zinc-100 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50">
+                      <tr key={booking.id} className="border-t border-zinc-100 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors duration-200">
                         <td className="py-4 px-6 text-sm text-zinc-900 dark:text-zinc-100 font-mono">{booking.id}</td>
                         <td className="py-4 px-6 text-sm text-zinc-900 dark:text-zinc-100">{booking.nama}</td>
                         <td className="py-4 px-6 text-sm text-zinc-600 dark:text-zinc-400">{booking.ruangan}</td>

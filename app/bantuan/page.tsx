@@ -1,8 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { IconChevronDown, IconSend, IconPhone, IconMail, IconMapPin} from "@tabler/icons-react";
+import { IconChevronDown, IconSend, IconPhone, IconMail, IconMapPin, IconCircleCheck, IconChevronLeft } from "@tabler/icons-react";
+
+function useScrollReveal() {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+          } else {
+            entry.target.classList.remove("revealed");
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    );
+    document.querySelectorAll(".scroll-reveal").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+}
 
 const faqs = [
   {
@@ -27,26 +46,22 @@ export default function BantuanPage() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const [submitted, setSubmitted] = useState(false);
 
-  return (
-    <div
-      className="min-h-screen font-sans text-zinc-900 dark:text-zinc-100"
-      style={{
-        background: "linear-gradient(to bottom, #f8f3ec 0%, #f5efe6 10%, #ede4d4 20%, #e4d7c3 30%, #dccfb9 40%, #d4c4ac 48%, #c8b89a 50%, #b09078 53%, #9a7060 57%, #8a5a50 62%, #7a4040 68%, #6D2931 75%, #622530 82%, #5a1f25 88%, #511a20 94%, #4a1520 100%)",
-      }}
-    >
+  useScrollReveal();
 
+  return (
+    <div className="animate-fade-in font-sans text-zinc-900 bg-hero-gradient">
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-14">
-          <h2 className="text-3xl font-extrabold mb-3 text-[#561C24]">
+          <h2 className="animate-fade-in-up animate-stagger-1 text-3xl font-extrabold mb-3 text-[#561C24]">
             Ada yang bisa kami bantu?
           </h2>
-          <p className="text-[#6D2932] max-w-lg mx-auto leading-relaxed">
-            Temukan jawaban atas pertanyaan umum seputar pemesanan, fasilitas, atau laporkan kendala teknis langsung ke tim UMSpace.
+          <p className="animate-fade-in-up animate-stagger-2 text-[#6D2932] max-w-lg mx-auto leading-relaxed">
+            Temukan jawaban atas pertanyaan umum seputar pemesanan, fasilitas, atau laporkan kendala teknis langsung ke tim SinergiSpace.
           </p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8 mb-16">
-          <div className="bg-[#E8D8C4]/80 p-6 rounded-2xl border border-[#C7B7A3] flex items-start gap-4 hover:shadow-md transition-shadow">
+          <div className="scroll-reveal bg-[#E8D8C4] p-6 rounded-2xl border border-[#C7B7A3] flex items-start gap-4 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300" style={{ transitionDelay: "0s" }}>
             <div className="p-3 bg-[#561C24]/10 rounded-xl text-[#561C24] flex-shrink-0">
               <IconPhone size={22} />
             </div>
@@ -56,7 +71,7 @@ export default function BantuanPage() {
               <span className="text-sm font-semibold text-[#561C24]">0895-7043-96770</span>
             </div>
           </div>
-          <div className="bg-[#E8D8C4]/80 p-6 rounded-2xl border border-[#C7B7A3] flex items-start gap-4 hover:shadow-md transition-shadow">
+          <div className="scroll-reveal bg-[#E8D8C4]/80 p-6 rounded-2xl border border-[#C7B7A3] flex items-start gap-4 hover:shadow-md transition-shadow" style={{ transitionDelay: "0.1s" }}>
             <div className="p-3 bg-[#561C24]/10 rounded-xl text-[#561C24] flex-shrink-0">
               <IconMail size={22} />
             </div>
@@ -66,7 +81,7 @@ export default function BantuanPage() {
               <span className="text-sm font-semibold text-[#561C24]">support@sinergispace.co.id</span>
             </div>
           </div>
-          <div className="bg-[#E8D8C4]/80 p-6 rounded-2xl border border-[#C7B7A3] flex items-start gap-4 hover:shadow-md transition-shadow">
+          <div className="scroll-reveal bg-[#E8D8C4]/80 p-6 rounded-2xl border border-[#C7B7A3] flex items-start gap-4 hover:shadow-md transition-shadow" style={{ transitionDelay: "0.2s" }}>
             <div className="p-3 bg-[#561C24]/10 rounded-xl text-[#561C24] flex-shrink-0">
               <IconMapPin size={22} />
             </div>
@@ -78,12 +93,11 @@ export default function BantuanPage() {
           </div>
         </div>
 
-        {/* FAQ Section */}
         <div className="mb-16">
-          <h3 className="text-xl font-bold mb-6 text-[#561C24]">Pertanyaan yang Sering Diajukan (FAQ)</h3>
+          <h3 className="scroll-reveal text-xl font-bold mb-6 text-[#561C24]">Pertanyaan yang Sering Diajukan (FAQ)</h3>
           <div className="space-y-3">
             {faqs.map((faq, index) => (
-              <div key={index} className="bg-[#E8D8C4]/80 border border-[#C7B7A3] rounded-xl overflow-hidden">
+              <div key={index} className="scroll-reveal bg-[#E8D8C4]/80 border border-[#C7B7A3] rounded-xl overflow-hidden" style={{ transitionDelay: `${index * 0.1}s` }}>
                 <button
                   onClick={() => setOpenIndex(openIndex === index ? null : index)}
                   className="w-full flex items-center justify-between p-5 text-left hover:bg-[#E8D8C4] transition-colors"
@@ -101,8 +115,7 @@ export default function BantuanPage() {
           </div>
         </div>
 
-        {/* Help Form */}
-        <div className="bg-[#561C24] rounded-3xl p-8 md:p-10 text-white relative overflow-hidden border border-[#4a1520] shadow-2xl">
+        <div className="scroll-reveal bg-[#561C24] rounded-3xl p-8 md:p-10 text-white relative overflow-hidden border border-[#4a1520] shadow-2xl">
           <div className="relative z-10">
             <h3 className="text-2xl font-bold mb-2">Kirim Aduan atau Pertanyaan</h3>
             <p className="text-[#E8D8C4]/70 text-sm mb-8 max-w-lg">Isi formulir di bawah ini, tim kami akan membalas dalam 1x24 jam kerja.</p>
@@ -141,7 +154,6 @@ export default function BantuanPage() {
             )}
           </div>
         </div>
-
       </main>
     </div>
   );
