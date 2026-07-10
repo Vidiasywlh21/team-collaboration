@@ -368,11 +368,18 @@ export default function TataLetakPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
         <div className="text-center mb-10">
           <h1 className="animate-fade-in-up animate-stagger-1 text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
+
             <span className="text-[#561c24] drop-shadow-lg">
               Denah Fakultas
             </span>
           </h1>
           <p className="animate-fade-in-up animate-stagger-2 text-[#561c24] max-w-lg mx-auto text-base leading-relaxed drop-shadow-md">
+
+            <span className="bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
+              Denah Fakultas
+            </span>
+          </h1>
+          <p className="animate-fade-in-up animate-stagger-2 text-zinc-200 max-w-lg mx-auto text-base leading-relaxed">
             Pilih fakultas untuk melihat denah tata letak ruangan, area kerja, dan fasilitas yang tersedia
           </p>
           <div className="animate-fade-in-up animate-stagger-3 flex justify-center mt-6">
