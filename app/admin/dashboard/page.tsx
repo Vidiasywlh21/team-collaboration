@@ -74,7 +74,7 @@ export default function AdminDashboard() {
           {/* Header */}
           <div className="mb-8 animate-fade-in-up">
             <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100">Dashboard</h1>
-            <p className="text-zinc-500 dark:text-zinc-400 mt-1">Selamat datang di panel administrasi SinergiSpace</p>
+            <p className="text-zinc-500 dark:text-zinc-400 mt-1">Selamat datang di panel administrasi BookNest</p>
           </div>
 
           {/* Stats Grid */}

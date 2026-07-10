@@ -16,9 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sistem Booking Ruang - Universitas Mulia Balikpapan",
+  title: "BookNest - Sistem Booking Ruang Universitas Mulia Balikpapan",
   description:
-    "Sistem peminjaman ruang kampus Universitas Mulia Balikpapan. Booking ruang kelas, laboratorium, dan aula secara online.",
+    "BookNest: Sistem peminjaman ruang kampus Universitas Mulia Balikpapan. Booking ruang kelas, laboratorium, dan aula secara online.",
 };
 
 export default function RootLayout({

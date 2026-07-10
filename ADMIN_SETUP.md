@@ -1,8 +1,8 @@
-# Admin Panel Setup - SinergiSpace
+# Admin Panel Setup - BookNest
 
 ## Akun Admin Default
 
-**Email:** admin@sinergispace.com  
+**Email:** admin@booknest.com  
 **Password:** admin123  
 **Role:** admin
 

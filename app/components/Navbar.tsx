@@ -22,15 +22,15 @@ export default function Navbar({ activePage }: { activePage: string }) {
             </Link>
           )}
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl bg-[#E8D8C4] flex items-center justify-center text-[#561C24] font-bold text-xl shadow-lg shadow-black/20">
-              S
+            <div className="w-10 h-10 rounded-xl bg-[#E8D8C4] flex items-center justify-center shadow-lg shadow-black/20 overflow-hidden">
+              <img src="/booknest-logo.svg" alt="BookNest" className="w-8 h-8" />
             </div>
             <div>
               <span className="font-bold text-lg tracking-tight text-[#E8D8C4]">
-                SinergiSpace
+                BookNest
               </span>
               <span className="block text-[10px] text-[#E8D8C4]/60 font-medium tracking-wider uppercase -mt-1">
-                Collaboration Hub
+                Campus Booking Hub
               </span>
             </div>
           </div>

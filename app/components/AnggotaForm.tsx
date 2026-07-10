@@ -63,7 +63,7 @@ export default function AnggotaForm({ anggota, onChange, errors }: AnggotaFormPr
           </p>
 
           {anggota.map((member, index) => (
-            <div key={index} className="bg-[#E8D8C4]/50 rounded-lg p-4 space-y-3 border border-[#C7B7A3]">
+            <div key={index} className="bg-[#E8D8C4]/50 rounded-lg p-4 space-y-3 border border-[#E8D8C4]">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-semibold text-[#6D2932]">
                   Anggota {index + 1}

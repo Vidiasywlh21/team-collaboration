@@ -27,7 +27,7 @@ export function initializeAdmin(): void {
   if (!adminExists) {
     // Add default admin account
     userList.push({
-      email: "admin@sinergispace.com",
+      email: "admin@booknest.com",
       nama: "Administrator",
       password: "admin123",
       role: "admin"

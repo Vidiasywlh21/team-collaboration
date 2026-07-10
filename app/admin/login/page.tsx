@@ -61,7 +61,7 @@ export default function AdminLoginPage() {
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-[#561C24] mb-2">Admin Login</h1>
             <p className="text-[#6D2932] text-sm">
-              Masuk ke dashboard administrasi SinergiSpace
+              Masuk ke dashboard administrasi BookNest
             </p>
           </div>
 
@@ -84,7 +84,7 @@ export default function AdminLoginPage() {
                 id="email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                placeholder="admin@sinergispace.com"
+                placeholder="admin@booknest.com"
                 className="w-full px-4 py-3 rounded-xl border border-[#C7B7A3] bg-white text-[#561C24] placeholder-[#6D2932]/50 text-sm focus:outline-none focus:ring-2 focus:ring-[#6D2932] transition-all"
                 required
               />
@@ -128,7 +128,7 @@ export default function AdminLoginPage() {
 
           <div className="mt-4 p-3 bg-white/50 rounded-lg">
             <p className="text-xs text-[#6D2932] text-center">
-              <strong>Demo:</strong> admin@sinergispace.com / admin123
+              <strong>Demo:</strong> admin@booknest.com / admin123
             </p>
           </div>
         </div>

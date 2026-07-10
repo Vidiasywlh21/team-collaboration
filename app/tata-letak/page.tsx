@@ -3,7 +3,190 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { IconArrowRight, IconX, IconArmchair, IconSchool, IconRadio } from "@tabler/icons-react";
+import { IconArrowRight, IconX, IconArmchair, IconSchool, IconRadio, IconBook2, IconUsers, IconBuilding } from "@tabler/icons-react";
+
+type RoomType = "ruang" | "ruangkelas" | "lab" | "laboratorium" | "perpustakaan" | "cowork" | "lobby" | "admin" | "dekan" | "rektorat" | "kaprodi" | "wakilrektor" | "prodi" | "fasilitas" | "pejabatstruktural";
+
+interface Room {
+  name: string;
+  type: RoomType;
+  gridArea?: string;
+}
+
+const getRoomStyle = (type: RoomType) => {
+  switch (type) {
+    case "ruang":
+      return "bg-white/70 border-blue-400/50 text-blue-800";
+    case "lab":
+      return "bg-white/70 border-emerald-400/50 text-emerald-800";
+    case "perpustakaan":
+      return "bg-white/70 border-purple-400/50 text-purple-800";
+    case "cowork":
+      return "bg-white/70 border-amber-400/50 text-amber-800";
+    case "lobby":
+      return "bg-white/70 border-rose-400/50 text-rose-800";
+    case "admin":
+      return "bg-white/70 border-sky-400/50 text-sky-800";
+    case "dekan":
+      return "bg-white/70 border-indigo-400/50 text-indigo-800";
+    case "rektorat":
+      return "bg-white/70 border-red-400/50 text-red-800";
+    case "wakilrektor":
+      return "bg-white/70 border-violet-400/50 text-violet-800";
+    case "prodi":
+      return "bg-white/70 border-cyan-400/50 text-cyan-800";
+    case "ruangkelas":
+      return "bg-white/70 border-orange-400/50 text-orange-800";
+    case "laboratorium":
+      return "bg-white/70 border-teal-400/50 text-teal-800";
+    case "fasilitas":
+      return "bg-white/70 border-slate-400/50 text-slate-800";
+    case "pejabatstruktural":
+      return "bg-white/70 border-fuchsia-400/50 text-fuchsia-800";
+    default:
+      return "bg-white/70 border-zinc-400/50 text-zinc-700";
+  }
+};
+
+const getRoomIcon = (type: RoomType, size: number = 24, name?: string) => {
+  const nameOverrides: Record<string, string> = {
+    "Lobby Utama": "/lobby.png",
+    "Ruang Dekan": "/dekan.png",
+    "Wakil Rektor 1": "/wakilRektor.png",
+    "Wakil Rektor 2": "/wakilRektor.png",
+    "Wakil Rektor 3": "/wakilRektor.png",
+    "Rektorat": "/rektor2.png",
+    "LPPM": "/LPPM.png",
+    "LPMPP": "/LPMPP.png",
+    "Toilet": "/toilet-.png",
+    "Prodi S1 Informatika": "/Prodi.png",
+    "Prodi S1 Sistem Informasi": "/Prodi.png",
+    "Prodi S1 DKV": "/Prodi.png",
+    "Prodi S1 Teknologi Informasi": "/Prodi.png",
+    "Ruang Kelas 201": "/classroom (1).png",
+    "Ruang Kelas 202": "/classroom (1).png",
+    "Ruang Kelas 203": "/classroom (1).png",
+    "Ruang Kelas 204": "/classroom (1).png",
+    "Ruang Kelas 205": "/classroom (1).png",
+    "Ruang Kelas 206": "/classroom (1).png",
+    "Ruang Kelas 207": "/classroom (1).png",
+    "Ruang Kelas 208": "/classroom (1).png",
+    "Ruang Kelas 301": "/classroom (1).png",
+    "Ruang Kelas 302": "/classroom (1).png",
+    "Ruang Kelas 303": "/classroom (1).png",
+    "Ruang Kelas 304": "/classroom (1).png",
+    "Ruang Kelas 305": "/classroom (1).png",
+    "Ruang Kelas 306": "/classroom (1).png",
+    "Ruang Kelas 307": "/classroom (1).png",
+    "Ruang Kelas 308": "/classroom (1).png",
+    "Ruang Robotika": "/classroom (1).png",
+    "Lab Multimedia": "/lab.png",
+    "Lab Jaringan": "/lab.png",
+    "Lab Manajemen": "/lab.png",
+    "Ruang Executive": "/meeting.png",
+    "Toilet Pria": "/male.png",
+    "Toilet Wanita": "/female.png",
+    "Perpustakaan": "/library.png",
+    "Ruang PSI": "/Prodi.png",
+    "Ruang LPPM": "/LPPM.png",
+    "Ruang Dir Executive": "/Prodi.png",
+    "Ruang HRD": "/man.png",
+    "Ruang Marketing": "/Prodi.png",
+    "Ruang C.201": "/classroom (1).png",
+    "Ruang C.202": "/classroom (1).png",
+    "Ruang C.203": "/classroom (1).png",
+    "Ruang Prodi Hukum": "/Prodi.png",
+    "Ruang Peradilan Semu": "/palu.png",
+    "Ruang Prodi Farma": "/Prodi.png",
+    "Ruang Lab Farmatologi": "/laboratory.png",
+    "Lab Kimia": "/laboratory.png",
+    "Ruang Fakultas FHK": "/Prodi.png",
+    "Ruang Sidang Dekanat": "/Prodi.png",
+    "Dekan FEB": "/dekan.png",
+    "BAAK FEB": "/administrasi.png",
+    "Prodi S1 Manajemen": "/Prodi.png",
+    "GPMF": "/LPMPP.png",
+    "Prodi S1 Akuntansi": "/Prodi.png",
+    "Lab Teknik": "/teknik.png",
+    "Ruang DayCare": "/kid.png",
+    "Ruang Server": "/server.png",
+    "Prodi Teknik Industri": "/Prodi.png",
+    "Prodi Teknik Sipil": "/Prodi.png",
+    "Prodi Teknik Pangan": "/Prodi.png",
+    "Co-Working Terbuka": "/library.png",
+    "Radio & Podcast": "/LPPM.png",
+    "Tenis Meja": "/man.png",
+  };
+  if (name && nameOverrides[name]) {
+    return <img src={nameOverrides[name]} alt={name} width={size} height={size} className="object-contain" />;
+  }
+  const iconMap: Record<string, string> = {
+    lobby: "/lobby.png",
+    rektorat: "/rektor.png",
+    dekan: "/dekan.png",
+    admin: "/administrasi.png",
+    lab: "/lab.png",
+    laboratorium: "/lab.png",
+    ruang: "/classroom (1).png",
+    ruangkelas: "/classroom (1).png",
+    fasilitas: "/female.png",
+    pejabatstruktural: "/rektor.png",
+    prodi: "/classroom (1).png",
+  };
+  if (iconMap[type]) {
+    return <img src={iconMap[type]} alt={type} width={size} height={size} className="object-contain" />;
+  }
+  switch (type) {
+    case "perpustakaan":
+      return <IconBook2 size={size} />;
+    case "cowork":
+      return <IconUsers size={size} />;
+    default:
+      return <IconBuilding size={size} />;
+  }
+};
+
+const floorPlans: Record<string, Room[]> = {
+  fikom: [
+    { name: "Lobby Utama", type: "fasilitas", gridArea: "1 / 1 / 2 / 3" },
+    { name: "Rektorat", type: "pejabatstruktural", gridArea: "1 / 3 / 2 / 5" },
+    { name: "Prodi S1 Informatika", type: "prodi", gridArea: "2 / 1 / 3 / 2" },
+    { name: "Prodi S1 Sistem Informasi", type: "prodi", gridArea: "2 / 2 / 3 / 3" },
+    { name: "Ruang Dekan", type: "pejabatstruktural", gridArea: "2 / 3 / 3 / 4" },
+    { name: "Wakil Rektor 1", type: "pejabatstruktural", gridArea: "2 / 4 / 3 / 5" },
+    { name: "BAAK", type: "admin", gridArea: "3 / 1 / 4 / 2" },
+    { name: "Toilet", type: "fasilitas", gridArea: "3 / 2 / 4 / 3" },
+  ],
+  feb: [
+    { name: "Dekan FEB", type: "pejabatstruktural", gridArea: "1 / 1 / 2 / 2" },
+    { name: "Prodi S1 Akuntansi", type: "prodi", gridArea: "1 / 2 / 2 / 3" },
+    { name: "Prodi S1 Manajemen", type: "prodi", gridArea: "1 / 3 / 2 / 4" },
+    { name: "BAAK FEB", type: "admin", gridArea: "1 / 4 / 2 / 5" },
+    { name: "GPMF", type: "pejabatstruktural", gridArea: "2 / 1 / 3 / 2" },
+    { name: "Toilet", type: "fasilitas", gridArea: "2 / 2 / 3 / 3" },
+  ],
+  "humaniora-kesehatan": [
+    { name: "Ruang Sidang Dekanat", type: "pejabatstruktural", gridArea: "1 / 1 / 2 / 2" },
+    { name: "Ruang Prodi Hukum", type: "prodi", gridArea: "1 / 2 / 2 / 3" },
+    { name: "Ruang Fakultas FHK", type: "pejabatstruktural", gridArea: "1 / 3 / 2 / 4" },
+    { name: "Ruang Prodi Farma", type: "prodi", gridArea: "1 / 4 / 2 / 5" },
+    { name: "Ruang Peradilan Semu", type: "lab", gridArea: "2 / 1 / 3 / 2" },
+    { name: "Ruang Lab Farmatologi", type: "lab", gridArea: "2 / 2 / 3 / 3" },
+  ],
+  teknik: [
+    { name: "Lab Teknik", type: "laboratorium" },
+    { name: "Ruang DayCare", type: "fasilitas" },
+    { name: "Ruang Server", type: "fasilitas" },
+    { name: "Prodi Teknik Industri", type: "prodi" },
+    { name: "Prodi Teknik Sipil", type: "prodi" },
+    { name: "Prodi Teknik Pangan", type: "prodi" },
+  ],
+  lainnya: [
+    { name: "Co-Working Terbuka", type: "cowork" },
+    { name: "Radio & Podcast", type: "admin" },
+    { name: "Tenis Meja", type: "fasilitas" },
+  ]
+};
 
 function useScrollReveal() {
   useEffect(() => {
@@ -96,10 +279,7 @@ export default function TataLetakPage() {
   const currentConfig = selectedFaculty ? floorConfig[selectedFaculty.slug] : null;
 
   return (
-    <div
-      className="font-sans text-zinc-900 dark:text-zinc-100 relative bg-hero-gradient"
-    >
-      {/* Inline styles for custom table tennis animations */}
+    <div>
       <style jsx global>{`
         @keyframes pingpong-ball {
           0% {
@@ -183,20 +363,20 @@ export default function TataLetakPage() {
         }
       `}</style>
 
-      
+
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
         <div className="text-center mb-10">
           <h1 className="animate-fade-in-up animate-stagger-1 text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
-            <span className="bg-gradient-to-r from-[#6D2932] via-[#a04050] to-[#c86070] bg-clip-text text-transparent">
+            <span className="text-[#561c24] drop-shadow-lg">
               Denah Fakultas
             </span>
           </h1>
-          <p className="animate-fade-in-up animate-stagger-2 text-zinc-600 max-w-lg mx-auto text-base leading-relaxed">
+          <p className="animate-fade-in-up animate-stagger-2 text-[#561c24] max-w-lg mx-auto text-base leading-relaxed drop-shadow-md">
             Pilih fakultas untuk melihat denah tata letak ruangan, area kerja, dan fasilitas yang tersedia
           </p>
           <div className="animate-fade-in-up animate-stagger-3 flex justify-center mt-6">
-            <div className="w-20 h-1 rounded-full bg-gradient-to-r from-transparent via-[#6D2932]/40 to-transparent"></div>
+            <div className="w-20 h-1 rounded-full bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
           </div>
         </div>
 
@@ -205,11 +385,10 @@ export default function TataLetakPage() {
             <button
               key={f.slug}
               onClick={() => handleCardClick(f)}
-              className={`scroll-reveal group text-left relative overflow-hidden rounded-3xl min-h-[250px] flex flex-col justify-end transition-all duration-500 hover:-translate-y-2 border-2 border-white/20 hover:border-white/60 cursor-pointer ${
-                i < 3
-                  ? "hover:shadow-[0_0_30px_rgba(90,31,37,0.6),0_0_60px_rgba(109,41,50,0.3)]"
-                  : "hover:shadow-[0_0_25px_rgba(255,255,255,0.5),0_0_50px_rgba(255,255,255,0.2)]"
-              }`}
+              className={`scroll-reveal group text-left relative overflow-hidden rounded-3xl min-h-[250px] flex flex-col justify-end transition-all duration-500 hover:-translate-y-2 border-2 border-white/20 hover:border-white/60 cursor-pointer ${i < 3
+                ? "hover:shadow-[0_0_30px_rgba(90,31,37,0.6),0_0_60px_rgba(109,41,50,0.3)]"
+                : "hover:shadow-[0_0_25px_rgba(255,255,255,0.5),0_0_50px_rgba(255,255,255,0.2)]"
+                }`}
               style={{ transitionDelay: `${i * 0.1}s` }}
             >
               <Image
@@ -240,16 +419,16 @@ export default function TataLetakPage() {
 
       {/* Modern, Glassmorphic Interactive Overlay Modal */}
       {isOpen && selectedFaculty && (
-        <div 
+        <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md transition-all duration-300 animate-fade-in"
           onClick={() => setIsOpen(false)}
         >
-          <div 
+          <div
             className="relative w-full max-w-4xl bg-zinc-950/90 dark:bg-zinc-900/95 border border-white/10 rounded-3xl p-6 md:p-8 shadow-2xl text-white max-h-[90vh] overflow-y-auto transition-transform duration-300 scale-100 animate-scale-up"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
-            <button 
+            <button
               onClick={() => setIsOpen(false)}
               className="absolute top-5 right-5 p-2 rounded-full bg-white/10 border border-white/10 hover:bg-white/25 hover:border-white/30 text-white/80 hover:text-white transition-all cursor-pointer z-50"
             >
@@ -267,7 +446,7 @@ export default function TataLetakPage() {
                 </h2>
               </div>
               <p className="text-zinc-400 text-sm md:text-base max-w-2xl">
-                {selectedFaculty.name === "Lainnya" 
+                {selectedFaculty.name === "Lainnya"
                   ? "Fasilitas belajar mandiri & hiburan umum yang modern dengan ruang belajar terbuka, meja besar yang nyaman, serta area tenis meja untuk menyegarkan pikiran."
                   : `Pilih lantai yang ingin Anda jelajahi untuk melihat tata letak meja kerja, ruang meeting, dan ketersediaan fasilitas secara langsung.`}
               </p>
@@ -332,7 +511,7 @@ export default function TataLetakPage() {
                     </span>
                     <h4 className="text-sm font-bold mb-1">Co-Working Terbuka</h4>
                     <p className="text-[10px] text-zinc-400 leading-relaxed mb-3">
-                      Meja kayu besar, kursi ergonomis, lampu baca & Wi-Fi kencang.
+                      Meja kayu besar, kursi ergonomis, lampu baca.
                     </p>
                     <div className="flex-1 bg-black/30 rounded-lg p-3 border border-white/5 flex flex-col gap-2">
                       <div className="flex items-center justify-between gap-2">
@@ -388,10 +567,10 @@ export default function TataLetakPage() {
                           {Array.from({ length: 8 }).map((_, idx) => {
                             const heights = [8, 5, 11, 7, 13, 6, 10, 9];
                             return (
-                              <div 
-                                key={idx} 
+                              <div
+                                key={idx}
                                 className="w-0.5 bg-purple-400 rounded-full animate-pulse"
-                                style={{ 
+                                style={{
                                   height: `${heights[idx]}px`,
                                   animationDelay: `${idx * 0.1}s`
                                 }}
@@ -447,8 +626,6 @@ export default function TataLetakPage() {
           </div>
         </div>
       )}
-
-      
     </div>
   );
 }

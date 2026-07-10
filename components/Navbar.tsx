@@ -34,15 +34,15 @@ export default function Navbar() {
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="w-10 h-10 rounded-xl bg-[#E8D8C4] flex items-center justify-center text-[#561C24] font-bold text-xl shadow-lg">
-            SS
+          <div className="w-10 h-10 rounded-xl bg-[#E8D8C4] flex items-center justify-center shadow-lg overflow-hidden">
+            <img src="/booknest-logo.svg" alt="BookNest" className="w-8 h-8" />
           </div>
           <div>
             <span className="font-bold text-lg tracking-tight text-white">
-              SinergiSpace
+              BookNest
             </span>
             <span className="block text-[10px] text-[#E8D8C4]/60 font-medium tracking-wider uppercase -mt-1">
-              Collaboration Hub
+              Campus Booking Hub
             </span>
           </div>
         </div>
