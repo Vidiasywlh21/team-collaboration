@@ -35,7 +35,7 @@ const faculties = [
   { slug: "feb", name: "FEB", full: "Fakultas Ekonomi & Bisnis", image: "/feb2.png", desc: "Manajemen dan Akuntasi", dataKey: "fakultas_ekonomi_bisnis" },
   { slug: "humaniora-kesehatan", name: "Humaniora & Kesehatan", full: "Fakultas Humaniora & Kesehatan", image: "/chengho.jpg", desc: "Farmasi, Hukum, dan PGPAUD", dataKey: "fakultas_humaniora_kesehatan" },
   { slug: "teknik", name: "Teknik", full: "Fakultas Teknik", image: "/Teknik.jpeg", desc: "Teknik Pangan, Sipil, dan Industri", dataKey: "fakultas_teknik" },
-  { slug: "lainnya", name: "Lainnya", full: "Area Bersama & Rekreasi", image: "/domain.webp", desc: "Fasilitas belajar mandiri & hiburan umum", dataKey: "lainnya" },
+
 ];
 
 const dataRuangan: Record<string, { value: string; label: string }[]> = {
@@ -217,10 +217,9 @@ export default function BookingPage() {
   // ===================== LOADING =====================
   if (isLoading) {
     return (
-      <div className="animate-fade-in min-h-screen flex flex-col items-center justify-center gap-4"
-        style={{ background: "linear-gradient(to bottom, #f8f3ec 0%, #f5efe6 10%, #ede4d4 20%, #e4d7c3 30%, #dccfb9 40%, #d4c4ac 48%, #c8b89a 50%, #b09078 53%, #9a7060 57%, #8a5a50 62%, #7a4040 68%, #6D2931 75%, #622530 82%, #5a1f25 88%, #511a20 94%, #4a1520 100%)" }}>
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
-        <p className="animate-fade-in-up text-white/70 text-sm">Memuat halaman booking...</p>
+      <div className="animate-fade-in min-h-screen flex flex-col items-center justify-center gap-4">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#561C24]"></div>
+        <p className="animate-fade-in-up text-[#561C24] text-sm">Memuat halaman booking...</p>
       </div>
     );
   }
@@ -228,8 +227,7 @@ export default function BookingPage() {
   // ===================== NOT LOGGED IN =====================
   if (!user) {
     return (
-      <div className="animate-fade-in min-h-screen flex flex-col items-center justify-center p-4"
-        style={{ background: "linear-gradient(to bottom, #f8f3ec 0%, #f5efe6 10%, #ede4d4 20%, #e4d7c3 30%, #dccfb9 40%, #d4c4ac 48%, #c8b89a 50%, #b09078 53%, #9a7060 57%, #8a5a50 62%, #7a4040 68%, #6D2931 75%, #622530 82%, #5a1f25 88%, #511a20 94%, #4a1520 100%)" }}>
+      <div className="animate-fade-in min-h-screen flex flex-col items-center justify-center p-4">
         <div className="w-full max-w-md animate-fade-in-scale">
           <Link href="/" className="inline-flex items-center gap-1 text-sm font-medium text-[#561C24] hover:text-white mb-8 transition-colors">
             <IconArrowLeft size={16} /> Kembali ke Beranda
@@ -285,8 +283,7 @@ export default function BookingPage() {
   if (submitted && bookingResult) {
     const isConfirmed = bookingResult.status === "dikonfirmasi";
     return (
-      <div className="animate-fade-in min-h-screen flex flex-col items-center justify-center p-4 text-center"
-        style={{ background: "linear-gradient(to bottom, #f8f3ec 0%, #f5efe6 10%, #ede4d4 20%, #e4d7c3 30%, #dccfb9 40%, #d4c4ac 48%, #c8b89a 50%, #b09078 53%, #9a7060 57%, #8a5a50 62%, #7a4040 68%, #6D2931 75%, #622530 82%, #5a1f25 88%, #511a20 94%, #4a1520 100%)" }}>
+      <div className="animate-fade-in min-h-screen flex flex-col items-center justify-center p-4 text-center">
         <div className={`animate-scale-bounce w-20 h-20 rounded-full flex items-center justify-center mb-6 ${isConfirmed ? "bg-emerald-100" : "bg-[#C7B7A3]"}`}>
           {isConfirmed ? <IconCircleCheck size={40} className="text-emerald-600" /> : <IconAlertCircle size={40} className="text-[#561C24]" />}
         </div>
@@ -319,20 +316,20 @@ export default function BookingPage() {
   // ===================== STEP 1: PILIH FAKULTAS =====================
   if (step === "fakultas") {
     return (
-      <div className="font-sans text-zinc-900 relative bg-hero-gradient">
+      <div className="font-sans text-zinc-900 relative">
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
           {/* Header */}
           <div className="text-center mb-10">
             <h1 className="animate-fade-in-up animate-stagger-1 text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
-              <span className="bg-gradient-to-r from-[#6D2932] via-[#a04050] to-[#c86070] bg-clip-text text-transparent">
+              <span className="text-[#561c24] drop-shadow-lg">
                 Booking Ruangan
               </span>
             </h1>
-            <p className="animate-fade-in-up animate-stagger-2 text-zinc-600 max-w-lg mx-auto text-base leading-relaxed">
+            <p className="animate-fade-in-up animate-stagger-2 text-[#561c24] max-w-lg mx-auto text-base leading-relaxed drop-shadow-md">
               Pilih fakultas untuk melihat ruangan yang tersedia dan ajukan booking
             </p>
             <div className="animate-fade-in-up animate-stagger-3 flex justify-center mt-6">
-              <div className="w-20 h-1 rounded-full bg-gradient-to-r from-transparent via-[#6D2932]/40 to-transparent"></div>
+              <div className="w-20 h-1 rounded-full bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
             </div>
             {/* User badge */}
             <div className="animate-fade-in-up animate-stagger-4 flex items-center justify-center gap-2 mt-4 px-4 py-2 bg-[#E8D8C4]/80 backdrop-blur-sm rounded-full w-fit mx-auto">
@@ -353,11 +350,10 @@ export default function BookingPage() {
               <button
                 key={f.slug}
                 onClick={() => { setSelectedFaculty(f); setIsModalOpen(true); }}
-                className={`scroll-reveal group text-left relative overflow-hidden rounded-3xl min-h-[250px] flex flex-col justify-end transition-all duration-500 hover:-translate-y-2 border-2 border-white/20 hover:border-white/60 cursor-pointer ${
-                  i < 3
-                    ? "hover:shadow-[0_0_30px_rgba(90,31,37,0.6),0_0_60px_rgba(109,41,50,0.3)]"
-                    : "hover:shadow-[0_0_25px_rgba(255,255,255,0.5),0_0_50px_rgba(255,255,255,0.2)]"
-                }`}
+                className={`scroll-reveal group text-left relative overflow-hidden rounded-3xl min-h-[250px] flex flex-col justify-end transition-all duration-500 hover:-translate-y-2 border-2 border-white/20 hover:border-white/60 cursor-pointer ${i < 3
+                  ? "hover:shadow-[0_0_30px_rgba(90,31,37,0.6),0_0_60px_rgba(109,41,50,0.3)]"
+                  : "hover:shadow-[0_0_25px_rgba(255,255,255,0.5),0_0_50px_rgba(255,255,255,0.2)]"
+                  }`}
                 style={{ transitionDelay: `${i * 0.1}s` }}
               >
                 <Image src={f.image} alt={f.name} fill className="object-cover transition-transform duration-700 group-hover:scale-110" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
@@ -444,36 +440,35 @@ export default function BookingPage() {
 
   // ===================== STEP 3: FORM BOOKING =====================
   return (
-    <div className="animate-fade-in min-h-screen font-sans py-12 px-4 sm:px-6 lg:px-8 text-zinc-900 relative"
-      style={{ background: "linear-gradient(to bottom, #f8f3ec 0%, #f5efe6 10%, #ede4d4 20%, #e4d7c3 30%, #dccfb9 40%, #d4c4ac 48%, #c8b89a 50%, #b09078 53%, #9a7060 57%, #8a5a50 62%, #7a4040 68%, #6D2931 75%, #622530 82%, #5a1f25 88%, #511a20 94%, #4a1520 100%)" }}>
+    <div className="animate-fade-in min-h-screen font-sans py-12 px-4 sm:px-6 lg:px-8 text-zinc-900 relative">
       <main>
         <div className="max-w-3xl mx-auto">
           {/* Back button */}
           <button onClick={() => { setStep("fakultas"); setSelectedRuangan(null); setErrors({}); }}
-            className="animate-fade-in-up animate-stagger-1 inline-flex items-center gap-1 text-sm font-medium text-[#561C24] hover:text-[#E8D8C4] mb-8 transition-colors">
+            className="animate-fade-in-up animate-stagger-1 inline-flex items-center gap-1 text-sm font-medium text-[#561c24] hover:text-white mb-8 transition-colors">
             <IconArrowLeft size={16} /> Pilih Ruangan Lain
           </button>
 
           {/* Header */}
           <div className="animate-fade-in-up animate-stagger-2 flex items-center justify-between mb-8">
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-[#E8D8C4] rounded-xl text-[#561C24] animate-scale-in animate-stagger-2">
+              <div className="p-3 bg-[#561C24] rounded-xl text-[#E8D8C4] animate-scale-in animate-stagger-2">
                 <IconCalendarPlus size={28} />
               </div>
               <div>
-                <h1 className="text-2xl md:text-3xl font-bold text-[#561C24]">Formulir Booking</h1>
+                <h1 className="text-2xl md:text-3xl font-bold text-[#561c24]">Formulir Booking</h1>
                 <p className="text-[#561C24] text-sm">
                   {selectedRuangan?.label} &bull; {selectedFaculty?.full}
                 </p>
               </div>
             </div>
-            <div className="hidden sm:flex animate-slide-in-left animate-stagger-3 items-center gap-2 px-4 py-2 bg-[#E8D8C4] rounded-xl">
-              <div className="w-8 h-8 bg-[#561C24] rounded-full flex items-center justify-center text-white font-bold text-sm">
+            <div className="hidden sm:flex animate-slide-in-left animate-stagger-3 items-center gap-2 px-4 py-2 bg-[#561C24] rounded-xl">
+              <div className="w-8 h-8 bg-[#E8D8C4] rounded-full flex items-center justify-center text-[#561C24] font-bold text-sm">
                 {user.nama.charAt(0).toUpperCase()}
               </div>
               <div className="text-sm">
-                <p className="font-semibold text-[#561C24]">{user.nama}</p>
-                <p className="text-[#6D2932] text-xs">{user.email}</p>
+                <p className="font-semibold text-white">{user.nama}</p>
+                <p className="text-[#E8D8C4] text-xs">{user.email}</p>
               </div>
             </div>
           </div>
@@ -499,11 +494,11 @@ export default function BookingPage() {
                 <div>
                   <label className="block text-sm font-semibold text-[#561C24] mb-2">Nama Pemesan</label>
                   <input
-  type="text"
-  name="nama"
-  value={user?.nama ?? ""}
-  readOnly
-/>
+                    type="text"
+                    name="nama"
+                    value={user?.nama ?? ""}
+                    readOnly
+                  />
                   {errors.nama && <p className="mt-1.5 text-xs text-rose-600">{errors.nama}</p>}
                 </div>
                 <div>

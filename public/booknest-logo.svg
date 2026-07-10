@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <!-- Book base -->
+  <rect x="8" y="14" width="32" height="26" rx="3" fill="#561C24"/>
+  <!-- Book pages -->
+  <rect x="10" y="16" width="28" height="22" rx="2" fill="#E8D8C4"/>
+  <!-- Book spine -->
+  <rect x="10" y="16" width="4" height="22" rx="1" fill="#C7B7A3"/>
+  <!-- Book page lines -->
+  <line x1="17" y1="22" x2="34" y2="22" stroke="#561C24" stroke-width="1" stroke-opacity="0.2"/>
+  <line x1="17" y1="26" x2="30" y2="26" stroke="#561C24" stroke-width="1" stroke-opacity="0.2"/>
+  <line x1="17" y1="30" x2="32" y2="30" stroke="#561C24" stroke-width="1" stroke-opacity="0.2"/>
+  <!-- Nest/bird element on top -->
+  <path d="M24 8 C20 8, 16 11, 18 14 C20 12, 22 11, 24 12 C26 11, 28 12, 30 14 C32 11, 28 8, 24 8Z" fill="#6D2932"/>
+  <!-- Small bird -->
+  <circle cx="22" cy="10" r="2" fill="#C7B7A3"/>
+  <circle cx="21.5" cy="9.5" r="0.5" fill="#561C24"/>
+  <path d="M20.5 10 L19.5 9.5" stroke="#561C24" stroke-width="0.5" stroke-linecap="round"/>
+</svg>

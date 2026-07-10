@@ -34,15 +34,13 @@ body::before {
   bottom: 0;
   background: linear-gradient(
     to bottom,
-    #561C24 0%,
-    #6D2932 15%,
-    #8B4553 30%,
-    #A86B7A 45%,
-    #C7B7A3 60%,
-    #D8CBB8 72%,
-    #E8D8C4 84%,
-    #F2E8DA 92%,
-    #FAF7F4 100%
+    #FAF7F4 0%,
+    #E8D8C4 16%,
+    #C7B7A3 40%,
+    #A86B7A 55%,
+    #8B4553 65%,
+    #6D2932 80%,
+    #561C24 100%
   );
   z-index: -1;
 }

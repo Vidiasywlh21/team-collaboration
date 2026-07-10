@@ -311,10 +311,10 @@ function FakultasPageContent() {
 
   return (
     <div
-      className="font-sans text-zinc-900 dark:text-zinc-100 flex flex-col justify-between relative bg-hero-gradient"
+      className="font-sans text-zinc-900 dark:text-zinc-100 flex flex-col justify-between relative"
     >
       <div className="relative z-10 flex flex-col justify-between">
-      <style jsx global>{`
+        <style jsx global>{`
         @keyframes float {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-6px); }
@@ -341,285 +341,283 @@ function FakultasPageContent() {
         }
       `}</style>
 
-      <Navbar activePage="/tata-letak" />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
-        <section className="mb-8 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border border-white/20 dark:border-zinc-800/50 rounded-3xl p-6 md:p-8 shadow-sm">
-          <div className="flex flex-row items-center justify-between gap-4 mb-4">
-            <Link
-              href="/tata-letak"
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#6D2932] dark:text-[#c8b89a] hover:underline"
-            >
-              <IconChevronLeft size={16} />
-              Kembali ke Denah Fakultas
-            </Link>
 
-            {fakultasInfo.floors > 1 && (
-              <div className="flex items-center gap-1.5 bg-zinc-100 dark:bg-zinc-800 p-1 rounded-xl border border-zinc-200 dark:border-zinc-700">
-                <span className="text-xs text-zinc-500 dark:text-zinc-400 px-2 font-bold uppercase tracking-wider">Lantai:</span>
-                {Array.from({ length: fakultasInfo.floors }).map((_, idx) => {
-                  const fNum = idx + 1;
-                  const isActive = fNum === currentFloor;
-                  return (
-                    <button
-                      key={fNum}
-                      onClick={() => router.push(`/tata-letak/${fakultasSlug}?lantai=${fNum}`)}
-                      className={`px-3 py-1 text-xs font-bold rounded-lg transition-all cursor-pointer ${
-                        isActive
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+          <section className="mb-8 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border border-white/20 dark:border-zinc-800/50 rounded-3xl p-6 md:p-8 shadow-sm">
+            <div className="flex flex-row items-center justify-between gap-4 mb-4">
+              <Link
+                href="/tata-letak"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#6D2932] dark:text-[#c8b89a] hover:underline"
+              >
+                <IconChevronLeft size={16} />
+                Kembali ke Denah Fakultas
+              </Link>
+
+              {fakultasInfo.floors > 1 && (
+                <div className="flex items-center gap-1.5 bg-zinc-100 dark:bg-zinc-800 p-1 rounded-xl border border-zinc-200 dark:border-zinc-700">
+                  <span className="text-xs text-zinc-500 dark:text-zinc-400 px-2 font-bold uppercase tracking-wider">Lantai:</span>
+                  {Array.from({ length: fakultasInfo.floors }).map((_, idx) => {
+                    const fNum = idx + 1;
+                    const isActive = fNum === currentFloor;
+                    return (
+                      <button
+                        key={fNum}
+                        onClick={() => router.push(`/tata-letak/${fakultasSlug}?lantai=${fNum}`)}
+                        className={`px-3 py-1 text-xs font-bold rounded-lg transition-all cursor-pointer ${isActive
                           ? "bg-[#6D2932] text-white shadow-md shadow-red-950/20"
                           : "text-zinc-600 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700"
-                      }`}
-                    >
-                      {fNum}
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-          </div>
+                          }`}
+                      >
+                        {fNum}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
 
-          <h1 className="text-3xl md:text-4xl font-black tracking-tight text-zinc-900 dark:text-white">
-            {fakultasInfo.title}
-          </h1>
-          <p className="text-zinc-500 dark:text-zinc-400 mt-2 text-sm md:text-base">
-            {isFloorPlan
-              ? "Denah tata letak "
-              : `Menampilkan ruangan dan fasilitas di `}
-            <strong className="text-[#6D2932] dark:text-[#c8b89a]">Lantai {currentFloor}</strong>
-          </p>
-        </section>
+            <h1 className="text-3xl md:text-4xl font-black tracking-tight text-zinc-900 dark:text-white">
+              {fakultasInfo.title}
+            </h1>
+            <p className="text-zinc-500 dark:text-zinc-400 mt-2 text-sm md:text-base">
+              {isFloorPlan
+                ? "Denah tata letak "
+                : `Menampilkan ruangan dan fasilitas di `}
+              <strong className="text-[#6D2932] dark:text-[#c8b89a]">Lantai {currentFloor}</strong>
+            </p>
+          </section>
 
-        {isFloorPlan && currentFloorPlan ? (
-          <section className="mb-8">
-            <h2 className="text-lg font-bold mb-6 flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#6D2932] shadow-[0_0_8px_rgba(109,41,50,0.6)]"></span>
-              Denah Lantai {currentFloor} - {fakultasSlug === "fikom" ? "FIKOM" : fakultasSlug === "feb" ? "FEB" : fakultasSlug === "humaniora-kesehatan" ? "Humaniora & Kesehatan" : fakultasSlug === "teknik" ? "Teknik" : ""}
-            </h2>
-            <div>
+          {isFloorPlan && currentFloorPlan ? (
+            <section className="mb-8">
+              <h2 className="text-lg font-bold mb-6 flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#6D2932] shadow-[0_0_8px_rgba(109,41,50,0.6)]"></span>
+                Denah Lantai {currentFloor} - {fakultasSlug === "fikom" ? "FIKOM" : fakultasSlug === "feb" ? "FEB" : fakultasSlug === "humaniora-kesehatan" ? "Humaniora & Kesehatan" : fakultasSlug === "teknik" ? "Teknik" : ""}
+              </h2>
+              <div>
                 <div className="grid grid-cols-4 grid-rows-4 gap-3" style={{ minHeight: fakultasSlug === "teknik" && currentFloor === 2 ? "120px" : "600px" }}>
-                {currentFloorPlan.rooms.map((room, idx) => (
+                  {currentFloorPlan.rooms.map((room, idx) => (
+                    <div
+                      key={idx}
+                      className={`animate-fade-in-up rounded-xl border-2 p-6 flex flex-col items-center justify-center gap-3 ${getRoomStyle(room.type)}`}
+                      style={{
+                        gridArea: room.gridArea,
+                        animationDelay: `${idx * 0.08}s`,
+                      }}
+                    >
+                      {getRoomIcon(room.type, 64, room.name)}
+                      <span className="text-lg font-bold text-center leading-snug">{room.name}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-3 flex flex-wrap gap-3 text-xs">
+                  {currentFloor === 1 && fakultasSlug === "fikom" ? (
+                    <>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded bg-slate-500/40 border border-slate-500/60"></span>
+                        <span className="text-zinc-500">Fasilitas</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded bg-sky-500/40 border border-sky-500/60"></span>
+                        <span className="text-zinc-500">Administrasi</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded bg-fuchsia-500/40 border border-fuchsia-500/60"></span>
+                        <span className="text-zinc-500">Pejabat Struktural</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded bg-cyan-500/40 border border-cyan-500/60"></span>
+                        <span className="text-zinc-500">Program Studi</span>
+                      </div>
+                    </>
+                  ) : currentFloor === 1 && fakultasSlug === "feb" ? (
+                    <>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded bg-cyan-500/40 border border-cyan-500/60"></span>
+                        <span className="text-zinc-500">Program Studi</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded bg-fuchsia-500/40 border border-fuchsia-500/60"></span>
+                        <span className="text-zinc-500">Pejabat Struktural</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded bg-slate-500/40 border border-slate-500/60"></span>
+                        <span className="text-zinc-500">Fasilitas</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded bg-sky-500/40 border border-sky-500/60"></span>
+                        <span className="text-zinc-500">Administrasi</span>
+                      </div>
+                    </>
+                  ) : currentFloor === 1 && fakultasSlug === "humaniora-kesehatan" ? (
+                    <>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded bg-emerald-500/40 border border-emerald-500/60"></span>
+                        <span className="text-zinc-500">Laboratorium</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded bg-cyan-500/40 border border-cyan-500/60"></span>
+                        <span className="text-zinc-500">Program Studi</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded bg-fuchsia-500/40 border border-fuchsia-500/60"></span>
+                        <span className="text-zinc-500">Pejabat Struktural</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded bg-slate-500/40 border border-slate-500/60"></span>
+                        <span className="text-zinc-500">Fasilitas</span>
+                      </div>
+                    </>
+                  ) : currentFloor === 2 ? (
+                    <>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded bg-slate-500/40 border border-slate-500/60"></span>
+                        <span className="text-zinc-500">Fasilitas</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded bg-teal-500/40 border border-teal-500/60"></span>
+                        <span className="text-zinc-500">Laboratorium</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded bg-orange-500/40 border border-orange-500/60"></span>
+                        <span className="text-zinc-500">Ruang Kelas</span>
+                      </div>
+                    </>
+                  ) : currentFloor === 3 ? (
+                    <>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded bg-orange-500/40 border border-orange-500/60"></span>
+                        <span className="text-zinc-500">Ruang Kelas</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded bg-teal-500/40 border border-teal-500/60"></span>
+                        <span className="text-zinc-500">Laboratorium</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded bg-slate-500/40 border border-slate-500/60"></span>
+                        <span className="text-zinc-500">Fasilitas</span>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded bg-purple-500/40 border border-purple-500/60"></span>
+                        <span className="text-zinc-500">Perpustakaan</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded bg-fuchsia-500/40 border border-fuchsia-500/60"></span>
+                        <span className="text-zinc-500">Pejabat Struktural</span>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            </section>
+          ) : currentRooms.length > 0 ? (
+            <section className="mb-8">
+              <h2 className="text-lg font-bold mb-6 flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 shadow-[0_0_8px_rgba(16,185,129,0.6)]"></span>
+                Ruangan & Fasilitas - Lantai {currentFloor}
+              </h2>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                {currentRooms.map((room, idx) => (
                   <div
                     key={idx}
-                    className={`animate-fade-in-up rounded-xl border-2 p-6 flex flex-col items-center justify-center gap-3 ${getRoomStyle(room.type)}`}
-                    style={{
-                      gridArea: room.gridArea,
-                      animationDelay: `${idx * 0.08}s`,
-                    }}
+                    className={`animate-fade-in-up relative flex flex-col items-center justify-center p-6 rounded-2xl border-2 ${getRoomStyle(room.type)}`}
+                    style={{ animationDelay: `${idx * 0.1}s` }}
                   >
-                    {getRoomIcon(room.type, 64, room.name)}
-                    <span className="text-lg font-bold text-center leading-snug">{room.name}</span>
+                    {getRoomIcon(room.type, 48, room.name)}
+                    <span className="text-base font-bold tracking-tight text-center mt-2">
+                      {room.name}
+                    </span>
                   </div>
                 ))}
               </div>
-              <div className="mt-3 flex flex-wrap gap-3 text-xs">
-                {currentFloor === 1 && fakultasSlug === "fikom" ? (
-                  <>
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-3 h-3 rounded bg-slate-500/40 border border-slate-500/60"></span>
-                      <span className="text-zinc-500">Fasilitas</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-3 h-3 rounded bg-sky-500/40 border border-sky-500/60"></span>
-                      <span className="text-zinc-500">Administrasi</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-3 h-3 rounded bg-fuchsia-500/40 border border-fuchsia-500/60"></span>
-                      <span className="text-zinc-500">Pejabat Struktural</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-3 h-3 rounded bg-cyan-500/40 border border-cyan-500/60"></span>
-                      <span className="text-zinc-500">Program Studi</span>
-                    </div>
-                  </>
-                ) : currentFloor === 1 && fakultasSlug === "feb" ? (
-                  <>
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-3 h-3 rounded bg-cyan-500/40 border border-cyan-500/60"></span>
-                      <span className="text-zinc-500">Program Studi</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-3 h-3 rounded bg-fuchsia-500/40 border border-fuchsia-500/60"></span>
-                      <span className="text-zinc-500">Pejabat Struktural</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-3 h-3 rounded bg-slate-500/40 border border-slate-500/60"></span>
-                      <span className="text-zinc-500">Fasilitas</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-3 h-3 rounded bg-sky-500/40 border border-sky-500/60"></span>
-                      <span className="text-zinc-500">Administrasi</span>
-                    </div>
-                  </>
-                ) : currentFloor === 1 && fakultasSlug === "humaniora-kesehatan" ? (
-                  <>
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-3 h-3 rounded bg-emerald-500/40 border border-emerald-500/60"></span>
-                      <span className="text-zinc-500">Laboratorium</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-3 h-3 rounded bg-cyan-500/40 border border-cyan-500/60"></span>
-                      <span className="text-zinc-500">Program Studi</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-3 h-3 rounded bg-fuchsia-500/40 border border-fuchsia-500/60"></span>
-                      <span className="text-zinc-500">Pejabat Struktural</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-3 h-3 rounded bg-slate-500/40 border border-slate-500/60"></span>
-                      <span className="text-zinc-500">Fasilitas</span>
-                    </div>
-                  </>
-                ) : currentFloor === 2 ? (
-                  <>
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-3 h-3 rounded bg-slate-500/40 border border-slate-500/60"></span>
-                      <span className="text-zinc-500">Fasilitas</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-3 h-3 rounded bg-teal-500/40 border border-teal-500/60"></span>
-                      <span className="text-zinc-500">Laboratorium</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-3 h-3 rounded bg-orange-500/40 border border-orange-500/60"></span>
-                      <span className="text-zinc-500">Ruang Kelas</span>
-                    </div>
-                  </>
-                ) : currentFloor === 3 ? (
-                  <>
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-3 h-3 rounded bg-orange-500/40 border border-orange-500/60"></span>
-                      <span className="text-zinc-500">Ruang Kelas</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-3 h-3 rounded bg-teal-500/40 border border-teal-500/60"></span>
-                      <span className="text-zinc-500">Laboratorium</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-3 h-3 rounded bg-slate-500/40 border border-slate-500/60"></span>
-                      <span className="text-zinc-500">Fasilitas</span>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-3 h-3 rounded bg-purple-500/40 border border-purple-500/60"></span>
-                      <span className="text-zinc-500">Perpustakaan</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-3 h-3 rounded bg-fuchsia-500/40 border border-fuchsia-500/60"></span>
-                      <span className="text-zinc-500">Pejabat Struktural</span>
-                    </div>
-                  </>
-                )}
+              {fakultasSlug === "humaniora-kesehatan" && currentFloor === 1 ? (
+                <div className="mt-6 flex flex-wrap gap-3 text-xs">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded bg-teal-500/40 border border-teal-500/60"></span>
+                    <span className="text-zinc-500">Laboratorium</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded bg-fuchsia-500/40 border border-fuchsia-500/60"></span>
+                    <span className="text-zinc-500">Pejabat Struktural</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded bg-slate-500/40 border border-slate-500/60"></span>
+                    <span className="text-zinc-500">Fasilitas</span>
+                  </div>
+                </div>
+              ) : fakultasSlug === "humaniora-kesehatan" && currentFloor === 2 ? (
+                <div className="mt-6 flex flex-wrap gap-3 text-xs">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded bg-orange-500/40 border border-orange-500/60"></span>
+                    <span className="text-zinc-500">Ruang Kelas</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded bg-slate-500/40 border border-slate-500/60"></span>
+                    <span className="text-zinc-500">Fasilitas</span>
+                  </div>
+                </div>
+              ) : fakultasSlug === "feb" && currentFloor === 2 ? (
+                <div className="mt-6 flex flex-wrap gap-3 text-xs">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded bg-orange-500/40 border border-orange-500/60"></span>
+                    <span className="text-zinc-500">Ruang Kelas</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded bg-slate-500/40 border border-slate-500/60"></span>
+                    <span className="text-zinc-500">Fasilitas</span>
+                  </div>
+                </div>
+              ) : fakultasSlug === "teknik" && currentFloor === 1 ? (
+                <div className="mt-2 flex flex-wrap gap-3 text-xs">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded bg-slate-500/40 border border-slate-500/60"></span>
+                    <span className="text-zinc-500">Fasilitas</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded bg-cyan-500/40 border border-cyan-500/60"></span>
+                    <span className="text-zinc-500">Program Studi</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded bg-teal-500/40 border border-teal-500/60"></span>
+                    <span className="text-zinc-500">Laboratorium</span>
+                  </div>
+                </div>
+              ) : fakultasSlug === "teknik" && currentFloor === 2 ? (
+                <div className="mt-3 flex flex-wrap gap-3 text-xs">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded bg-orange-500/40 border border-orange-500/60"></span>
+                    <span className="text-zinc-500">Ruang Kelas</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded bg-slate-500/40 border border-slate-500/60"></span>
+                    <span className="text-zinc-500">Fasilitas</span>
+                  </div>
+                </div>
+              ) : fakultasSlug === "teknik" && currentFloor === 3 ? (
+                <div className="mt-3 flex flex-wrap gap-3 text-xs">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded bg-orange-500/40 border border-orange-500/60"></span>
+                    <span className="text-zinc-500">Ruang Kelas</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded bg-slate-500/40 border border-slate-500/60"></span>
+                    <span className="text-zinc-500">Fasilitas</span>
+                  </div>
+                </div>
+              ) : null}
+            </section>
+          ) : (
+            <section className="mb-8">
+              <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border border-white/20 dark:border-zinc-800/50 rounded-3xl p-12 text-center">
+                <IconBuilding size={48} className="mx-auto mb-4 text-zinc-400" />
+                <p className="text-zinc-500">Denah untuk lantai ini belum tersedia.</p>
               </div>
-            </div>
-          </section>
-        ) : currentRooms.length > 0 ? (
-          <section className="mb-8">
-            <h2 className="text-lg font-bold mb-6 flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 shadow-[0_0_8px_rgba(16,185,129,0.6)]"></span>
-              Ruangan & Fasilitas - Lantai {currentFloor}
-            </h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-              {currentRooms.map((room, idx) => (
-                <div
-                  key={idx}
-                  className={`animate-fade-in-up relative flex flex-col items-center justify-center p-6 rounded-2xl border-2 ${getRoomStyle(room.type)}`}
-                  style={{ animationDelay: `${idx * 0.1}s` }}
-                >
-                  {getRoomIcon(room.type, 48, room.name)}
-                  <span className="text-base font-bold tracking-tight text-center mt-2">
-                    {room.name}
-                  </span>
-                </div>
-              ))}
-            </div>
-            {fakultasSlug === "humaniora-kesehatan" && currentFloor === 1 ? (
-              <div className="mt-6 flex flex-wrap gap-3 text-xs">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded bg-teal-500/40 border border-teal-500/60"></span>
-                  <span className="text-zinc-500">Laboratorium</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded bg-fuchsia-500/40 border border-fuchsia-500/60"></span>
-                  <span className="text-zinc-500">Pejabat Struktural</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded bg-slate-500/40 border border-slate-500/60"></span>
-                  <span className="text-zinc-500">Fasilitas</span>
-                </div>
-              </div>
-            ) : fakultasSlug === "humaniora-kesehatan" && currentFloor === 2 ? (
-              <div className="mt-6 flex flex-wrap gap-3 text-xs">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded bg-orange-500/40 border border-orange-500/60"></span>
-                  <span className="text-zinc-500">Ruang Kelas</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded bg-slate-500/40 border border-slate-500/60"></span>
-                  <span className="text-zinc-500">Fasilitas</span>
-                </div>
-              </div>
-            ) : fakultasSlug === "feb" && currentFloor === 2 ? (
-              <div className="mt-6 flex flex-wrap gap-3 text-xs">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded bg-orange-500/40 border border-orange-500/60"></span>
-                  <span className="text-zinc-500">Ruang Kelas</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded bg-slate-500/40 border border-slate-500/60"></span>
-                  <span className="text-zinc-500">Fasilitas</span>
-                </div>
-              </div>
-            ) : fakultasSlug === "teknik" && currentFloor === 1 ? (
-              <div className="mt-2 flex flex-wrap gap-3 text-xs">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded bg-slate-500/40 border border-slate-500/60"></span>
-                  <span className="text-zinc-500">Fasilitas</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded bg-cyan-500/40 border border-cyan-500/60"></span>
-                  <span className="text-zinc-500">Program Studi</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded bg-teal-500/40 border border-teal-500/60"></span>
-                  <span className="text-zinc-500">Laboratorium</span>
-                </div>
-              </div>
-            ) : fakultasSlug === "teknik" && currentFloor === 2 ? (
-              <div className="mt-3 flex flex-wrap gap-3 text-xs">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded bg-orange-500/40 border border-orange-500/60"></span>
-                  <span className="text-zinc-500">Ruang Kelas</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded bg-slate-500/40 border border-slate-500/60"></span>
-                  <span className="text-zinc-500">Fasilitas</span>
-                </div>
-              </div>
-            ) : fakultasSlug === "teknik" && currentFloor === 3 ? (
-              <div className="mt-3 flex flex-wrap gap-3 text-xs">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded bg-orange-500/40 border border-orange-500/60"></span>
-                  <span className="text-zinc-500">Ruang Kelas</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded bg-slate-500/40 border border-slate-500/60"></span>
-                  <span className="text-zinc-500">Fasilitas</span>
-                </div>
-              </div>
-            ) : null}
-          </section>
-        ) : (
-          <section className="mb-8">
-            <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border border-white/20 dark:border-zinc-800/50 rounded-3xl p-12 text-center">
-              <IconBuilding size={48} className="mx-auto mb-4 text-zinc-400" />
-              <p className="text-zinc-500">Denah untuk lantai ini belum tersedia.</p>
-            </div>
-          </section>
-        )}
-      </main>
-      <Footer />
+            </section>
+          )}
+        </main>
       </div>
     </div>
   );
@@ -635,7 +633,7 @@ export default function FakultasPage() {
         </div>
       }
     >
-      
+      <FakultasPageContent />
     </Suspense>
   );
 }

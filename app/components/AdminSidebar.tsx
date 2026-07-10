@@ -51,7 +51,7 @@ export default function AdminSidebar() {
       >
         {/* Logo */}
         <div className="mb-8 animate-slide-in-left">
-          <h1 className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">SinergiSpace</h1>
+          <h1 className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">BookNest</h1>
           <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Admin Dashboard</p>
         </div>
 

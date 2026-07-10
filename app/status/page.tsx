@@ -72,13 +72,9 @@ export default function StatusPage() {
 
   if (isLoading) {
     return (
-      <div className="animate-fade-in min-h-screen flex flex-col items-center justify-center gap-4"
-        style={{
-          background: "linear-gradient(to bottom, #f8f3ec 0%, #f5efe6 10%, #ede4d4 20%, #e4d7c3 30%, #dccfb9 40%, #d4c4ac 48%, #c8b89a 50%, #b09078 53%, #9a7060 57%, #8a5a50 62%, #7a4040 68%, #6D2931 75%, #622530 82%, #5a1f25 88%, #511a20 94%, #4a1520 100%)",
-        }}
-      >
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
-        <p className="text-white/70 text-sm">Memuat riwayat booking...</p>
+      <div className="animate-fade-in min-h-screen flex flex-col items-center justify-center gap-4">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#561C24]"></div>
+        <p className="text-[#561C24] text-sm">Memuat riwayat booking...</p>
       </div>
     );
   }
@@ -87,9 +83,6 @@ export default function StatusPage() {
     return (
       <div
         className="animate-fade-in min-h-screen flex flex-col items-center justify-center p-4"
-        style={{
-          background: "linear-gradient(to bottom, #f8f3ec 0%, #f5efe6 10%, #ede4d4 20%, #e4d7c3 30%, #dccfb9 40%, #d4c4ac 48%, #c8b89a 50%, #b09078 53%, #9a7060 57%, #8a5a50 62%, #7a4040 68%, #6D2931 75%, #622530 82%, #5a1f25 88%, #511a20 94%, #4a1520 100%)",
-        }}
       >
         <div className="w-full max-w-md animate-fade-in-scale">
           <Link href="/" className="inline-flex items-center gap-1 text-sm font-medium text-[#561C24] hover:text-white mb-8 transition-colors">
@@ -208,13 +201,13 @@ export default function StatusPage() {
 
   return (
     <div
-      className="animate-fade-in font-sans text-zinc-900 relative bg-hero-gradient"
+      className="animate-fade-in font-sans text-zinc-900 relative"
     >
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {bookingHistory.length === 0 ? (
           <div className="animate-fade-in-up text-center py-16">
-            <div className="w-16 h-16 bg-[#E8D8C4] rounded-full flex items-center justify-center mx-auto mb-4 animate-scale-in">
-              <IconClock size={32} className="text-[#6D2932]" />
+            <div className="w-16 h-16 bg-[#561c24] rounded-full flex items-center justify-center mx-auto mb-4 animate-scale-in">
+              <IconClock size={32} className="text-[#e8c8d4]" />
             </div>
             <h2 className="text-xl font-bold mb-2 text-[#561c24]">Belum Ada Booking</h2>
             <p className="text-[#561c24] mb-6">Anda belum memiliki riwayat pemesanan ruangan.</p>

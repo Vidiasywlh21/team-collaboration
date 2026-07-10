@@ -42,10 +42,10 @@ export default function Footer() {
           {/* Brand */}
           <div className="footer-reveal md:col-span-1">
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-8 h-8 rounded-lg bg-[#E8D8C4] flex items-center justify-center text-[#561C24] font-bold text-sm">
-                SS
+              <div className="w-8 h-8 rounded-lg bg-[#E8D8C4] flex items-center justify-center overflow-hidden">
+                <img src="/booknest-logo.svg" alt="BookNest" className="w-6 h-6" />
               </div>
-              <span className="font-bold text-lg text-white">SinergiSpace</span>
+              <span className="font-bold text-lg text-white">BookNest</span>
             </div>
             <p className="text-xs text-[#E8D8C4]/60 leading-relaxed mb-4">
               Sistem peminjaman ruang kampus Universitas Mulia Balikpapan. Booking ruang kelas, laboratorium, dan aula secara online.
@@ -55,7 +55,7 @@ export default function Footer() {
                 className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-[#E8D8C4]/70 hover:bg-white/20 hover:text-white transition-all duration-200">
                 <IconBrandInstagram size={16} />
               </a>
-              <a href="mailto:info@sinergispace.com"
+              <a href="mailto:info@booknest.com"
                 className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-[#E8D8C4]/70 hover:bg-white/20 hover:text-white transition-all duration-200">
                 <IconMail size={16} />
               </a>
@@ -102,7 +102,7 @@ export default function Footer() {
               <li>Jl. Gn. Empat, Balikpapan</li>
               <li>Kalimantan Timur, Indonesia</li>
               <li className="pt-1">
-                <a href="mailto:info@sinergispace.com" className="hover:text-white transition-colors">info@sinergispace.com</a>
+                <a href="mailto:info@booknest.com" className="hover:text-white transition-colors">info@booknest.com</a>
               </li>
             </ul>
           </div>
@@ -111,7 +111,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-[10px] text-[#E8D8C4]/40">
-            &copy; {new Date().getFullYear()} SinergiSpace. Hak Cipta Dilindungi Undang-Undang.
+            &copy; {new Date().getFullYear()} BookNest. Hak Cipta Dilindungi Undang-Undang.
           </p>
           <div className="flex gap-4 text-[10px] font-medium text-[#E8D8C4]/50">
             <Link href="/bantuan" className="hover:text-white transition-colors">Kebijakan Privasi</Link>
