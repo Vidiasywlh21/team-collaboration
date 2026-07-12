@@ -30,7 +30,7 @@ export default function AdminSidebar() {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white dark:bg-zinc-800 rounded-lg shadow-lg border border-zinc-200 dark:border-zinc-700"
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-[#561C24] text-[#E8D8C4] rounded-lg shadow-lg border border-[#6D2932]"
       >
         {isMobileMenuOpen ? <IconX size={24} /> : <IconMenu2 size={24} />}
       </button>
@@ -47,29 +47,28 @@ export default function AdminSidebar() {
       <aside
         className={`${
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-        } lg:translate-x-0 fixed lg:sticky top-0 left-0 h-screen w-64 bg-white dark:bg-zinc-900 border-r border-zinc-200 dark:border-zinc-800 p-6 transition-transform duration-300 z-40 flex flex-col`}
+        } lg:translate-x-0 fixed lg:sticky top-0 left-0 h-screen w-64 bg-[#561C24] border-r border-[#6D2932] transition-transform duration-300 z-40 flex flex-col`}
       >
-        {/* Logo */}
-        <div className="mb-8 animate-slide-in-left">
-          <h1 className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">BookNest</h1>
-          <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Admin Dashboard</p>
+        {/* Logo - aligned with Dashboard header */}
+        <div className="px-6 pt-8 animate-slide-in-left">
+          <img src="/booknest_logo.png" alt="BookNest" className="h-28 w-auto" />
         </div>
 
         {/* User Info */}
-        <div className="mb-6 p-3 bg-zinc-50 dark:bg-zinc-800 rounded-xl animate-slide-in-left" style={{ animationDelay: "0.1s" }}>
+        <div className="mx-6 mt-6 p-3 bg-[#6D2932] rounded-xl animate-slide-in-left" style={{ animationDelay: "0.1s" }}>
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold transition-transform duration-300 hover:scale-110">
+            <div className="w-10 h-10 bg-[#E8D8C4] rounded-full flex items-center justify-center text-[#561C24] font-bold transition-transform duration-300 hover:scale-110">
               {user?.nama.charAt(0).toUpperCase()}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 truncate">{user?.nama}</p>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 truncate">{user?.email}</p>
+              <p className="text-sm font-semibold text-[#E8D8C4] truncate">{user?.nama}</p>
+              <p className="text-xs text-[#C7B7A3] truncate">{user?.email}</p>
             </div>
           </div>
         </div>
 
-        {/* Navigation */}
-        <nav className="flex-1 space-y-1">
+        {/* Navigation - aligned with cards */}
+        <nav className="flex-1 px-6 mt-8 space-y-1">
           {menuItems.map((item, index) => {
             const isActive = pathname === item.href;
             const Icon = item.icon;
@@ -80,8 +79,8 @@ export default function AdminSidebar() {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 animate-slide-in-left ${
                   isActive
-                    ? "bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400"
-                    : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:translate-x-1"
+                    ? "bg-[#E8D8C4] text-[#561C24]"
+                    : "text-[#C7B7A3] hover:bg-[#6D2932] hover:text-[#E8D8C4] hover:translate-x-1"
                 }`}
                 style={{ animationDelay: `${0.15 + index * 0.05}s` }}
               >
@@ -93,14 +92,16 @@ export default function AdminSidebar() {
         </nav>
 
         {/* Logout Button */}
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-all duration-300 w-full animate-slide-in-left"
-          style={{ animationDelay: "0.4s" }}
-        >
-          <IconLogout size={20} />
-          Keluar
-        </button>
+        <div className="px-6 pb-6">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-[#E8D8C4] hover:bg-[#6D2932] transition-all duration-300 w-full animate-slide-in-left"
+            style={{ animationDelay: "0.4s" }}
+          >
+            <IconLogout size={20} />
+            Keluar
+          </button>
+        </div>
       </aside>
     </>
   );

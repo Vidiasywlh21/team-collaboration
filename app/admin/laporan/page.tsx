@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../lib/auth-context";
 import { useRouter } from "next/navigation";
-import AdminSidebar from "../../components/AdminSidebar";
 import { getAllBookings } from "../../lib/admin-store";
 import { Booking } from "../../lib/booking-store";
 import { IconDownload, IconCalendar, IconFilter } from "@tabler/icons-react";
@@ -100,8 +99,8 @@ export default function Laporan() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#E8D8C4]"></div>
       </div>
     );
   }
@@ -111,20 +110,17 @@ export default function Laporan() {
   }
 
   return (
-    <div className="flex min-h-screen bg-zinc-50 dark:bg-zinc-950">
-      <AdminSidebar />
-
-      <main className="flex-1 p-8">
-        <div className="max-w-7xl mx-auto">
+    <div className="p-8">
+      <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="flex items-center justify-between mb-8 animate-fade-in-up">
             <div>
-              <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100">Laporan</h1>
-              <p className="text-zinc-500 dark:text-zinc-400 mt-1">Statistik dan laporan booking ruangan</p>
+              <h1 className="text-3xl font-bold text-[#561C24]">Laporan</h1>
+              <p className="text-[#6D2932] mt-1">Statistik dan laporan booking ruangan</p>
             </div>
             <button
               onClick={handleExport}
-              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl text-sm font-semibold shadow-lg shadow-indigo-600/30 transition-all duration-300 hover:scale-105"
+              className="flex items-center gap-2 bg-[#6D2932] hover:bg-[#561C24] text-[#E8D8C4] px-6 py-3 rounded-xl text-sm font-semibold shadow-lg transition-all duration-300 hover:scale-105"
             >
               <IconDownload size={18} />
               Export CSV
@@ -132,14 +128,14 @@ export default function Laporan() {
           </div>
 
           {/* Filters */}
-          <div className="scroll-reveal bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6 mb-6">
+          <div className="scroll-reveal bg-[#E8D8C4]/80 backdrop-blur-sm rounded-xl border border-[#C7B7A3] p-6 mb-6">
             <div className="flex items-center gap-2 mb-4">
-              <IconFilter size={20} className="text-zinc-500 dark:text-zinc-400" />
-              <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Filter Laporan</h2>
+              <IconFilter size={20} className="text-[#6D2932]" />
+              <h2 className="text-lg font-semibold text-[#561C24]">Filter Laporan</h2>
             </div>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                <label className="block text-sm font-medium text-[#6D2932] mb-2">
                   <IconCalendar size={14} className="inline mr-1" />
                   Bulan
                 </label>
@@ -147,15 +143,15 @@ export default function Laporan() {
                   type="month"
                   value={filterMonth}
                   onChange={(e) => setFilterMonth(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-[#C7B7A3] bg-white text-[#561C24] text-sm focus:outline-none focus:ring-2 focus:ring-[#6D2932] transition-all"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">Status</label>
+                <label className="block text-sm font-medium text-[#6D2932] mb-2">Status</label>
                 <select
                   value={filterStatus}
                   onChange={(e) => setFilterStatus(e.target.value as any)}
-                  className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-[#C7B7A3] bg-white text-[#561C24] text-sm focus:outline-none focus:ring-2 focus:ring-[#6D2932] transition-all"
                 >
                   <option value="all">Semua Status</option>
                   <option value="pending">Pending</option>
@@ -168,63 +164,63 @@ export default function Laporan() {
 
           {/* Stats Summary */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-            <div className="animate-fade-in-up animate-stagger-1 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
-              <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-1">Total Booking</p>
-              <h3 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100">{stats.total}</h3>
+            <div className="animate-fade-in-up animate-stagger-1 bg-[#E8D8C4]/80 backdrop-blur-sm rounded-xl border border-[#C7B7A3] p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+              <p className="text-sm text-[#6D2932] mb-1">Total Booking</p>
+              <h3 className="text-3xl font-bold text-[#561C24]">{stats.total}</h3>
             </div>
-            <div className="animate-fade-in-up animate-stagger-2 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
-              <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-1">Pending</p>
-              <h3 className="text-3xl font-bold text-amber-600 dark:text-amber-400">{stats.pending}</h3>
+            <div className="animate-fade-in-up animate-stagger-2 bg-[#E8D8C4]/80 backdrop-blur-sm rounded-xl border border-[#C7B7A3] p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+              <p className="text-sm text-[#6D2932] mb-1">Pending</p>
+              <h3 className="text-3xl font-bold text-[#6D2932]">{stats.pending}</h3>
             </div>
-            <div className="animate-fade-in-up animate-stagger-3 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
-              <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-1">Disetujui</p>
-              <h3 className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">{stats.dikonfirmasi}</h3>
+            <div className="animate-fade-in-up animate-stagger-3 bg-[#E8D8C4]/80 backdrop-blur-sm rounded-xl border border-[#C7B7A3] p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+              <p className="text-sm text-[#6D2932] mb-1">Disetujui</p>
+              <h3 className="text-3xl font-bold text-[#6D2932]">{stats.dikonfirmasi}</h3>
             </div>
-            <div className="animate-fade-in-up animate-stagger-4 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
-              <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-1">Ditolak</p>
-              <h3 className="text-3xl font-bold text-rose-600 dark:text-rose-400">{stats.ditolak}</h3>
+            <div className="animate-fade-in-up animate-stagger-4 bg-[#E8D8C4]/80 backdrop-blur-sm rounded-xl border border-[#C7B7A3] p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+              <p className="text-sm text-[#6D2932] mb-1">Ditolak</p>
+              <h3 className="text-3xl font-bold text-[#561C24]">{stats.ditolak}</h3>
             </div>
           </div>
 
           {/* Table */}
-          <div className="scroll-reveal bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
+          <div className="scroll-reveal bg-[#E8D8C4]/80 backdrop-blur-sm rounded-xl border border-[#C7B7A3] overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-zinc-50 dark:bg-zinc-800">
+                <thead className="bg-[#C7B7A3]/50">
                   <tr>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-zinc-600 dark:text-zinc-400">ID Booking</th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-zinc-600 dark:text-zinc-400">Nama</th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-zinc-600 dark:text-zinc-400">Ruangan</th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-zinc-600 dark:text-zinc-400">Tanggal</th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-zinc-600 dark:text-zinc-400">Waktu</th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-zinc-600 dark:text-zinc-400">Status</th>
+                    <th className="text-left py-4 px-6 text-sm font-semibold text-[#6D2932]">ID Booking</th>
+                    <th className="text-left py-4 px-6 text-sm font-semibold text-[#6D2932]">Nama</th>
+                    <th className="text-left py-4 px-6 text-sm font-semibold text-[#6D2932]">Ruangan</th>
+                    <th className="text-left py-4 px-6 text-sm font-semibold text-[#6D2932]">Tanggal</th>
+                    <th className="text-left py-4 px-6 text-sm font-semibold text-[#6D2932]">Waktu</th>
+                    <th className="text-left py-4 px-6 text-sm font-semibold text-[#6D2932]">Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredBookings.length === 0 ? (
                     <tr>
-                      <td colSpan={6} className="text-center py-12 text-zinc-500 dark:text-zinc-400 text-sm">
+                      <td colSpan={6} className="text-center py-12 text-[#6D2932] text-sm">
                         Tidak ada data untuk filter yang dipilih
                       </td>
                     </tr>
                   ) : (
                     filteredBookings.map((booking) => (
-                      <tr key={booking.id} className="border-t border-zinc-100 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors duration-200">
-                        <td className="py-4 px-6 text-sm text-zinc-900 dark:text-zinc-100 font-mono">{booking.id}</td>
-                        <td className="py-4 px-6 text-sm text-zinc-900 dark:text-zinc-100">{booking.nama}</td>
-                        <td className="py-4 px-6 text-sm text-zinc-600 dark:text-zinc-400">{booking.ruangan}</td>
-                        <td className="py-4 px-6 text-sm text-zinc-600 dark:text-zinc-400">{booking.tanggal}</td>
-                        <td className="py-4 px-6 text-sm text-zinc-600 dark:text-zinc-400">
+                      <tr key={booking.id} className="border-t border-[#C7B7A3]/50 hover:bg-[#C7B7A3]/30 transition-colors duration-200">
+                        <td className="py-4 px-6 text-sm text-[#561C24] font-mono">{booking.id}</td>
+                        <td className="py-4 px-6 text-sm text-[#561C24]">{booking.nama}</td>
+                        <td className="py-4 px-6 text-sm text-[#6D2932]">{booking.ruangan}</td>
+                        <td className="py-4 px-6 text-sm text-[#6D2932]">{booking.tanggal}</td>
+                        <td className="py-4 px-6 text-sm text-[#6D2932]">
                           {booking.waktu_mulai} - {booking.waktu_selesai}
                         </td>
                         <td className="py-4 px-6">
                           <span
                             className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
                               booking.status === "pending"
-                                ? "bg-amber-100 dark:bg-amber-950/50 text-amber-700 dark:text-amber-400"
+                                ? "bg-[#C7B7A3] text-[#561C24]"
                                 : booking.status === "dikonfirmasi"
-                                ? "bg-emerald-100 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400"
-                                : "bg-rose-100 dark:bg-rose-950/50 text-rose-700 dark:text-rose-400"
+                                ? "bg-[#6D2932]/20 text-[#561C24]"
+                                : "bg-[#561C24]/20 text-[#561C24]"
                             }`}
                           >
                             {booking.status === "pending" ? "Pending" : booking.status === "dikonfirmasi" ? "Disetujui" : "Ditolak"}
@@ -237,8 +233,7 @@ export default function Laporan() {
               </table>
             </div>
           </div>
-        </div>
-      </main>
+      </div>
     </div>
   );
 }
