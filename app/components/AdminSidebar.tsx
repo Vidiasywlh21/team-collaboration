@@ -51,27 +51,7 @@ export default function AdminSidebar() {
       >
         {/* Logo - aligned with Dashboard header */}
         <div className="px-6 pt-8 animate-slide-in-left">
-          <div className="group relative flex items-center select-none">
-            <span className="text-white font-extrabold text-2xl tracking-tight">B</span>
-            <svg className="w-8 h-6 mx-0.5" viewBox="0 0 40 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="infGradNav" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#8B4553"/>
-                  <stop offset="40%" stopColor="#C46B7A"/>
-                  <stop offset="70%" stopColor="#D4AF37"/>
-                  <stop offset="100%" stopColor="#E8C84A"/>
-                </linearGradient>
-              </defs>
-              <circle cx="13" cy="14" r="7" stroke="url(#infGradNav)" strokeWidth="3.5" fill="none"/>
-              <circle cx="27" cy="14" r="7" stroke="url(#infGradNav)" strokeWidth="3.5" fill="none"/>
-            </svg>
-            <span className="text-white font-extrabold text-2xl tracking-tight">kNest</span>
-            <span className="relative ml-3">
-              <span className="text-white font-extrabold text-2xl tracking-tight">UM</span>
-              <span className="absolute top-0 right-[-5px] w-2 h-2 rounded-full bg-[#D4AF37]"></span>
-            </span>
-            <span className="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-[#D4AF37] group-hover:w-full transition-all duration-300 ease-out rounded-full"></span>
-          </div>
+          <img src="/booknest_logo.png" alt="BookNest" className="h-28 w-auto" />
         </div>
 
         {/* User Info */}

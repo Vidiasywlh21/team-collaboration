@@ -114,7 +114,7 @@ export default function VerifikasiBooking() {
                 <thead className="bg-[#C7B7A3]/50">
                   <tr>
                     <th className="text-left py-4 px-6 text-sm font-semibold text-[#6D2932]">ID Booking</th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-[#6D2932]">Nama / Acara</th>
+                    <th className="text-left py-4 px-6 text-sm font-semibold text-[#6D2932]">Nama Pemesan</th>
                     <th className="text-left py-4 px-6 text-sm font-semibold text-[#6D2932]">Ruangan</th>
                     <th className="text-left py-4 px-6 text-sm font-semibold text-[#6D2932]">Tanggal</th>
                     <th className="text-left py-4 px-6 text-sm font-semibold text-[#6D2932]">Waktu</th>
@@ -133,7 +133,7 @@ export default function VerifikasiBooking() {
                     filteredBookings.map((booking) => (
                       <tr key={booking.id} className="border-t border-[#C7B7A3]/50 hover:bg-[#C7B7A3]/30 transition-colors duration-200">
                         <td className="py-4 px-6 text-sm text-[#561C24] font-mono">{booking.id}</td>
-                        <td className="py-4 px-6 text-sm text-[#561C24]">{booking.nama_acara || booking.nama}</td>
+                        <td className="py-4 px-6 text-sm text-[#561C24]">{booking.nama}</td>
                         <td className="py-4 px-6 text-sm text-[#6D2932]">{booking.ruangan}</td>
                         <td className="py-4 px-6 text-sm text-[#6D2932]">{booking.tanggal}</td>
                         <td className="py-4 px-6 text-sm text-[#6D2932]">

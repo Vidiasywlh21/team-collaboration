@@ -6,16 +6,15 @@ import Footer from "@/app/components/Footer";
 
 export default function ConditionalLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isLoginPage = pathname === "/admin/login";
-  const isAdminDashboard = pathname.startsWith("/admin") && !isLoginPage;
+  const isAdminRoute = pathname.startsWith("/admin");
 
-  if (isAdminDashboard) {
+  if (isAdminRoute) {
     return <>{children}</>;
   }
 
   return (
     <>
-      <Navbar />
+      <Navbar activePage={pathname} />
       <main className="flex-1 pt-16">{children}</main>
       <Footer />
     </>
