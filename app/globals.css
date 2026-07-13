@@ -329,6 +329,15 @@ body::before {
   transform: translateY(0);
 }
 
+/* Logo glow effect */
+.logo-glow {
+  text-shadow: 0 0 8px rgba(232, 216, 196, 0.6), 0 0 16px rgba(232, 216, 196, 0.3);
+}
+
+.logo-glow:hover {
+  text-shadow: 0 0 12px rgba(232, 216, 196, 0.8), 0 0 24px rgba(232, 216, 196, 0.5);
+}
+
 /* Dark Mode Scrollbar */
 @media (prefers-color-scheme: dark) {
   ::-webkit-scrollbar-track {

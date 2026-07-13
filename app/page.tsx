@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   IconLayout,
   IconCalendarPlus,
@@ -10,8 +10,10 @@ import {
   IconArrowRight,
   IconMapPin,
   IconUsers,
-  IconCircleCheck
+  IconCircleCheck,
+  IconX
 } from "@tabler/icons-react";
+import { getBookings, Booking } from "./lib/booking-store";
 
 function useScrollReveal() {
   useEffect(() => {
@@ -32,8 +34,21 @@ function useScrollReveal() {
   }, []);
 }
 
+const totalRooms = 38;
+
 export default function Home() {
   useScrollReveal();
+  const [showBookingPopup, setShowBookingPopup] = useState(false);
+  const [bookedRooms, setBookedRooms] = useState<Booking[]>([]);
+  const [bookedCount, setBookedCount] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => {
+    setIsMounted(true);
+    const bookings = getBookings().filter(b => b.status === "dikonfirmasi");
+    setBookedCount(bookings.length);
+  }, []);
 
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -49,7 +64,7 @@ export default function Home() {
             <span className="w-1.5 h-1.5 bg-[#6D2932] rounded-full animate-ping"></span>
             Sistem Aktif & Terpadu
           </span>
-          <h1 className="animate-fade-in-up animate-stagger-2 text-3xl md:text-4xl font-extrabold tracking-tight mb-4 leading-tight text-white">
+          <h1 className="animate-fade-in-up animate-stagger-2 text-3xl md:text-4xl tracking-tight mb-4 leading-tight text-white" style={{ fontFamily: "var(--font-heading), Georgia, serif", fontWeight: 900 }}>
             Booking Ruangan Mudah untuk <br />
             Seluruh Civitas Universitas Mulia Balikpapan
           </h1>
@@ -70,15 +85,24 @@ export default function Home() {
 
       {/* Live Statistics Cards */}
       <section className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mb-10">
-        <div className="scroll-reveal bg-[#E8D8C4] p-5 rounded-2xl border border-[#C7B7A3] shadow-sm flex items-center gap-4 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5" style={{ transitionDelay: "0s" }}>
+        <button
+          onClick={() => {
+            const bookings = getBookings().filter(b => b.status === "dikonfirmasi");
+            setBookedRooms(bookings);
+            setBookedCount(bookings.length);
+            setShowBookingPopup(true);
+          }}
+          className="scroll-reveal bg-[#E8D8C4] p-5 rounded-2xl border border-[#C7B7A3] shadow-sm flex items-center gap-4 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 cursor-pointer text-left w-full"
+          style={{ transitionDelay: "0s" }}
+        >
           <div className="w-12 h-12 rounded-xl bg-[#561C24] flex items-center justify-center text-[#E8D8C4]">
             <IconMapPin size={24} />
           </div>
           <div>
-            <span className="text-xs text-[#6D2932] block mb-0.5">Meja Terbooking</span>
-            <span className="text-xl font-bold tracking-tight text-[#561C24]">18 <span className="text-xs text-[#6D2932]/60 font-normal">/ 24 meja</span></span>
+            <span className="text-xs text-[#6D2932] block mb-0.5">Ruangan Terbooking</span>
+            <span className="text-xl font-bold tracking-tight text-[#561C24]">{isMounted ? bookedCount : 0} <span className="text-xs text-[#6D2932]/60 font-normal">/ {totalRooms} ruangan</span></span>
           </div>
-        </div>
+        </button>
 
         <div className="scroll-reveal bg-[#E8D8C4] p-5 rounded-2xl border border-[#C7B7A3] shadow-sm flex items-center gap-4 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5" style={{ transitionDelay: "0.1s" }}>
           <div className="w-12 h-12 rounded-xl bg-[#6D2932] flex items-center justify-center text-[#E8D8C4]">
@@ -110,6 +134,35 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Booking Popup */}
+      {showBookingPopup && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setShowBookingPopup(false)}>
+          <div className="bg-[#E8D8C4] rounded-2xl max-w-md w-full max-h-[70vh] overflow-hidden shadow-2xl" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between p-5 border-b border-[#C7B7A3]">
+              <h3 className="font-bold text-[#561C24]">Ruangan Terbooking</h3>
+              <button onClick={() => setShowBookingPopup(false)} className="p-1 hover:bg-[#C7B7A3] rounded-lg transition-colors">
+                <IconX size={18} className="text-[#561C24]" />
+              </button>
+            </div>
+            <div className="p-5 overflow-y-auto max-h-[50vh]">
+              {bookedRooms.length === 0 ? (
+                <p className="text-sm text-[#6D2932]/60 text-center py-4">Tidak ada ruangan terbooking</p>
+              ) : (
+                <div className="space-y-3">
+                  {bookedRooms.map((b) => (
+                    <div key={b.id} className="bg-white rounded-xl p-3 border border-[#C7B7A3]">
+                      <p className="font-semibold text-[#561C24] text-sm">{b.ruangan}</p>
+                      <p className="text-xs text-[#6D2932]">{b.tanggal} • {b.waktu_mulai} - {b.waktu_selesai}</p>
+                      <p className="text-xs text-[#6D2932]/60">{b.nama}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Core Menu Grid */}
       <section className="mb-12">
