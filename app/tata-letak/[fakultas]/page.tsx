@@ -284,7 +284,7 @@ const getRoomIcon = (type: RoomType, size: number = 24, name?: string) => {
 };
 
 const fakultasNames: Record<string, { title: string; floors: number }> = {
-  fikom: { title: "Fakultas Ilmu Komunikasi (FIKOM)", floors: 4 },
+  fikom: { title: "Fakultas Ilmu Komputer (FIKOM)", floors: 4 },
   feb: { title: "Fakultas Ekonomi & Bisnis (FEB)", floors: 2 },
   "humaniora-kesehatan": { title: "Fakultas Humaniora & Kesehatan", floors: 2 },
   teknik: { title: "Fakultas Teknik", floors: 3 },
