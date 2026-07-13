@@ -212,7 +212,7 @@ const faculties = [
   { slug: "feb", name: "FEB", full: "Fakultas Ekonomi & Bisnis", image: "/feb2.png", desc: "Manajemen dan Akuntasi" },
   { slug: "humaniora-kesehatan", name: "Humaniora & Kesehatan", full: "Fakultas Humaniora & Kesehatan", image: "/chengho.jpg", desc: "Farmasi, Hukum, dan PGPAUD" },
   { slug: "teknik", name: "Teknik", full: "Fakultas Teknik", image: "/Teknik.jpeg", desc: "Teknik Pangan dan Pertanian, Teknik Sipil, dan Teknik Industri " },
-  { slug: "lainnya", name: "Lainnya", full: "Area Bersama & Rekreasi", image: "/domain.webp", desc: "Fasilitas belajar mandiri & hiburan umum" },
+  { slug: "lainnya", name: "Lainnya", full: "Domain Space", image: "/domain.webp", desc: "Fasilitas belajar mandiri & hiburan" },
 ];
 
 const floorConfig: Record<string, { floors: number; descriptions: string[] }> = {
@@ -442,12 +442,12 @@ export default function TataLetakPage() {
                   <IconSchool size={24} />
                 </div>
                 <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">
-                  {selectedFaculty.name === "Lainnya" ? "Area Bersama & Rekreasi" : `Denah  ${selectedFaculty.name}`}
+                  {selectedFaculty.name === "Lainnya" ? "Domain" : `Denah  ${selectedFaculty.name}`}
                 </h2>
               </div>
               <p className="text-zinc-400 text-sm md:text-base max-w-2xl">
                 {selectedFaculty.name === "Lainnya"
-                  ? "Fasilitas belajar mandiri & hiburan umum yang modern dengan ruang belajar terbuka, meja besar yang nyaman, serta area tenis meja untuk menyegarkan pikiran."
+                  ? "Fasilitas belajar mandiri & hiburan yang modern dengan ruang belajar terbuka, meja besar yang nyaman, serta area tenis meja untuk menyegarkan pikiran."
                   : `Pilih lantai yang ingin Anda jelajahi untuk melihat tata letak meja kerja, ruang meeting, dan ketersediaan fasilitas secara langsung.`}
               </p>
             </div>
@@ -484,7 +484,7 @@ export default function TataLetakPage() {
                 })}
               </div>
             ) : (
-              /* Modern Visual Layout for "Lainnya" - Area Bersama & Rekreasi */
+              /* Modern Visual Layout for "Lainnya" - Area Bersama */
               <div className="mt-4 flex flex-col gap-5">
                 {/* Hero Image */}
                 <div className="relative w-full h-48 md:h-56 rounded-2xl overflow-hidden border border-white/10">
@@ -497,8 +497,8 @@ export default function TataLetakPage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                   <div className="absolute bottom-4 left-5 right-5">
-                    <h4 className="text-lg font-extrabold text-white drop-shadow-lg">Area Bersama & Rekreasi</h4>
-                    <p className="text-xs text-white/70 mt-1">Fasilitas belajar mandiri, studio kreatif, dan hiburan umum</p>
+                    <h4 className="text-lg font-extrabold text-white drop-shadow-lg">Domain Space</h4>
+                    <p className="text-xs text-white/70 mt-1">Fasilitas belajar mandiri, studio kreatif, dan hiburan</p>
                   </div>
                 </div>
 

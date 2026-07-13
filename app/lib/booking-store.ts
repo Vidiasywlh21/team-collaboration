@@ -16,6 +16,10 @@ export interface Booking {
   waktu_selesai: string;
   keperluan?: string;
   anggota?: Anggota[];
+  nama_acara?: string;
+  nama_ketua?: string;
+  estimasi_peserta?: number;
+  surat_pembina?: string;
   status: "dikonfirmasi" | "ditolak" | "pending";
   created_at: string;
 }

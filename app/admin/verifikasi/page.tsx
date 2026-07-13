@@ -5,7 +5,7 @@ import { useAuth } from "../../lib/auth-context";
 import { useRouter } from "next/navigation";
 import { getAllBookings, updateBookingStatus } from "../../lib/admin-store";
 import { Booking } from "../../lib/booking-store";
-import { IconCheck, IconX, IconEye, IconClock, IconUser, IconPhone, IconDoor, IconCalendar, IconUsers } from "@tabler/icons-react";
+import { IconCheck, IconX, IconEye, IconClock, IconUser, IconPhone, IconDoor, IconCalendar, IconUsers, IconFile } from "@tabler/icons-react";
 
 function useScrollReveal() {
   useEffect(() => {
@@ -289,6 +289,37 @@ export default function VerifikasiBooking() {
                       </div>
                     ))}
                   </div>
+                </div>
+              )}
+
+              {/* Surat Resmi Pembina */}
+              {selectedBooking.surat_pembina && (
+                <div>
+                  <label className="text-xs text-[#6D2932] mb-1 block">Surat Resmi dari Pembina</label>
+                  <a href={selectedBooking.surat_pembina} target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-[#6D2932] hover:bg-[#561C24] text-[#E8D8C4] rounded-lg text-xs font-medium transition-all">
+                    <IconFile size={14} /> Lihat Surat
+                  </a>
+                </div>
+              )}
+
+              {/* UKM-specific fields */}
+              {selectedBooking.nama_acara && (
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs text-[#6D2932] mb-1 block">Nama Acara</label>
+                    <p className="text-sm font-medium text-[#561C24]">{selectedBooking.nama_acara}</p>
+                  </div>
+                  <div>
+                    <label className="text-xs text-[#6D2932] mb-1 block">Ketua / Penanggung Jawab</label>
+                    <p className="text-sm font-medium text-[#561C24]">{selectedBooking.nama_ketua}</p>
+                  </div>
+                </div>
+              )}
+              {selectedBooking.estimasi_peserta && (
+                <div>
+                  <label className="text-xs text-[#6D2932] mb-1 block">Estimasi Jumlah Peserta</label>
+                  <p className="text-sm font-medium text-[#561C24]">{selectedBooking.estimasi_peserta} orang</p>
                 </div>
               )}
 
