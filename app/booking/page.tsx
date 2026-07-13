@@ -25,8 +25,21 @@ function useScrollReveal() {
       },
       { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
     );
-    document.querySelectorAll(".scroll-reveal").forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+
+    const observeElements = () => {
+      document.querySelectorAll(".scroll-reveal").forEach((el) => observer.observe(el));
+    };
+
+    observeElements();
+
+    // Re-observe when DOM changes
+    const mutationObserver = new MutationObserver(observeElements);
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      observer.disconnect();
+      mutationObserver.disconnect();
+    };
   }, []);
 }
 
@@ -35,7 +48,7 @@ const faculties = [
   { slug: "feb", name: "FEB", full: "Fakultas Ekonomi & Bisnis", image: "/feb2.png", desc: "Manajemen dan Akuntasi", dataKey: "fakultas_ekonomi_bisnis" },
   { slug: "humaniora-kesehatan", name: "Humaniora & Kesehatan", full: "Fakultas Humaniora & Kesehatan", image: "/chengho.jpg", desc: "Farmasi, Hukum, dan PGPAUD", dataKey: "fakultas_humaniora_kesehatan" },
   { slug: "teknik", name: "Teknik", full: "Fakultas Teknik", image: "/Teknik.jpeg", desc: "Teknik Pangan, Sipil, dan Industri", dataKey: "fakultas_teknik" },
-
+  { slug: "lainnya", name: "Lainnya", full: "Organisasi & UKM", image: "/domain.webp", desc: "Booking untuk Organisasi, UKM, atau Kegiatan Kemahasiswaan", dataKey: "lainnya" },
 ];
 
 const dataRuangan: Record<string, { value: string; label: string }[]> = {
@@ -200,8 +213,7 @@ export default function BookingPage() {
       created_at: new Date().toISOString(),
     };
     saveBooking(booking);
-    setBookingResult({ status, message });
-    setSubmitted(true);
+    router.push("/status");
   };
 
   const resetAll = () => {
@@ -320,7 +332,7 @@ export default function BookingPage() {
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
           {/* Header */}
           <div className="text-center mb-10">
-            <h1 className="animate-fade-in-up animate-stagger-1 text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
+            <h1 className="animate-fade-in-up animate-stagger-1 text-4xl md:text-5xl tracking-tight mb-4" style={{ fontFamily: "var(--font-heading), Georgia, serif", fontWeight: 900 }}>
               <span className="text-[#561c24] drop-shadow-lg">
                 Booking Ruangan
               </span>
@@ -338,9 +350,9 @@ export default function BookingPage() {
               </div>
               <span className="text-sm font-medium text-[#561C24]">{user.nama}</span>
               <span className="text-xs text-[#6D2932]/60">|</span>
-              <button onClick={() => { router.push("/status"); }} className="text-xs font-medium text-[#6D2932] hover:text-[#561C24] transition-colors">
+              <Link href="/status" className="text-xs font-medium text-[#6D2932] hover:text-[#561C24] transition-colors cursor-pointer">
                 Lihat Riwayat
-              </button>
+              </Link>
             </div>
           </div>
 
@@ -349,7 +361,16 @@ export default function BookingPage() {
             {faculties.map((f, i) => (
               <button
                 key={f.slug}
-                onClick={() => { setSelectedFaculty(f); setIsModalOpen(true); }}
+                onClick={() => {
+                  if (f.slug === "lainnya") {
+                    setSelectedFaculty(f);
+                    setSelectedRuangan({ value: "domain_space", label: "Domain Space" });
+                    setStep("form");
+                  } else {
+                    setSelectedFaculty(f);
+                    setIsModalOpen(true);
+                  }
+                }}
                 className={`scroll-reveal group text-left relative overflow-hidden rounded-3xl min-h-[250px] flex flex-col justify-end transition-all duration-500 hover:-translate-y-2 border-2 border-white/20 hover:border-white/60 cursor-pointer ${i < 3
                   ? "hover:shadow-[0_0_30px_rgba(90,31,37,0.6),0_0_60px_rgba(109,41,50,0.3)]"
                   : "hover:shadow-[0_0_25px_rgba(255,255,255,0.5),0_0_50px_rgba(255,255,255,0.2)]"
@@ -357,7 +378,11 @@ export default function BookingPage() {
                 style={{ transitionDelay: `${i * 0.1}s` }}
               >
                 <Image src={f.image} alt={f.name} fill className="object-cover transition-transform duration-700 group-hover:scale-110" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10"></div>
+                {f.slug === "lainnya" ? (
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                ) : (
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10"></div>
+                )}
                 <div className="relative z-10 p-7 w-full">
                   <div className="flex items-end justify-between gap-4">
                     <div>
@@ -474,7 +499,7 @@ export default function BookingPage() {
           </div>
 
           {/* Selected room info */}
-          <div className="animate-fade-in-up animate-stagger-3 bg-[#561C24]/10 border border-[#561C24]/20 rounded-xl p-4 mb-6 flex items-center gap-3">
+          <div className="animate-fade-in-up animate-stagger-3 bg-[#E8D8C4] border border-[#C7B7A3] rounded-xl p-4 mb-6 flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-[#561C24] flex items-center justify-center text-[#E8D8C4] font-bold text-sm">
               {selectedFaculty?.name.charAt(0)}
             </div>
@@ -490,14 +515,21 @@ export default function BookingPage() {
               {errors.ruangan && (
                 <div className="p-3 bg-rose-100 border border-rose-300 rounded-xl text-sm text-rose-700 animate-shake">{errors.ruangan}</div>
               )}
+              {selectedFaculty?.slug === "lainnya" && (
+                <div className="p-3 bg-[#561C24]/10 border border-[#561C24]/20 rounded-xl text-sm text-[#561C24]">
+                  Form ini khusus untuk pengajuan izin penggunaan ruangan untuk kegiatan organisasi, UKM, dan kemahasiswaan.
+                </div>
+              )}
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-semibold text-[#561C24] mb-2">Nama Pemesan</label>
                   <input
                     type="text"
                     name="nama"
-                    value={user?.nama ?? ""}
-                    readOnly
+                    value={formData.nama}
+                    onChange={handleChange}
+                    placeholder="Masukkan nama lengkap"
+                    className={`w-full px-4 py-3 rounded-xl border ${errors.nama ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] placeholder-[#6D2932]/50 text-sm focus:outline-none focus:ring-2 transition-all duration-200 hover:border-[#6D2932]`}
                   />
                   {errors.nama && <p className="mt-1.5 text-xs text-rose-600">{errors.nama}</p>}
                 </div>

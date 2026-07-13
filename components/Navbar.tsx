@@ -33,18 +33,26 @@ export default function Navbar() {
         : "bg-[#561C24] border-[#4a1520]/50"
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-10 h-10 rounded-xl bg-[#E8D8C4] flex items-center justify-center shadow-lg overflow-hidden">
-            <img src="/booknest-logo.svg" alt="BookNest" className="w-8 h-8" />
-          </div>
-          <div>
-            <span className="font-bold text-lg tracking-tight text-white">
-              BookNest
-            </span>
-            <span className="block text-[10px] text-[#E8D8C4]/60 font-medium tracking-wider uppercase -mt-1">
-              Campus Booking Hub
-            </span>
-          </div>
+        <div className="group relative flex items-center select-none cursor-pointer ml-4">
+          <span className="text-white font-extrabold text-2xl tracking-tight">B</span>
+          <svg className="w-8 h-6 mx-0.5" viewBox="0 0 40 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="infGradNav" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#8B4553"/>
+                <stop offset="40%" stopColor="#C46B7A"/>
+                <stop offset="70%" stopColor="#D4AF37"/>
+                <stop offset="100%" stopColor="#E8C84A"/>
+              </linearGradient>
+            </defs>
+            <circle cx="13" cy="14" r="7" stroke="url(#infGradNav)" strokeWidth="3.5" fill="none"/>
+            <circle cx="27" cy="14" r="7" stroke="url(#infGradNav)" strokeWidth="3.5" fill="none"/>
+          </svg>
+          <span className="text-white font-extrabold text-2xl tracking-tight">kNest</span>
+          <span className="relative ml-3">
+            <span className="text-white font-extrabold text-2xl tracking-tight">UM</span>
+            <span className="absolute top-0 right-[-5px] w-2 h-2 rounded-full bg-[#D4AF37]"></span>
+          </span>
+          <span className="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-[#D4AF37] group-hover:w-full transition-all duration-300 ease-out rounded-full"></span>
         </div>
 
         <div className="hidden md:flex items-center gap-6 text-sm font-medium">
@@ -53,9 +61,9 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               className={`px-4 py-1.5 rounded-full transition-all ${
-                pathname === link.href
+                (link.href === "/" ? pathname === "/" : pathname.startsWith(link.href))
                   ? "bg-[#E8D8C4] text-[#561C24] font-semibold"
-                  : "text-[#E8D8C4]/80 hover:text-white hover:bg-white/10"
+                  : "text-[#E8D8C4]/80 hover:text-[#E8D8C4] hover:border hover:border-[#D4AF37]/50 hover:shadow-[0_0_8px_rgba(212,175,55,0.3)]"
               }`}
             >
               {link.label}
@@ -112,7 +120,7 @@ export default function Navbar() {
               className={`block px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                 pathname === link.href
                   ? "bg-[#E8D8C4] text-[#561C24] font-semibold"
-                  : "text-[#E8D8C4]/80 hover:text-white hover:bg-white/10"
+                  : "text-[#E8D8C4]/80 hover:text-[#E8D8C4] hover:border hover:border-[#D4AF37]/50 hover:shadow-[0_0_8px_rgba(212,175,55,0.3)]"
               }`}
             >
               {link.label}

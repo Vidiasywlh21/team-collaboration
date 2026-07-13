@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 48" fill="none">
+  <defs>
+    <!-- Gradient for infinity symbol -->
+    <linearGradient id="infinityGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4727A"/>
+      <stop offset="50%" stop-color="#C7616B"/>
+      <stop offset="100%" stop-color="#8B3A4A"/>
+    </linearGradient>
+    <!-- Gold gradient for accent dot -->
+    <radialGradient id="goldGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#D4B06A"/>
+      <stop offset="100%" stop-color="#B89555"/>
+    </radialGradient>
+  </defs>
+
+  <!-- BookNest UM text using bold font -->
+  <text
+    x="0"
+    y="36"
+    font-family="'Geist', 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif"
+    font-size="38"
+    font-weight="800"
+    fill="white"
+    letter-spacing="-0.5"
+  >BookNest UM</text>
+
+  <!-- Infinity symbol overlay - positioned over "oo" in Book -->
+  <g transform="translate(58, 14)">
+    <path
+      d="M18 10 C18 4, 30 0, 36 7 C42 0, 54 4, 54 10 C54 16, 42 20, 36 13 C30 20, 18 16, 18 10Z"
+      fill="url(#infinityGradient)"
+    />
+    <!-- Inner shine -->
+    <path
+      d="M24 10 C24 6, 30 4, 34 8 C38 4, 44 6, 44 10 C44 13, 38 15, 34 11 C30 15, 24 13, 24 10Z"
+      fill="white"
+      fill-opacity="0.15"
+    />
+  </g>
+
+  <!-- Gold accent dot -->
+  <circle cx="270" cy="7" r="4" fill="url(#goldGradient)"/>
+</svg>
