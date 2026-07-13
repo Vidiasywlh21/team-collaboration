@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { bookingSchema } from "../lib/schema";
+import { bookingSchema, getBookingSchema } from "../lib/schema";
 import { checkTimeOverlap, saveBooking, generateBookingId, Booking } from "../lib/booking-store";
 import { useAuth } from "../lib/auth-context";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { IconCalendarPlus, IconCircleCheck, IconArrowLeft, IconPhone, IconAlertCircle, IconId, IconLogin, IconUserPlus, IconMail, IconLock, IconUser, IconArrowRight, IconX, IconSchool } from "@tabler/icons-react";
+import { IconCalendarPlus, IconCircleCheck, IconArrowLeft, IconPhone, IconAlertCircle, IconId, IconLogin, IconUserPlus, IconMail, IconLock, IconUser, IconArrowRight, IconX, IconSchool, IconUpload, IconFile } from "@tabler/icons-react";
 import SearchableSelect from "../components/SearchableSelect";
 import AnggotaForm from "../components/AnggotaForm";
 
@@ -129,7 +129,12 @@ export default function BookingPage() {
     waktu_selesai: "",
     keperluan: "",
     anggota: [] as { nama: string; nim: string }[],
+    nama_acara: "",
+    nama_ketua: "",
+    estimasi_peserta: "",
   });
+  const [suratFile, setSuratFile] = useState<string | null>(null);
+  const [suratFileName, setSuratFileName] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [bookingResult, setBookingResult] = useState<{ status: "dikonfirmasi" | "ditolak" | "pending"; message: string } | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -171,11 +176,28 @@ export default function BookingPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      setErrors({ ...errors, surat: "Ukuran file maksimal 5MB" });
+      return;
+    }
+    setSuratFileName(file.name);
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      setSuratFile(ev.target?.result as string);
+      setErrors({ ...errors, surat: "" });
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!user || !selectedRuangan || !selectedFaculty) return;
     try {
-      bookingSchema.parse({
+      const schema = getBookingSchema(selectedFaculty.dataKey);
+      schema.parse({
         ...formData,
         fakultas: selectedFaculty.dataKey,
         ruangan: selectedRuangan.value,
@@ -209,6 +231,10 @@ export default function BookingPage() {
       waktu_selesai: formData.waktu_selesai,
       keperluan: formData.keperluan,
       anggota: formData.anggota.length > 0 ? formData.anggota : undefined,
+      nama_acara: formData.nama_acara || undefined,
+      nama_ketua: formData.nama_ketua || undefined,
+      estimasi_peserta: formData.estimasi_peserta ? Number(formData.estimasi_peserta) : undefined,
+      surat_pembina: suratFile || undefined,
       status,
       created_at: new Date().toISOString(),
     };
@@ -217,7 +243,9 @@ export default function BookingPage() {
   };
 
   const resetAll = () => {
-    setFormData({ nama: user?.nama || "", nim: "", telepon: "", tanggal: "", waktu_mulai: "", waktu_selesai: "", keperluan: "", anggota: [] });
+    setFormData({ nama: user?.nama || "", nim: "", telepon: "", tanggal: "", waktu_mulai: "", waktu_selesai: "", keperluan: "", anggota: [], nama_acara: "", nama_ketua: "", estimasi_peserta: "" });
+    setSuratFile(null);
+    setSuratFileName("");
     setSubmitted(false);
     setBookingResult(null);
     setSelectedFaculty(null);
@@ -520,63 +548,177 @@ export default function BookingPage() {
                   Form ini khusus untuk pengajuan izin penggunaan ruangan untuk kegiatan organisasi, UKM, dan kemahasiswaan.
                 </div>
               )}
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-semibold text-[#561C24] mb-2">Nama Pemesan</label>
-                  <input
-                    type="text"
-                    name="nama"
-                    value={formData.nama}
-                    onChange={handleChange}
-                    placeholder="Masukkan nama lengkap"
-                    className={`w-full px-4 py-3 rounded-xl border ${errors.nama ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] placeholder-[#6D2932]/50 text-sm focus:outline-none focus:ring-2 transition-all duration-200 hover:border-[#6D2932]`}
-                  />
-                  {errors.nama && <p className="mt-1.5 text-xs text-rose-600">{errors.nama}</p>}
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-[#561C24] mb-2">
-                    <span className="flex items-center gap-1.5"><IconId size={14} />NIM Pemesan</span>
-                  </label>
-                  <input type="text" name="nim" value={formData.nim} onChange={handleChange} placeholder="Nomor Induk Mahasiswa"
-                    className={`w-full px-4 py-3 rounded-xl border ${errors.nim ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] placeholder-[#6D2932]/50 text-sm focus:outline-none focus:ring-2 transition-all duration-200 hover:border-[#6D2932]`} />
-                  {errors.nim && <p className="mt-1.5 text-xs text-rose-600">{errors.nim}</p>}
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-[#561C24] mb-2">
-                    <span className="flex items-center gap-1.5"><IconPhone size={14} />Nomor Telepon Aktif</span>
-                  </label>
-                  <input type="tel" name="telepon" value={formData.telepon} onChange={handleChange} placeholder="08xxxxxxxxxx"
-                    className={`w-full px-4 py-3 rounded-xl border ${errors.telepon ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] placeholder-[#6D2932]/50 text-sm focus:outline-none focus:ring-2 transition-all duration-200 hover:border-[#6D2932]`} />
-                  {errors.telepon && <p className="mt-1.5 text-xs text-rose-600">{errors.telepon}</p>}
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-[#561C24] mb-2">Tanggal Booking</label>
-                  <input type="date" name="tanggal" value={formData.tanggal} onChange={handleChange}
-                    className={`w-full px-4 py-3 rounded-xl border ${errors.tanggal ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] text-sm focus:outline-none focus:ring-2 transition-all duration-200 hover:border-[#6D2932]`} />
-                  {errors.tanggal && <p className="mt-1.5 text-xs text-rose-600">{errors.tanggal}</p>}
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-semibold text-[#561C24] mb-2">Jam Mulai</label>
-                    <input type="time" name="waktu_mulai" value={formData.waktu_mulai} onChange={handleChange}
-                      className={`w-full px-4 py-3 rounded-xl border ${errors.waktu_mulai ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] text-sm focus:outline-none focus:ring-2 transition-all duration-200 hover:border-[#6D2932]`} />
-                    {errors.waktu_mulai && <p className="mt-1.5 text-xs text-rose-600">{errors.waktu_mulai}</p>}
+              {selectedFaculty?.slug === "lainnya" ? (
+                /* ========== FORM UKM / LAINNYA ========== */
+                <>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-semibold text-[#561C24] mb-2">Nama Organisasi / UKM</label>
+                      <input type="text" name="nama" value={formData.nama} onChange={handleChange}
+                        placeholder="Contoh: HIMSI, BEM, dll"
+                        className={`w-full px-4 py-3 rounded-xl border ${errors.nama ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] placeholder-[#6D2932]/50 text-sm focus:outline-none focus:ring-2 transition-all duration-200 hover:border-[#6D2932]`} />
+                      {errors.nama && <p className="mt-1.5 text-xs text-rose-600">{errors.nama}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-[#561C24] mb-2">Nama Acara / Event</label>
+                      <input type="text" name="nama_acara" value={formData.nama_acara} onChange={handleChange}
+                        placeholder="Contoh: Seminar Teknologi 2026"
+                        className={`w-full px-4 py-3 rounded-xl border ${errors.nama_acara ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] placeholder-[#6D2932]/50 text-sm focus:outline-none focus:ring-2 transition-all duration-200 hover:border-[#6D2932]`} />
+                      {errors.nama_acara && <p className="mt-1.5 text-xs text-rose-600">{errors.nama_acara}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-[#561C24] mb-2">Nama Ketua / Penanggung Jawab</label>
+                      <input type="text" name="nama_ketua" value={formData.nama_ketua} onChange={handleChange}
+                        placeholder="Masukkan nama ketua"
+                        className={`w-full px-4 py-3 rounded-xl border ${errors.nama_ketua ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] placeholder-[#6D2932]/50 text-sm focus:outline-none focus:ring-2 transition-all duration-200 hover:border-[#6D2932]`} />
+                      {errors.nama_ketua && <p className="mt-1.5 text-xs text-rose-600">{errors.nama_ketua}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-[#561C24] mb-2">
+                        <span className="flex items-center gap-1.5"><IconId size={14} />NIM Ketua</span>
+                      </label>
+                      <input type="text" name="nim" value={formData.nim} onChange={handleChange} placeholder="Nomor Induk Mahasiswa"
+                        className={`w-full px-4 py-3 rounded-xl border ${errors.nim ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] placeholder-[#6D2932]/50 text-sm focus:outline-none focus:ring-2 transition-all duration-200 hover:border-[#6D2932]`} />
+                      {errors.nim && <p className="mt-1.5 text-xs text-rose-600">{errors.nim}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-[#561C24] mb-2">
+                        <span className="flex items-center gap-1.5"><IconPhone size={14} />No. Telepon / HP</span>
+                      </label>
+                      <input type="tel" name="telepon" value={formData.telepon} onChange={handleChange} placeholder="08xxxxxxxxxx"
+                        className={`w-full px-4 py-3 rounded-xl border ${errors.telepon ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] placeholder-[#6D2932]/50 text-sm focus:outline-none focus:ring-2 transition-all duration-200 hover:border-[#6D2932]`} />
+                      {errors.telepon && <p className="mt-1.5 text-xs text-rose-600">{errors.telepon}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-[#561C24] mb-2">Tanggal Acara</label>
+                      <input type="date" name="tanggal" value={formData.tanggal} onChange={handleChange}
+                        className={`w-full px-4 py-3 rounded-xl border ${errors.tanggal ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] text-sm focus:outline-none focus:ring-2 transition-all duration-200 hover:border-[#6D2932]`} />
+                      {errors.tanggal && <p className="mt-1.5 text-xs text-rose-600">{errors.tanggal}</p>}
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-semibold text-[#561C24] mb-2">Jam Mulai</label>
+                        <input type="time" name="waktu_mulai" value={formData.waktu_mulai} onChange={handleChange}
+                          className={`w-full px-4 py-3 rounded-xl border ${errors.waktu_mulai ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] text-sm focus:outline-none focus:ring-2 transition-all duration-200 hover:border-[#6D2932]`} />
+                        {errors.waktu_mulai && <p className="mt-1.5 text-xs text-rose-600">{errors.waktu_mulai}</p>}
+                      </div>
+                      <div>
+                        <label className="block text-sm font-semibold text-[#561C24] mb-2">Jam Selesai</label>
+                        <input type="time" name="waktu_selesai" value={formData.waktu_selesai} onChange={handleChange}
+                          className={`w-full px-4 py-3 rounded-xl border ${errors.waktu_selesai ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] text-sm focus:outline-none focus:ring-2 transition-all duration-200 hover:border-[#6D2932]`} />
+                        {errors.waktu_selesai && <p className="mt-1.5 text-xs text-rose-600">{errors.waktu_selesai}</p>}
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-[#561C24] mb-2">Estimasi Jumlah Peserta</label>
+                      <input type="number" name="estimasi_peserta" value={formData.estimasi_peserta} onChange={handleChange}
+                        placeholder="Contoh: 50" min="1"
+                        className={`w-full px-4 py-3 rounded-xl border ${errors.estimasi_peserta ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] placeholder-[#6D2932]/50 text-sm focus:outline-none focus:ring-2 transition-all duration-200 hover:border-[#6D2932]`} />
+                      {errors.estimasi_peserta && <p className="mt-1.5 text-xs text-rose-600">{errors.estimasi_peserta}</p>}
+                    </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-[#561C24] mb-2">Jam Selesai</label>
-                    <input type="time" name="waktu_selesai" value={formData.waktu_selesai} onChange={handleChange}
-                      className={`w-full px-4 py-3 rounded-xl border ${errors.waktu_selesai ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] text-sm focus:outline-none focus:ring-2 transition-all duration-200 hover:border-[#6D2932]`} />
-                    {errors.waktu_selesai && <p className="mt-1.5 text-xs text-rose-600">{errors.waktu_selesai}</p>}
+                    <label className="block text-sm font-semibold text-[#561C24] mb-2">Keterangan / Deskripsi Acara</label>
+                    <textarea name="keperluan" value={formData.keperluan} onChange={handleChange} rows={4}
+                      placeholder="Jelaskan deskripsi singkat acara yang akan dilaksanakan..."
+                      className="w-full px-4 py-3 rounded-xl border border-[#C7B7A3] bg-white text-[#561C24] placeholder-[#6D2932]/50 text-sm focus:outline-none focus:ring-2 focus:ring-[#6D2932] transition-all duration-200 hover:border-[#6D2932] resize-none"></textarea>
                   </div>
+                </>
+              ) : (
+                /* ========== FORM BOOKING BIASA ========== */
+                <>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-semibold text-[#561C24] mb-2">Nama Pemesan</label>
+                      <input
+                        type="text"
+                        name="nama"
+                        value={formData.nama}
+                        onChange={handleChange}
+                        placeholder="Masukkan nama lengkap"
+                        className={`w-full px-4 py-3 rounded-xl border ${errors.nama ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] placeholder-[#6D2932]/50 text-sm focus:outline-none focus:ring-2 transition-all duration-200 hover:border-[#6D2932]`}
+                      />
+                      {errors.nama && <p className="mt-1.5 text-xs text-rose-600">{errors.nama}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-[#561C24] mb-2">
+                        <span className="flex items-center gap-1.5"><IconId size={14} />NIM Pemesan</span>
+                      </label>
+                      <input type="text" name="nim" value={formData.nim} onChange={handleChange} placeholder="Nomor Induk Mahasiswa"
+                        className={`w-full px-4 py-3 rounded-xl border ${errors.nim ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] placeholder-[#6D2932]/50 text-sm focus:outline-none focus:ring-2 transition-all duration-200 hover:border-[#6D2932]`} />
+                      {errors.nim && <p className="mt-1.5 text-xs text-rose-600">{errors.nim}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-[#561C24] mb-2">
+                        <span className="flex items-center gap-1.5"><IconPhone size={14} />Nomor Telepon Aktif</span>
+                      </label>
+                      <input type="tel" name="telepon" value={formData.telepon} onChange={handleChange} placeholder="08xxxxxxxxxx"
+                        className={`w-full px-4 py-3 rounded-xl border ${errors.telepon ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] placeholder-[#6D2932]/50 text-sm focus:outline-none focus:ring-2 transition-all duration-200 hover:border-[#6D2932]`} />
+                      {errors.telepon && <p className="mt-1.5 text-xs text-rose-600">{errors.telepon}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-[#561C24] mb-2">Tanggal Booking</label>
+                      <input type="date" name="tanggal" value={formData.tanggal} onChange={handleChange}
+                        className={`w-full px-4 py-3 rounded-xl border ${errors.tanggal ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] text-sm focus:outline-none focus:ring-2 transition-all duration-200 hover:border-[#6D2932]`} />
+                      {errors.tanggal && <p className="mt-1.5 text-xs text-rose-600">{errors.tanggal}</p>}
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-semibold text-[#561C24] mb-2">Jam Mulai</label>
+                        <input type="time" name="waktu_mulai" value={formData.waktu_mulai} onChange={handleChange}
+                          className={`w-full px-4 py-3 rounded-xl border ${errors.waktu_mulai ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] text-sm focus:outline-none focus:ring-2 transition-all duration-200 hover:border-[#6D2932]`} />
+                        {errors.waktu_mulai && <p className="mt-1.5 text-xs text-rose-600">{errors.waktu_mulai}</p>}
+                      </div>
+                      <div>
+                        <label className="block text-sm font-semibold text-[#561C24] mb-2">Jam Selesai</label>
+                        <input type="time" name="waktu_selesai" value={formData.waktu_selesai} onChange={handleChange}
+                          className={`w-full px-4 py-3 rounded-xl border ${errors.waktu_selesai ? 'border-rose-500 focus:ring-rose-500' : 'border-[#C7B7A3] focus:ring-[#6D2932]'} bg-white text-[#561C24] text-sm focus:outline-none focus:ring-2 transition-all duration-200 hover:border-[#6D2932]`} />
+                        {errors.waktu_selesai && <p className="mt-1.5 text-xs text-rose-600">{errors.waktu_selesai}</p>}
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-[#561C24] mb-2">Keperluan / Catatan</label>
+                    <textarea name="keperluan" value={formData.keperluan} onChange={handleChange} rows={4}
+                      placeholder="Jelaskan secara singkat agenda penggunaan ruangan..."
+                      className="w-full px-4 py-3 rounded-xl border border-[#C7B7A3] bg-white text-[#561C24] placeholder-[#6D2932]/50 text-sm focus:outline-none focus:ring-2 focus:ring-[#6D2932] transition-all duration-200 hover:border-[#6D2932] resize-none"></textarea>
+                  </div>
+                  <AnggotaForm anggota={formData.anggota} onChange={(anggota) => setFormData({ ...formData, anggota })} errors={errors} />
+                </>
+              )}
+
+              {/* Upload Surat Resmi Pembina - hanya untuk "Lainnya" */}
+              {selectedFaculty?.slug === "lainnya" && (
+                <div>
+                  <label className="block text-sm font-semibold text-[#561C24] mb-2">
+                    <span className="flex items-center gap-1.5"><IconFile size={14} />Surat Resmi dari Pembina</span>
+                  </label>
+                  <p className="text-xs text-[#6D2932]/60 mb-3">Unggah foto/surat izin resmi dari pembina (opsional, maks 5MB)</p>
+                  <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-[#C7B7A3] rounded-xl cursor-pointer hover:border-[#6D2932] hover:bg-[#C7B7A3]/20 transition-all duration-200">
+                    {suratFile ? (
+                      <div className="flex flex-col items-center gap-2">
+                        <IconFile size={32} className="text-[#561C24]" />
+                        <span className="text-xs font-medium text-[#561C24] truncate max-w-[200px]">{suratFileName}</span>
+                        <button
+                          type="button"
+                          onClick={(e) => { e.preventDefault(); setSuratFile(null); setSuratFileName(""); }}
+                          className="text-xs text-rose-600 hover:underline"
+                        >
+                          Hapus file
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="flex flex-col items-center gap-2">
+                        <IconUpload size={24} className="text-[#6D2932]/50" />
+                        <span className="text-xs text-[#6D2932]/60">Klik untuk unggah surat</span>
+                        <span className="text-[10px] text-[#6D2932]/40">JPG, PNG, atau PDF (maks 5MB)</span>
+                      </div>
+                    )}
+                    <input type="file" accept="image/*,.pdf" onChange={handleFileChange} className="hidden" />
+                  </label>
+                  {errors.surat && <p className="mt-1.5 text-xs text-rose-600">{errors.surat}</p>}
                 </div>
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-[#561C24] mb-2">Keperluan / Catatan</label>
-                <textarea name="keperluan" value={formData.keperluan} onChange={handleChange} rows={4}
-                  placeholder="Jelaskan secara singkat agenda penggunaan ruangan..."
-                  className="w-full px-4 py-3 rounded-xl border border-[#C7B7A3] bg-white text-[#561C24] placeholder-[#6D2932]/50 text-sm focus:outline-none focus:ring-2 focus:ring-[#6D2932] transition-all duration-200 hover:border-[#6D2932] resize-none"></textarea>
-              </div>
-              <AnggotaForm anggota={formData.anggota} onChange={(anggota) => setFormData({ ...formData, anggota })} errors={errors} />
+              )}
               <div className="flex justify-end gap-3 pt-4 border-t border-[#C7B7A3]">
                 <button type="button" onClick={() => { setStep("fakultas"); setSelectedRuangan(null); setErrors({}); }}
                   className="px-5 py-2.5 rounded-xl text-sm font-medium text-[#6D2932] hover:bg-[#C7B7A3]/80 transition-all duration-200">Batal</button>
